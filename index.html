@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vanguard Daily — Intelligence Portal</title>
+    <meta name="description" content="Vanguard Daily — Real-time intelligence feed by Hassan Group Limited. Bilingual news portal covering global and national dispatches." />
+    <meta name="theme-color" content="#0D0D0D" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+
+    <!--
+      ═══════════════════════════════════════════════════════════════
+      ANTI-FLICKER THEME SCRIPT
+      Must execute synchronously BEFORE first paint.
+      Reads prefers-color-scheme and applies data-theme attribute.
+      ═══════════════════════════════════════════════════════════════
+    -->
+    <script>
+      (function () {
+        try {
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (!prefersDark) {
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+          // Also restore saved language on html element for font-face pre-loading
+          var savedLang = localStorage.getItem('vd_lang');
+          if (savedLang) {
+            document.documentElement.lang = savedLang;
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./src/main.jsx"></script>
+  </body>
+</html>
