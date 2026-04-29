@@ -1,0 +1,98 @@
+[
+  {
+    "id": "en-001",
+    "headline": "Vanguard Intelligence Reports Surge in Regional Cyber Intrusion Attempts",
+    "category": "Global",
+    "isBreaking": true,
+    "timestamp": "2026-04-29T06:00:00Z",
+    "content": "Analysts at the Vanguard Intelligence unit have confirmed a 340% spike in coordinated cyber intrusion attempts targeting critical infrastructure across the Indian subcontinent. The attacks, attributed to state-adjacent actors, employed sophisticated spear-phishing and zero-day exploit chains. Emergency protocols have been activated at partner institutions."
+  },
+  {
+    "id": "en-002",
+    "headline": "Hassan Group Expands Blunov Technology Footprint Across Southeast Asia",
+    "category": "National",
+    "isBreaking": true,
+    "timestamp": "2026-04-29T05:30:00Z",
+    "content": "Hassan Group Limited has announced a landmark expansion of its Blunov Technology International division into five new Southeast Asian markets. The initiative, backed by a $220M capital allocation, will establish regional data sovereignty nodes and enterprise AI infrastructure for government and private sector clients."
+  },
+  {
+    "id": "en-003",
+    "headline": "Global AI Governance Summit Reaches Landmark Accord on Autonomous Systems",
+    "category": "Global",
+    "isBreaking": false,
+    "timestamp": "2026-04-29T04:45:00Z",
+    "content": "Delegations from 47 nations have signed the Geneva Accord on Autonomous Systems, establishing binding restrictions on lethal AI deployment in conflict zones. The agreement, brokered after 18 months of negotiations, marks the first binding international treaty on AI warfare ethics."
+  },
+  {
+    "id": "en-004",
+    "headline": "Dhaka Tech Corridor Attracts Record Foreign Direct Investment in Q1 2026",
+    "category": "National",
+    "isBreaking": false,
+    "timestamp": "2026-04-29T04:00:00Z",
+    "content": "The Dhaka Technology Corridor has recorded $4.7 billion in foreign direct investment during Q1 2026, surpassing the full-year total of 2024. Semiconductor assembly, cloud infrastructure, and fintech platforms have emerged as the dominant investment categories, according to the Bangladesh Investment Development Authority."
+  },
+  {
+    "id": "en-005",
+    "headline": "Deep-Sea Mineral Extraction Dispute Escalates at International Tribunal",
+    "category": "Global",
+    "isBreaking": true,
+    "timestamp": "2026-04-29T03:30:00Z",
+    "content": "The International Seabed Authority tribunal has convened emergency proceedings after three member-states filed competing claims over a newly discovered polymetallic nodule field in the central Pacific. Analysts warn the dispute could set precedent for a new era of resource conflict in international waters."
+  },
+  {
+    "id": "en-006",
+    "headline": "National Digital Identity Framework Enters Beta Phase Nationwide",
+    "category": "National",
+    "isBreaking": false,
+    "timestamp": "2026-04-29T03:00:00Z",
+    "content": "The Ministry of ICT has formally launched the beta phase of the National Digital Identity Framework, enrolling 2.3 million citizens in the pilot. The system integrates biometric verification, blockchain-anchored credential management, and inter-agency data sharing protocols."
+  },
+  {
+    "id": "en-007",
+    "headline": "Semiconductor Supply Chain Crisis Deepens as Export Controls Tighten",
+    "category": "Global",
+    "isBreaking": false,
+    "timestamp": "2026-04-29T02:15:00Z",
+    "content": "New export control regulations from three major producing nations have sent shockwaves through global semiconductor supply chains. Lead times for advanced logic chips have extended beyond 52 weeks, prompting emergency procurement strategies at major electronics manufacturers and defense contractors worldwide."
+  },
+  {
+    "id": "en-008",
+    "headline": "Central Bank Issues Guidance on AI-Assisted Credit Scoring Models",
+    "category": "National",
+    "isBreaking": false,
+    "timestamp": "2026-04-29T01:45:00Z",
+    "content": "Bangladesh Bank has released a comprehensive regulatory circular requiring all licensed financial institutions to submit algorithmic impact assessments for AI-driven credit scoring systems. The guidance mandates explainability standards, bias audits, and mandatory human-in-the-loop review for edge-case determinations."
+  },
+  {
+    "id": "en-009",
+    "headline": "Strategic Minerals Pact Reshapes Geopolitical Alignment Across Gulf States",
+    "category": "Global",
+    "isBreaking": false,
+    "timestamp": "2026-04-29T01:00:00Z",
+    "content": "A trilateral strategic minerals agreement signed in Riyadh is reorienting geopolitical alliances across the Gulf Cooperation Council. The pact, covering lithium, cobalt, and rare earth processing rights, is seen as a direct counter to China's Belt and Road mineral infrastructure dominance."
+  },
+  {
+    "id": "en-010",
+    "headline": "Vanguard Daily Intelligence Index Records Highest Volatility Score Since 2022",
+    "category": "National",
+    "isBreaking": false,
+    "timestamp": "2026-04-29T00:30:00Z",
+    "content": "The Vanguard Daily Global Intelligence Volatility Index has reached 87.4, its highest reading since the geopolitical disruptions of Q3 2022. The composite metric aggregates conflict risk, economic instability, and cyber threat signals across 190 monitored jurisdictions."
+  },
+  {
+    "id": "en-011",
+    "headline": "Arctic Council Suspends Sessions Amid Renewed Territorial Disputes",
+    "category": "Global",
+    "isBreaking": false,
+    "timestamp": "2026-04-28T23:00:00Z",
+    "content": "The Arctic Council has suspended plenary sessions indefinitely following an emergency veto by two member-states over competing territorial surveys in the Beaufort Sea. The suspension marks the most severe institutional fracture in the council's 30-year history."
+  },
+  {
+    "id": "en-012",
+    "headline": "National Power Grid Authority Announces Quantum-Secured SCADA Upgrade",
+    "category": "National",
+    "isBreaking": false,
+    "timestamp": "2026-04-28T22:00:00Z",
+    "content": "The Bangladesh Power Development Board has contracted Blunov Technology International to retrofit 47 critical grid substations with quantum-key distribution secured SCADA systems. The $340M contract represents the largest single cybersecurity infrastructure investment in the nation's history."
+  }
+]
