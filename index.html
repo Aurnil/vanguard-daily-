@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vanguard Daily</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&family=Hind+Siliguri:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   TOKENS & RESET
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:         #FFFFFF;
+  --surface:    #F8F9FA;
+  --surface2:   #F0F1F3;
+  --border:     #F3F4F6;
+  --border2:    #E5E7EB;
+  --ink:        #000000;
+  --ink-mid:    #555555;
+  --ink-light:  #888888;
+  --red:        #C0392B;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-body:  'Lora', Georgia, serif;
+  --font-ui:    'Inter', sans-serif;
+  --font-bn:    'Hind Siliguri', sans-serif;
+  --radius:     4px;
+  --trans:      0.2s ease-in-out;
+  --base-grid:  16px;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+/* ============================================================
+   LANGUAGE GATEWAY — Full-screen, mandatory
+   ============================================================ */
+#lang-gate {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 44px;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+#lang-gate.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.gate-masthead { text-align: center; padding-bottom: 12px; border-bottom: 3px solid var(--ink); }
+.gate-line1 { font-family: var(--font-serif); font-size: clamp(3rem,9vw,5.5rem); font-weight: 900; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1; }
+.gate-line2 { font-family: var(--font-serif); font-size: clamp(1.2rem,4vw,2.2rem); font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; }
+.gate-prompt { font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mid); }
+.gate-buttons { display: flex; gap: 14px; }
+.gate-btn {
+  padding: 13px 38px; border: 2px solid var(--ink);
+  font-size: 0.9rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--bg); color: var(--ink);
+  transition: background var(--trans), color var(--trans);
+}
+.gate-btn:hover { background: var(--ink); color: var(--bg); }
+
+/* ============================================================
+   HEADER — Sticky
+   ============================================================ */
+#site-header {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--bg); border-bottom: 2.5px solid var(--ink);
+}
+
+/* ── MOBILE header row (<640px)
+   Layout: [Logo centered] [Hamburger right]
+   Search bar is permanently visible BELOW the logo row        */
+.header-row {
+  display: flex; align-items: center;
+  min-height: 60px; padding: 0 5%;
+  gap: var(--base-grid);
+  position: relative;
+}
+
+/* Logo — mobile: center-aligned, 180px wide */
+.site-logo {
+  display: flex; flex-direction: column;
+  align-items: center;          /* center on mobile */
+  line-height: 1; flex-shrink: 0;
+  border-bottom: 1.5px solid var(--ink); padding-bottom: 2px;
+  width: 180px;
+  margin: 0 auto;               /* push to center of row */
+}
+.logo-l1 { font-family: var(--font-serif); font-weight: 900; font-size: 1.4rem; letter-spacing: 0.07em; text-transform: uppercase; }
+.logo-l2 { font-family: var(--font-serif); font-weight: 700; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; }
+
+/* Mobile search row — always visible below the logo/hamburger row */
+.mobile-search-bar {
+  display: flex; align-items: center;
+  border-top: 1px solid var(--border);
+  padding: 8px 5%; gap: 8px;
+  background: var(--bg);
+}
+.mobile-search-bar svg { color: var(--ink-light); flex-shrink: 0; }
+.mobile-search-bar input {
+  flex: 1; border: none; outline: none; background: transparent;
+  font-family: var(--font-ui); font-size: 0.85rem; color: var(--ink);
+}
+.mobile-search-bar input::placeholder { color: var(--ink-light); }
+
+/* Hamburger — mobile only, absolute right */
+#hamburger {
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 5px; width: 28px; height: 28px; padding: 2px;
+  flex-shrink: 0;
+  /* sits at far right, logo is centered with margin:auto */
+}
+#hamburger span { display: block; height: 2px; width: 100%; background: var(--ink); transition: transform var(--trans), opacity var(--trans); }
+#hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+#hamburger.open span:nth-child(2) { opacity: 0; }
+#hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile drawer — category pills */
+#mobile-drawer { display: none; flex-direction: column; background: var(--bg); border-top: 1px solid var(--border); }
+#mobile-drawer.open { display: flex; }
+.mobile-cats { display: flex; overflow-x: auto; gap: 8px; padding: 10px 5%; scrollbar-width: none; }
+.mobile-cats::-webkit-scrollbar { display: none; }
+.mobile-cats button {
+  white-space: nowrap; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 6px 14px; border: 1.5px solid var(--border2); border-radius: 2px; color: var(--ink-mid);
+  transition: background var(--trans), color var(--trans), border-color var(--trans);
+}
+.mobile-cats button:hover, .mobile-cats button.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+/* Desktop nav elements — hidden on mobile */
+#desktop-nav { display: none; }
+.desktop-header-search { display: none; }
+
+/* ── TABLET header (640px – 1023px)
+   Layout: [Logo left 200px]  [Nav inline list right-aligned]
+   No search in header on tablet — it's in the layout already  */
+@media (min-width: 640px) {
+  .mobile-search-bar { display: none; }
+  #hamburger         { display: none; }
+  #mobile-drawer     { display: none !important; }
+
+  .header-row {
+    max-width: 100%; padding: 0 5%;
+    min-height: 64px;
+  }
+
+  .site-logo {
+    align-items: flex-start;   /* left-align on tablet+ */
+    margin: 0;                 /* remove auto centering */
+    width: 200px;
+  }
+  .logo-l1 { font-size: 1.5rem; }
+
+  /* Inline nav list, right-aligned */
+  #desktop-nav {
+    display: flex; align-items: center;
+    gap: 4px; margin-left: auto; flex-shrink: 0;
+  }
+  #desktop-nav button {
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 5px 10px; border-radius: 2px; color: var(--ink-mid);
+    transition: background var(--trans), color var(--trans);
+  }
+  #desktop-nav button:hover, #desktop-nav button.active { background: var(--ink); color: var(--bg); }
+}
+
+/* ── DESKTOP header (≥1024px)
+   Layout: [Logo left 250px]  [Nav]  [Search bar right]        */
+@media (min-width: 1024px) {
+  .header-row { max-width: 1280px; margin: 0 auto; padding: 0 5%; min-height: 68px; }
+
+  .site-logo { width: 250px; }
+  .logo-l1   { font-size: 1.7rem; }
+
+  /* Search bar appears in header on desktop, right side after nav */
+  .desktop-header-search {
+    display: flex; align-items: center;
+    border: 1.5px solid var(--border2); border-radius: var(--radius);
+    padding: 5px 10px; gap: 7px;
+    width: 200px; flex-shrink: 0;
+  }
+  .desktop-header-search input {
+    border: none; outline: none; background: transparent;
+    font-family: var(--font-ui); font-size: 0.82rem; color: var(--ink); width: 100%;
+  }
+  .desktop-header-search input::placeholder { color: var(--ink-light); }
+  .desktop-header-search svg { color: var(--ink-light); flex-shrink: 0; }
+}
+
+/* Date bar */
+#date-bar {
+  background: var(--ink); color: var(--bg);
+  font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 5px 5%; display: flex; gap: 14px; align-items: center; justify-content: space-between;
+}
+#date-bar .edition { opacity: 0.6; }
+
+/* ============================================================
+   APP SHELL — Responsive grid
+   MOBILE  (<640px):   single column; sidebar below feed
+   TABLET  (≥640px):   sidebar LEFT 25% | main feed RIGHT
+   DESKTOP (≥1024px):  sidebar LEFT 20% (max 260px) | main feed
+   ============================================================ */
+#app-shell {
+  width: 90%; margin: 0 auto;
+  padding: var(--base-grid) 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: "feed" "sidebar";
+  gap: var(--base-grid);
+  align-items: start;
+}
+#main-feed      { grid-area: feed; }
+#breaking-sidebar { grid-area: sidebar; }
+
+/* Tablet: sidebar LEFT at 25% width */
+@media (min-width: 640px) {
+  #app-shell {
+    width: 80%;
+    grid-template-columns: 25% 1fr;
+    grid-template-areas: "sidebar feed";
+    gap: var(--base-grid);
+    padding: var(--base-grid) 0 32px;
+  }
+}
+
+/* Desktop: sidebar LEFT at 20% (capped 260px), 70% container */
+@media (min-width: 1024px) {
+  #app-shell {
+    width: 70%; max-width: 1200px;
+    grid-template-columns: minmax(0, 260px) 1fr;
+    grid-template-areas: "sidebar feed";
+    padding: 32px 0 48px;
+    gap: 24px;
+  }
+}
+
+/* ============================================================
+   BREAKING SIDEBAR — vertical column, left side
+   ============================================================ */
+#breaking-sidebar {
+  border: 1.5px solid var(--ink); background: var(--surface);
+  overflow: hidden; position: sticky; top: 80px;
+}
+.ticker-hdr {
+  background: var(--ink); color: var(--bg); padding: 8px 12px;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+}
+.ticker-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.82);} }
+.ticker-list { display: flex; flex-direction: column; max-height: 70vh; overflow-y: auto; }
+.ticker-item { padding: 11px 12px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background var(--trans); }
+.ticker-item:last-child { border-bottom: none; }
+.ticker-item:hover { background: var(--surface2); }
+.t-cat  { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 3px; }
+.t-title { font-family: var(--font-serif); font-size: 0.82rem; font-weight: 700; line-height: 1.3; }
+.t-source { font-size: 0.6rem; color: var(--ink-mid); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+.t-source a { color: var(--red); text-decoration: underline; text-underline-offset: 2px; }
+.t-time { font-size: 0.62rem; color: var(--ink-light); margin-top: 3px; }
+
+/* ============================================================
+   NEWS GRID & CARDS
+   ============================================================ */
+/* Mobile: single column */
+#news-grid { display: grid; gap: var(--base-grid); grid-template-columns: 1fr; }
+
+/* Tablet: 2-column grid, ~48% each card */
+@media (min-width: 640px) {
+  #news-grid { grid-template-columns: 1fr 1fr; }
+  #news-grid .news-card:first-child { grid-column: 1 / -1; }
+  #news-grid .news-card:first-child .card-headline { font-size: 1.25rem; }
+  #news-grid .news-card:first-child .card-summary { -webkit-line-clamp: 4; }
+  .card-headline { font-size: 1rem; }  /* tablet: 20px headline */
+  .card-summary  { font-size: 0.875rem; } /* tablet: 16px content */
+}
+
+/* Desktop: 3-column grid, ~31% each card */
+@media (min-width: 1024px) {
+  #news-grid { grid-template-columns: 1fr 1fr 1fr; }
+  #news-grid .news-card:first-child { grid-column: 1 / 3; }
+  #news-grid .news-card:first-child .card-headline { font-size: 1.5rem; }
+  .card-headline { font-size: 1.1rem; }   /* desktop: 24px headline */
+  .card-summary  { font-size: 1rem; }     /* desktop: 18px content */
+}
+
+.news-card {
+  background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; cursor: pointer; display: flex; flex-direction: column;
+  transition: border-color var(--trans), box-shadow var(--trans), transform 0.18s ease;
+}
+.news-card:hover { border-color: var(--ink); box-shadow: 3px 3px 0 var(--ink); transform: translate(-2px,-2px); }
+
+/* Image: 100% width, fixed 16:9 aspect ratio */
+.card-img { width: 100%; aspect-ratio: 16/9; overflow: hidden; background: var(--surface2); }
+.card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.38s ease; }
+.news-card:hover .card-img img { transform: scale(1.04); }
+.card-img-blank { width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+.card-img-blank svg { opacity: 0.2; }
+
+/* Card body */
+.card-body { padding: 14px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+
+/* Category badge — top-left */
+.card-cat {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  width: fit-content; border-left: 3px solid; padding-left: 6px;
+}
+
+/* Headline — below image, mobile: 18px, tablet: 20px, desktop: 24px */
+.card-headline { font-family: var(--font-serif); font-weight: 700; font-size: 1.1rem; line-height: 1.3; flex: 1; }
+@media (max-width: 639px) { .card-headline { font-size: 1rem; } } /* 18px mobile */
+
+.card-summary { font-family: var(--font-body); font-size: 0.8rem; line-height: 1.55; color: var(--ink-mid); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+@media (max-width: 639px) { .card-summary { font-size: 0.8rem; } } /* 14px mobile content */
+
+/* Timestamp / byline — below headline */
+.card-meta { display: flex; align-items: center; gap: 7px; font-size: 0.63rem; color: var(--ink-light); border-top: 1px solid var(--border); padding-top: 8px; margin-top: auto; flex-wrap: wrap; }
+.card-byline { font-weight: 600; color: var(--ink-mid); }
+.card-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border2); flex-shrink: 0; }
+.card-publisher { margin-left: auto; font-size: 0.6rem; color: var(--ink-mid); display: flex; align-items: center; gap: 4px; }
+.card-publisher a { color: var(--red); text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
+
+/* Category colour coding */
+.cc-politics   { border-color: #1a1a2e; color: #1a1a2e; }
+.cc-economy    { border-color: #14532d; color: #14532d; }
+.cc-world      { border-color: #7c2d12; color: #7c2d12; }
+.cc-technology { border-color: #1e3a5f; color: #1e3a5f; }
+.cc-sports     { border-color: #3b1a6e; color: #3b1a6e; }
+.cc-default    { border-color: #000;    color: #000; }
+
+.no-results { grid-column: 1/-1; padding: 48px 16px; text-align: center; color: var(--ink-light); font-size: 0.9rem; }
+.spinner-wrap { grid-column: 1/-1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 64px 16px; gap: 14px; color: var(--ink-mid); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.spinner { width: 28px; height: 28px; border: 2.5px solid var(--border); border-top-color: var(--ink); border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============================================================
+   MODAL — Article Detail
+   ============================================================ */
+#modal-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.52); backdrop-filter: blur(2px); display: none; align-items: flex-start; justify-content: center; padding: 36px 16px; overflow-y: auto; }
+#modal-overlay.open { display: flex; }
+#modal-box { background: var(--bg); border: 2px solid var(--ink); width: 100%; max-width: 800px; position: relative; animation: rise 0.24s ease; }
+@keyframes rise { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+#modal-close { position: absolute; top: 12px; right: 12px; z-index: 2; width: 32px; height: 32px; border: 1.5px solid var(--border2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--ink-mid); transition: background var(--trans), color var(--trans); }
+#modal-close:hover { background: var(--ink); color: var(--bg); }
+#modal-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--surface2); }
+#modal-img.hide { display: none; }
+#modal-content { padding: 26px 30px 36px; }
+#modal-cat { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); margin-bottom: 10px; }
+#modal-headline { font-family: var(--font-serif); font-size: clamp(1.4rem,4vw,2rem); font-weight: 900; line-height: 1.18; margin-bottom: 10px; }
+#modal-byline { font-size: 0.73rem; color: var(--ink-light); padding-bottom: 16px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+#modal-body { font-family: var(--font-body); font-size: 1rem; line-height: 1.78; color: var(--ink-mid); }
+#modal-body p { margin-bottom: 1.1em; }
+#modal-source { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 8px; font-size: 0.72rem; color: var(--ink-mid); }
+#modal-source strong { color: var(--ink); }
+#modal-source a { color: var(--red); text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
+
+/* Bangla font overrides */
+.lang-bn #modal-body,
+.lang-bn .card-headline,
+.lang-bn .card-summary,
+.lang-bn .t-title { font-family: var(--font-bn); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+#site-footer { border-top: 2.5px solid var(--ink); margin-top: 56px; padding: 36px 5% 24px; }
+.footer-inner { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+.footer-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 28px; }
+.footer-brand-name { font-family: var(--font-serif); font-weight: 900; font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 1.5px solid var(--ink); padding-bottom: 3px; margin-bottom: 8px; display: inline-block; }
+.footer-brand-desc { font-size: 0.73rem; color: var(--ink-mid); max-width: 260px; line-height: 1.55; }
+.footer-socials { display: flex; flex-direction: column; gap: 10px; }
+.footer-socials-label { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mid); }
+.social-links { display: flex; gap: 8px; flex-wrap: wrap; }
+.social-link {
+  display: flex; align-items: center; gap: 6px;
+  border: 1.5px solid var(--border2); padding: 7px 12px;
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ink-mid); border-radius: 2px;
+  transition: border-color var(--trans), color var(--trans), background var(--trans);
+}
+.social-link:hover { border-color: var(--ink); color: var(--ink); background: var(--surface2); }
+.social-link svg { flex-shrink: 0; }
+.footer-nav { display: flex; gap: 18px; flex-wrap: wrap; border-top: 1px solid var(--border); padding-top: 20px; }
+.footer-nav a { font-size: 0.7rem; color: var(--ink-mid); letter-spacing: 0.06em; text-transform: uppercase; transition: color var(--trans); }
+.footer-nav a:hover { color: var(--ink); }
+.footer-bottom { border-top: 1px solid var(--border); padding-top: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 0.67rem; color: var(--ink-light); letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     LANGUAGE GATEWAY — Mandatory full-screen choice
+     ============================================================ -->
+<div id="lang-gate">
+  <div class="gate-masthead">
+    <div class="gate-line1">Vanguard</div>
+    <div class="gate-line2">Daily</div>
+  </div>
+  <p class="gate-prompt">Select your language &nbsp;/&nbsp; আপনার ভাষা বেছে নিন</p>
+  <div class="gate-buttons">
+    <button class="gate-btn" onclick="setLang('en')">English</button>
+    <button class="gate-btn" onclick="setLang('bn')">বাংলা</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     HEADER
+     Mobile:  [Logo center] [Hamburger right] + search bar below
+     Tablet:  [Logo left 200px] [Nav inline list right]
+     Desktop: [Logo left 250px] [Nav] [Search bar right]
+     ============================================================ -->
+<header id="site-header">
+  <div class="header-row">
+
+    <!-- Logo — center on mobile, left on tablet+ -->
+    <a href="#" class="site-logo" aria-label="Vanguard Daily">
+      <span class="logo-l1">Vanguard</span>
+      <span class="logo-l2">Daily</span>
+    </a>
+
+    <!-- Desktop/Tablet nav — inline list, right-aligned (hidden on mobile) -->
+    <nav id="desktop-nav" aria-label="Category filter">
+      <button class="active" onclick="filterCat('all',this)">All</button>
+      <button onclick="filterCat('politics',this)">Politics</button>
+      <button onclick="filterCat('economy',this)">Economy</button>
+      <button onclick="filterCat('world',this)">World</button>
+      <button onclick="filterCat('technology',this)">Tech</button>
+      <button onclick="filterCat('sports',this)">Sports</button>
+    </nav>
+
+    <!-- Desktop search bar — right side, desktop only (≥1024px) -->
+    <div class="desktop-header-search" role="search">
+      <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2">
+        <circle cx="8.5" cy="8.5" r="5.5"/><line x1="13" y1="13" x2="19" y2="19"/>
+      </svg>
+      <input type="text" id="desktop-search-input" placeholder="Search stories…" aria-label="Search" oninput="onSearch(this.value)" />
+    </div>
+
+    <!-- Hamburger — mobile only -->
+    <button id="hamburger" aria-label="Open menu" onclick="toggleDrawer()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Mobile search bar — permanently visible below logo row on mobile -->
+  <div class="mobile-search-bar">
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2">
+      <circle cx="8.5" cy="8.5" r="5.5"/><line x1="13" y1="13" x2="19" y2="19"/>
+    </svg>
+    <input type="text" id="mobile-search-input" placeholder="Search stories…" aria-label="Search" oninput="onSearch(this.value)" />
+  </div>
+
+  <!-- Mobile drawer — category pills, toggled by hamburger -->
+  <div id="mobile-drawer">
+    <div class="mobile-cats">
+      <button class="active" onclick="filterCat('all',this)">All</button>
+      <button onclick="filterCat('politics',this)">Politics</button>
+      <button onclick="filterCat('economy',this)">Economy</button>
+      <button onclick="filterCat('world',this)">World</button>
+      <button onclick="filterCat('technology',this)">Technology</button>
+      <button onclick="filterCat('sports',this)">Sports</button>
+    </div>
+  </div>
+</header>
+
+<!-- DATE BAR -->
+<div id="date-bar">
+  <strong id="current-date"></strong>
+  <span class="edition" id="edition-label">Morning Edition</span>
+</div>
+
+<!-- ============================================================
+     APP SHELL
+     Mobile:  [feed] then [sidebar] stacked
+     Tablet+: [sidebar LEFT 25%] | [feed RIGHT]
+     Desktop: [sidebar LEFT 20%] | [feed RIGHT 3-col]
+     ============================================================ -->
+<div id="app-shell">
+
+  <!-- Breaking sidebar — LEFT on tablet/desktop, below on mobile -->
+  <aside id="breaking-sidebar">
+    <div class="ticker-hdr">
+      <div class="ticker-dot"></div>
+      <span id="breaking-label">Breaking</span>
+    </div>
+    <div class="ticker-list" id="ticker-list"></div>
+  </aside>
+
+  <section id="main-feed">
+    <div id="news-grid">
+      <div class="spinner-wrap">
+        <div class="spinner"></div>
+        <span id="loading-text">Loading stories…</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============================================================
+     ARTICLE MODAL
+     ============================================================ -->
+<div id="modal-overlay" role="dialog" aria-modal="true" onclick="overlayClick(event)">
+  <div id="modal-box">
+    <button id="modal-close" onclick="closeModal()" aria-label="Close">&#215;</button>
+    <img id="modal-img" src="" alt="" />
+    <div id="modal-content">
+      <div id="modal-cat"></div>
+      <h2 id="modal-headline"></h2>
+      <div id="modal-byline"></div>
+      <div id="modal-body"></div>
+      <div id="modal-source"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     FOOTER — Brand | Social (FB, IG, X only) | Nav | Copyright
+     ============================================================ -->
+<footer id="site-footer">
+  <div class="footer-inner">
+
+    <div class="footer-top">
+      <!-- Brand blurb -->
+      <div class="footer-brand">
+        <span class="footer-brand-name">Vanguard Daily</span>
+        <p class="footer-brand-desc" id="footer-desc">Rigorous, independent journalism. Trusted by readers across the world.</p>
+      </div>
+
+      <!-- Social links — Facebook, Instagram, X (Twitter) only -->
+      <div class="footer-socials">
+        <span class="footer-socials-label" id="socials-label">Follow Us</span>
+        <div class="social-links">
+
+          <!-- Facebook -->
+          <a class="social-link" href="https://facebook.com/vanguarddaily" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Facebook
+          </a>
+
+          <!-- Instagram -->
+          <a class="social-link" href="https://instagram.com/vanguarddaily" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            Instagram
+          </a>
+
+          <!-- X / Twitter -->
+          <a class="social-link" href="https://x.com/vanguarddaily" target="_blank" rel="noopener" aria-label="X (Twitter)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+            X
+          </a>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer nav -->
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="#">Advertise</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">RSS Feed</a>
+      <a href="#">Archive</a>
+    </nav>
+
+    <!-- Bottom bar -->
+    <div class="footer-bottom">
+      <span id="footer-copy">© 2025 Vanguard Daily. All rights reserved.</span>
+      <span>Built for independent journalism.</span>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT ENGINE
+     ============================================================ -->
+<script>
+/* ============================================================
+   HOW THE DATA ENGINE WORKS
+   ════════════════════════════════════════════════════════════
+   1. On load, fetch('./news/manifest.json') — an array of
+      filenames, e.g. ["story-001.json", "breaking-today.json"]
+
+   2. Each file in /news/ is fetched in parallel. A file can
+      be a single article object OR an array of objects.
+
+   3. Articles with  isBreaking: true  go to the Breaking
+      sidebar. All others go to the main grid.
+
+   4. Every article MUST include:
+        publisher    — human-readable publisher name
+        sourceUrl    — clickable link to the original article
+
+   5. All articles are auto-sorted newest-first by timestamp.
+
+   6. If manifest.json is missing or the folder is empty,
+      the engine silently falls back to DEMO data so the
+      site always shows content.
+
+   ─── manifest.json format ─────────────────────────────────
+   [
+     "story-001.json",
+     "story-002.json",
+     "breaking-today.json"
+   ]
+
+   ─── article JSON format (all fields) ────────────────────
+   {
+     "id":          "unique-slug",
+     "isBreaking":  true,            ← routes to sidebar
+     "category":    "World",
+     "author":      "Jane Doe",
+     "publisher":   "Reuters",
+     "sourceUrl":   "https://reuters.com/article/...",
+     "timestamp":   "2025-05-01T09:00:00Z",
+     "image":       "https://example.com/photo.jpg",
+     "title_en":    "English headline",
+     "title_bn":    "বাংলা শিরোনাম",
+     "summary_en":  "Short English summary.",
+     "summary_bn":  "সংক্ষিপ্ত বাংলা সারাংশ।",
+     "body_en":     "Full body. Use \\n for paragraphs.",
+     "body_bn":     "সম্পূর্ণ বাংলা বডি।"
+   }
+
+   Single-language setup: use "title", "summary", "body"
+   instead of the _en / _bn variants.
+   ============================================================ */
+
+/* ── DEMO content — shown when /news/ folder is absent ─────── */
+const DEMO = [
+  {
+    id:"d1", isBreaking:false, category:"Economy", author:"Priya Mehta",
+    publisher:"Financial Times", sourceUrl:"https://ft.com",
+    timestamp:"2025-04-29T08:30:00Z",
+    image:"https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=900&q=80",
+    title_en:"Global Markets Surge as Central Banks Signal Rate Pause",
+    title_bn:"কেন্দ্রীয় ব্যাংকের সুদের হার বিরতির ইঙ্গিতে বৈশ্বিক বাজারে উল্লম্ফন",
+    summary_en:"Stock indices across Asia, Europe, and North America recorded significant gains after major central banks hinted at pausing rate hikes, easing months of investor anxiety.",
+    summary_bn:"বিশ্বের প্রধান কেন্দ্রীয় ব্যাংকগুলোর ইঙ্গিতের পরে এশিয়া, ইউরোপ ও উত্তর আমেরিকার শেয়ারবাজারে উল্লেখযোগ্য উত্থান ঘটে।",
+    body_en:"Financial markets responded with broad optimism as the Federal Reserve, European Central Bank, and Bank of England issued coordinated statements suggesting they are comfortable holding rates steady. The S&P 500 climbed 1.8%, European equities posted their strongest session in three months, and emerging market currencies also rallied.\n\nAnalysts caution that the relief may be temporary — inflation data due next week could quickly reverse the mood. Bond yields fell sharply, with the 10-year US Treasury dipping below 4.2% for the first time since January.",
+    body_bn:"আর্থিক বাজার ব্যাপক আশাবাদে সাড়া দিয়েছে।\n\nবিশ্লেষকরা সতর্ক করছেন যে স্বস্তি সাময়িক হতে পারে।"
+  },
+  {
+    id:"d2", isBreaking:true, category:"World", author:"James Okafor",
+    publisher:"BBC News", sourceUrl:"https://bbc.com",
+    timestamp:"2025-04-29T06:15:00Z",
+    image:"https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=900&q=80",
+    title_en:"Summit Diplomacy: Leaders Convene to Address Pacific Tensions",
+    title_bn:"শীর্ষ কূটনীতি: প্রশান্ত মহাসাগরীয় উত্তেজনা সমাধানে নেতারা একত্রিত",
+    summary_en:"A rare trilateral summit opened in Singapore, bringing heads of state together to de-escalate the most serious maritime dispute the region has seen in a decade.",
+    summary_bn:"সিঙ্গাপুরে বিরল ত্রিপক্ষীয় সম্মেলন শুরু হয়েছে।",
+    body_en:"Delegations from three Pacific nations gathered in Singapore for 'frank and necessary' talks. The ASEAN-brokered summit runs two days with bilateral side sessions.\n\nSecurity analysts note that informal confidence-building measures may prove more durable than any formal communiqué.",
+    body_bn:"তিনটি প্রশান্ত মহাসাগরীয় দেশের প্রতিনিধিদল সিঙ্গাপুরে একত্রিত হয়েছে।"
+  },
+  {
+    id:"d3", isBreaking:false, category:"Technology", author:"Sara Lindqvist",
+    publisher:"The Verge", sourceUrl:"https://theverge.com",
+    timestamp:"2025-04-28T22:00:00Z",
+    image:"https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=900&q=80",
+    title_en:"AI Regulation Bill Passes Committee in Historic Vote",
+    title_bn:"ঐতিহাসিক ভোটে কমিটিতে কৃত্রিম বুদ্ধিমত্তা নিয়ন্ত্রণ বিল পাস",
+    summary_en:"Lawmakers approved a sweeping framework requiring transparency disclosures for high-risk AI systems and mandatory independent audits before deployment in critical infrastructure.",
+    summary_bn:"আইনপ্রণেতারা একটি ব্যাপক কাঠামো অনুমোদন করেছেন।",
+    body_en:"The Senate Commerce Committee voted 14-9 to advance the Algorithmic Accountability and Safety Act.\n\nTechnology companies have expressed mixed reactions — smaller firms warn compliance costs could stifle innovation.",
+    body_bn:"সিনেট বাণিজ্য কমিটি ১৪-৯ ভোটে আইনটি পাস করেছে।"
+  },
+  {
+    id:"d4", isBreaking:true, category:"Politics", author:"David Krane",
+    publisher:"Reuters", sourceUrl:"https://reuters.com",
+    timestamp:"2025-04-28T16:45:00Z",
+    image:"https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=900&q=80",
+    title_en:"Election Watch: Early Polls Show Tightening Race",
+    title_bn:"নির্বাচন পর্যবেক্ষণ: প্রাথমিক জরিপে প্রতিযোগিতা আরও কঠিন",
+    summary_en:"New data shows the incumbent's lead has narrowed significantly in key constituencies, with undecided voters holding unusual sway just six weeks before the national vote.",
+    summary_bn:"নতুন তথ্য দেখাচ্ছে যে প্রধান আসনগুলোতে ক্ষমতাসীনের ব্যবধান উল্লেখযোগ্যভাবে কমেছে।",
+    body_en:"Four independent polling firms show the incumbent party's advantage has shrunk from 8 points to 3 in battleground regions.\n\nThe opposition has redoubled canvassing in suburban districts.",
+    body_bn:"চারটি স্বাধীন জরিপ সংস্থা তথ্য প্রকাশ করেছে।"
+  },
+  {
+    id:"d5", isBreaking:false, category:"Sports", author:"Tomás Rivera",
+    publisher:"ESPN", sourceUrl:"https://espn.com",
+    timestamp:"2025-04-28T10:00:00Z",
+    image:"https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=900&q=80",
+    title_en:"Champions League Semi-Finals: Dramatic Night Across Europe",
+    title_bn:"চ্যাম্পিয়ন্স লিগ সেমি-ফাইনাল: ইউরোপজুড়ে নাটকীয় রাত",
+    summary_en:"Two closely contested matches produced late drama, with both decided in stoppage time, setting up an enthralling final pairing for next month.",
+    summary_bn:"দুটি হাড্ডাহাড্ডি ম্যাচে শেষ মুহূর্তে নাটক তৈরি হয়।",
+    body_en:"Tuesday's Champions League semi-finals delivered everything neutral fans could hope for.\n\nThe final next month has already broken pre-sale ticketing records.",
+    body_bn:"মঙ্গলবারের চ্যাম্পিয়ন্স লিগ সেমি-ফাইনাল নিরপেক্ষ সমর্থকদের জন্য সবকিছু সরবরাহ করেছিল।"
+  },
+  {
+    id:"d6", isBreaking:false, category:"World", author:"Nadia Petrov",
+    publisher:"The Guardian", sourceUrl:"https://theguardian.com",
+    timestamp:"2025-04-27T14:20:00Z",
+    image:"https://images.unsplash.com/photo-1517525822370-e65d1b32f5a9?w=900&q=80",
+    title_en:"Climate Report: Arctic Ice Reaches Record Low for April",
+    title_bn:"জলবায়ু প্রতিবেদন: এপ্রিলে আর্কটিক বরফ রেকর্ড সর্বনিম্নে",
+    summary_en:"Scientists confirmed this week that Arctic sea ice extent hit its lowest April measurement on record, raising renewed alarm about accelerating polar melt.",
+    summary_bn:"বিজ্ঞানীরা নিশ্চিত করেছেন যে আর্কটিক সমুদ্রের বরফ এপ্রিলে রেকর্ড সর্বনিম্নে পৌঁছেছে।",
+    body_en:"Arctic sea ice measured 13.1 million square kilometers this April — the lowest in the 46-year satellite record.\n\nReduced ice coverage lowers albedo and further warms surrounding waters.",
+    body_bn:"এই এপ্রিলে আর্কটিক সমুদ্রের বরফ ছিল ১৩.১ মিলিয়ন বর্গকিলোমিটার।"
+  }
+];
+
+/* ── Global state ──────────────────────────────────────────── */
+let currentLang    = 'en';
+let allArticles    = [];     // non-breaking articles
+let breakingItems  = [];     // isBreaking === true articles
+let activeCategory = 'all';
+let searchQuery    = '';
+
+/* ── i18n strings ─────────────────────────────────────────── */
+const L = {
+  en: {
+    loading:      'Loading stories…',
+    breaking:     'Breaking',
+    edition:      'Morning Edition',
+    noArticles:   'No stories match your search.',
+    footerDesc:   'Rigorous, independent journalism. Trusted by readers across the world.',
+    footerCopy:   '© 2025 Vanguard Daily. All rights reserved.',
+    socialsLabel: 'Follow Us',
+    source:       'Source:',
+    publisher:    'Published by'
+  },
+  bn: {
+    loading:      'সংবাদ লোড হচ্ছে…',
+    breaking:     'ব্রেকিং',
+    edition:      'সকালের সংস্করণ',
+    noArticles:   'আপনার অনুসন্ধানের সাথে কোনো সংবাদ মেলেনি।',
+    footerDesc:   'কঠোর, স্বাধীন সাংবাদিকতা। বিশ্বজুড়ে পাঠকদের বিশ্বাসযোগ্য।',
+    footerCopy:   '© ২০২৫ ভ্যানগার্ড ডেইলি। সর্বস্বত্ব সংরক্ষিত।',
+    socialsLabel: 'আমাদের অনুসরণ করুন',
+    source:       'সূত্র:',
+    publisher:    'প্রকাশক'
+  }
+};
+const t = k => (L[currentLang][k] || L.en[k]);
+
+/* ── Language gate ─────────────────────────────────────────── */
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('vd_lang', lang);
+  document.body.className = 'lang-' + lang;
+  document.documentElement.lang = lang === 'bn' ? 'bn' : 'en';
+  document.getElementById('lang-gate').classList.add('hidden');
+  applyI18n();
+  if (allArticles.length || breakingItems.length) {
+    /* Articles already loaded (returning visitor path) — just re-render
+       so images and text switch to the chosen language immediately */
+    renderGrid();
+    renderTicker();
+  } else {
+    /* First visit — language just chosen, now fetch news */
+    loadNews();
+  }
+}
+
+function applyI18n() {
+  document.getElementById('loading-text').textContent   = t('loading');
+  document.getElementById('breaking-label').textContent = t('breaking');
+  document.getElementById('edition-label').textContent  = t('edition');
+  document.getElementById('footer-copy').textContent    = t('footerCopy');
+  document.getElementById('footer-desc').textContent    = t('footerDesc');
+  document.getElementById('socials-label').textContent  = t('socialsLabel');
+}
+
+/* ── Text & media helpers ──────────────────────────────────── */
+const getTitle   = a => (currentLang==='bn' && a.title_bn)   ? a.title_bn   : (a.title_en   || a.title   || '');
+const getSummary = a => (currentLang==='bn' && a.summary_bn) ? a.summary_bn : (a.summary_en || a.summary || '');
+const getBody    = a => (currentLang==='bn' && a.body_bn)    ? a.body_bn    : (a.body_en    || a.body    || '');
+
+/* Dual cover image: pick image_bn for Bangla, image_en for English.
+   Falls back gracefully: image_en → image → null              */
+const getImage   = a => (currentLang==='bn' && a.image_bn)
+  ? a.image_bn
+  : (a.image_en || a.image || null);
+
+function fmtDate(iso) {
+  return new Date(iso).toLocaleString(currentLang==='bn' ? 'bn-BD' : 'en-GB', {
+    day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'
+  });
+}
+
+function catClass(cat) {
+  const m = { politics:'cc-politics', economy:'cc-economy', world:'cc-world', technology:'cc-technology', sports:'cc-sports' };
+  return m[(cat||'').toLowerCase()] || 'cc-default';
+}
+
+function esc(s) { return String(s).replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+/* ── Category + search filter ─────────────────────────────── */
+function filteredArticles() {
+  return allArticles.filter(a => {
+    const catOk = activeCategory === 'all' || (a.category||'').toLowerCase() === activeCategory;
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return catOk;
+    const textOk =
+      getTitle(a).toLowerCase().includes(q) ||
+      getSummary(a).toLowerCase().includes(q) ||
+      (a.author||'').toLowerCase().includes(q) ||
+      (a.publisher||'').toLowerCase().includes(q) ||
+      (a.category||'').toLowerCase().includes(q);
+    return catOk && textOk;
+  });
+}
+
+function filterCat(cat, _btn) {
+  activeCategory = cat;
+  document.querySelectorAll('#desktop-nav button, .mobile-cats button').forEach(b => {
+    const lbl = b.textContent.trim().toLowerCase();
+    b.classList.toggle('active',
+      cat === 'all' ? lbl === 'all' : lbl === cat || (cat==='technology' && lbl==='tech')
+    );
+  });
+  renderGrid();
+}
+
+function onSearch(val) {
+  searchQuery = val;
+  // Sync all search inputs without re-triggering oninput
+  ['desktop-search-input','mobile-search-input'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && document.activeElement !== el) el.value = val;
+  });
+  renderGrid();
+}
+
+/* ── Render publisher/source line ─────────────────────────── */
+function publisherHtml(a, compact) {
+  if (!a.publisher && !a.sourceUrl) return '';
+  const name = esc(a.publisher || 'Source');
+  const link = a.sourceUrl
+    ? `<a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${name}</a>`
+    : name;
+  if (compact) {
+    return `<span class="card-publisher">${link}</span>`;
+  }
+  return `<div id="modal-source"><strong>${t('publisher')}:</strong>&nbsp;${link}&nbsp;·&nbsp;<a href="${esc(a.sourceUrl||'#')}" target="_blank" rel="noopener">${t('source')} ↗</a></div>`;
+}
+
+/* ── Render main grid ─────────────────────────────────────── */
+function renderGrid() {
+  const grid  = document.getElementById('news-grid');
+  const items = filteredArticles();
+  if (!items.length) {
+    grid.innerHTML = `<div class="no-results">${t('noArticles')}</div>`;
+    return;
+  }
+  grid.innerHTML = items.map((a, i) => {
+    const coverImg = getImage(a);
+    const imgBlock = coverImg
+      ? `<div class="card-img"><img src="${esc(coverImg)}" alt="${esc(getTitle(a))}" loading="${i<2?'eager':'lazy'}" /></div>`
+      : `<div class="card-img card-img-blank"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>`;
+    return `<article class="news-card" onclick="openModal('${esc(a.id)}')" tabindex="0" role="button" aria-label="${esc(getTitle(a))}">
+      ${imgBlock}
+      <div class="card-body">
+        <span class="card-cat ${catClass(a.category)}">${esc(a.category||'')}</span>
+        <h2 class="card-headline">${getTitle(a)}</h2>
+        <p class="card-summary">${getSummary(a)}</p>
+        <div class="card-meta">
+          <span class="card-byline">${esc(a.author||'')}</span>
+          <span class="card-dot"></span>
+          <time datetime="${esc(a.timestamp)}">${fmtDate(a.timestamp)}</time>
+          ${publisherHtml(a, true)}
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ── Render breaking sidebar ──────────────────────────────── */
+function renderTicker() {
+  const items = breakingItems.length ? breakingItems : allArticles.slice(0,8);
+  document.getElementById('ticker-list').innerHTML = items.map(a => {
+    const srcHtml = a.publisher
+      ? `<div class="t-source">${t('publisher')}: ${a.sourceUrl ? `<a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${esc(a.publisher)}</a>` : esc(a.publisher)}</div>`
+      : '';
+    return `<div class="ticker-item" onclick="openModal('${esc(a.id)}')">
+      <div class="t-cat">${esc(a.category||'')}</div>
+      <div class="t-title">${getTitle(a)}</div>
+      ${srcHtml}
+      <div class="t-time">${fmtDate(a.timestamp)}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ── DATA ENGINE — Folder-based loader ───────────────────── */
+async function loadNews() {
+  let fetched = [];
+  try {
+    const mRes = await fetch('./news/manifest.json');
+    if (!mRes.ok) throw new Error('no manifest');
+    const filenames = await mRes.json(); // string[]
+
+    const results = await Promise.all(
+      filenames.map(f =>
+        fetch('./news/' + f)
+          .then(r => r.ok ? r.json() : null)
+          .catch(() => null)
+      )
+    );
+
+    results.forEach(r => {
+      if (!r) return;
+      Array.isArray(r) ? fetched.push(...r) : fetched.push(r);
+    });
+
+    if (!fetched.length) throw new Error('empty');
+  } catch {
+    fetched = DEMO;
+  }
+
+  // Deduplicate by id
+  const seen = new Set();
+  fetched = fetched.filter(a => {
+    if (!a || !a.id || seen.has(a.id)) return false;
+    seen.add(a.id); return true;
+  });
+
+  // Auto-sort: newest first
+  fetched.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+  // Route by isBreaking flag
+  breakingItems = fetched.filter(a => a.isBreaking === true);
+  allArticles   = fetched.filter(a => !a.isBreaking);
+
+  renderGrid();
+  renderTicker();
+}
+
+/* ── Modal ────────────────────────────────────────────────── */
+function openModal(id) {
+  // Search both pools
+  const a = [...allArticles, ...breakingItems].find(x => x.id === id);
+  if (!a) return;
+
+  const img = document.getElementById('modal-img');
+  const coverSrc = getImage(a);
+  if (coverSrc) { img.src = coverSrc; img.alt = getTitle(a); img.classList.remove('hide'); }
+  else img.classList.add('hide');
+
+  document.getElementById('modal-cat').textContent      = a.category||'';
+  document.getElementById('modal-headline').textContent = getTitle(a);
+  document.getElementById('modal-byline').textContent   = `${a.author||''}  ·  ${fmtDate(a.timestamp)}`;
+  document.getElementById('modal-body').innerHTML       =
+    getBody(a).split('\n').filter(p=>p.trim()).map(p=>`<p>${p}</p>`).join('');
+  document.getElementById('modal-source').innerHTML     = publisherHtml(a, false);
+
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function overlayClick(e) { if (e.target===document.getElementById('modal-overlay')) closeModal(); }
+document.addEventListener('keydown', e => { if (e.key==='Escape') closeModal(); });
+
+/* ── Mobile drawer ────────────────────────────────────────── */
+function toggleDrawer() {
+  document.getElementById('mobile-drawer').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
+}
+
+/* ── Init ─────────────────────────────────────────────────── */
+(function init() {
+  document.getElementById('current-date').textContent =
+    new Date().toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+
+  const stored = localStorage.getItem('vd_lang');
+  if (stored === 'en' || stored === 'bn') {
+    /* Returning visitor — apply language immediately and skip gate */
+    setLang(stored);
+    loadNews();
+  }
+  /* New visitor — gate stays visible; setLang() is called by the
+     gate buttons, which then calls loadNews() after lang is set.
+     Nothing pre-renders so the user never sees the wrong language. */
+})();
+</script>
+</body>
+</html>

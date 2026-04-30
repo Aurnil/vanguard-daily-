@@ -1,0 +1,57 @@
+name: Auto-generate manifest.json
+
+on:
+  push:
+    paths:
+      - 'news/**.json'   # only runs when a .json file inside /news/ is pushed
+
+jobs:
+  build-manifest:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # needed to commit manifest.json back to the repo
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Generate manifest.json
+        run: |
+          cd news
+          # Find all .json files except manifest.json itself, sort by name
+          files=$(ls *.json 2>/dev/null | grep -v '^manifest\.json$' | sort)
+
+          # Build the JSON array
+          echo "[" > manifest.json
+          first=true
+          for f in $files; do
+            if [ "$first" = true ]; then
+              echo "  \"$f\"" >> manifest.json
+              first=false
+            else
+              # Add comma before each item after the first
+              sed -i '$ s/$/ ,/' manifest.json
+              echo "  \"$f\"" >> manifest.json
+            fi
+          done
+          echo "]" >> manifest.json
+
+          # Pretty-print using Python (available on ubuntu-latest)
+          python3 -c "
+          import json, sys
+          with open('manifest.json') as f:
+            data = json.load(f)
+          with open('manifest.json', 'w') as f:
+            json.dump(data, f, indent=2)
+          print('manifest.json updated:', data)
+          "
+
+      - name: Commit manifest.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add news/manifest.json
+          # Only commit if manifest actually changed
+          git diff --staged --quiet || git commit -m "chore: auto-update manifest.json"
+          git push
