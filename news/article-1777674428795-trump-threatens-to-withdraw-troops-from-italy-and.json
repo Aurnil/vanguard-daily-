@@ -1,0 +1,23 @@
+{
+  "title_en": "Trump Threatens to Withdraw Troops from Italy and Spain",
+  "title_bn": "ট্রাম্প ইতালি ও স্পেন থেকে সৈন্য প্রত্যাহারের হুমকি দিয়েছেন",
+  "summary_en": "The decision to withdraw troops from Italy and Spain is a geopolitical move that may impact global security. This change in military strategy could lead to a shift in power dynamics in the region. The withdrawal may also affect the economic relationships between the US and the affected countries.",
+  "summary_bn": "ইতালি ও স্পেন থেকে সৈন্য প্রত্যাহারের সিদ্ধান্ত একটি ভূ-রাজনৈতিক পদক্ষেপ যা বৈশ্বিক নিরাপত্তাকে প্রভাবিত করতে পারে। সামরিক কৌশলে এই পরিবর্তনটি এই অঞ্চলে ক্ষমতার গতিশীলতায় পরিবর্তন ঘটাতে পারে। সৈন্য প্রত্যাহার মার্কিন যুক্তরাষ্ট্র এবং প্রভাবিত দেশগুলির মধ্যে অর্থনৈতিক সম্পর্ককেও প্রভাবিত করতে পারে।",
+  "cover_image_en": "https://i.guim.co.uk/img/media/8ba56bb537e7cedfd2f242ff63d68b9cbcf750be/564_0_4373_3498/master/4373.jpg?width=140&quality=85&auto=format&fit=max&s=79e8bd54ef55c922f81fc043aa4df576",
+  "cover_image_bn": "https://i.guim.co.uk/img/media/8ba56bb537e7cedfd2f242ff63d68b9cbcf750be/564_0_4373_3498/master/4373.jpg?width=140&quality=85&auto=format&fit=max&s=79e8bd54ef55c922f81fc043aa4df576",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://www.theguardian.com/us-news/2026/may/01/trump-threatens-withdraw-troops-italy-spain-strait-hormuz",
+  "score": 60,
+  "category": "Policy",
+  "published_at": "2026-05-01T22:27:08.793Z",
+  "pub_date": "2026-05-01T14:16:23.000Z",
+  "vanguard_analysis": {
+    "architecture": "Geopolitical strategy",
+    "algorithm_or_logic": "Risk assessment and strategic decision-making",
+    "governance": "International relations and diplomacy",
+    "delta_of_change": "Shift in global power dynamics and potential impact on regional security",
+    "impact_horizon": "Mid-term"
+  },
+  "image_prompt_en": "A map of Italy and Spain with US military bases marked",
+  "image_prompt_bn": "ইতালি ও স্পেনের মানচিত্রে মার্কিন সামরিক ঘাঁটি চিহ্নিত"
+}
