@@ -1,0 +1,23 @@
+{
+  "title_en": "French PM Fuels Row with Trip to Buy Baguettes",
+  "title_bn": "ফরাসি প্রধানমন্ত্রী ব্যাগেট কেনার জন্য ভ্রমণে বিতর্কের জ্বালানি",
+  "summary_en": "The French Prime Minister's recent trip to buy baguettes has sparked controversy. This event highlights the intersection of politics and everyday life. The incident has drawn attention to the Prime Minister's priorities and actions.",
+  "summary_bn": "ফরাসি প্রধানমন্ত্রীর সাম্প্রতিক ব্যাগেট কেনার ভ্রমণ বিতর্কের জন্ম দিয়েছে। এই ঘটনাটি রাজনীতি এবং সাধারণ জীবনের ছেদকে তুলে ধরে। ঘটনাটি প্রধানমন্ত্রীর অগ্রাধিকার এবং কর্মের দিকে মনোযোগ আকর্ষণ করেছে。",
+  "cover_image_en": "https://ichef.bbci.co.uk/ace/standard/240/cpsprodpb/fca2/live/d25a4ab0-457c-11f1-86ec-5992fe9627d8.jpg",
+  "cover_image_bn": "https://ichef.bbci.co.uk/ace/standard/240/cpsprodpb/fca2/live/d25a4ab0-457c-11f1-86ec-5992fe9627d8.jpg",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://www.bbc.com/news/articles/czx2rnk9y9go?at_medium=RSS&at_campaign=rss",
+  "score": 20,
+  "category": "Other",
+  "published_at": "2026-05-01T19:54:27.443Z",
+  "pub_date": "2026-05-01T17:59:34.000Z",
+  "vanguard_analysis": {
+    "architecture": "No specific architectural pattern involved",
+    "algorithm_or_logic": "No core algorithmic innovation",
+    "governance": "Regulatory and ethical implications related to political actions",
+    "delta_of_change": "Public perception of the Prime Minister's priorities and actions",
+    "impact_horizon": "Short-term"
+  },
+  "image_prompt_en": "French PM holding a baguette in a bakery",
+  "image_prompt_bn": "ফরাসি প্রধানমন্ত্রী একটি বেকারিতে একটি ব্যাগেট ধরে আছেন"
+}
