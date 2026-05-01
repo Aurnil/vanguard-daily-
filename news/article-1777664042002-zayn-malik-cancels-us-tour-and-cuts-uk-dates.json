@@ -1,0 +1,23 @@
+{
+  "title_en": "Zayn Malik Cancels US Tour and Cuts UK Dates",
+  "title_bn": "জেইন মালিক মার্কিন ভ্রমণ বাতিল করেছেন এবং ইউকে তারিখ কমিয়েছেন",
+  "summary_en": "Zayn Malik has canceled his US tour and cut UK dates after a hospital bed photo was shared. The decision was made due to health concerns and the need for rest. This change in schedule may impact his fans and the music industry as a whole.",
+  "summary_bn": "জেইন মালিক একটি হাসপাতালের বিছানা ছবি শেয়ার করার পরে তার মার্কিন ভ্রমণ বাতিল করেছেন এবং ইউকে তারিখ কমিয়েছেন। স্বাস্থ্যগত উদ্বেগ এবং বিশ্রামের প্রয়োজনের কারণে এই সিদ্ধান্ত নেওয়া হয়েছে। সুতরাং, এই সময়সূচীর পরিবর্তন তার ভক্তদের এবং সামগ্রিকভাবে সঙ্গীত শিল্পকে প্রভাবিত করতে পারে।",
+  "cover_image_en": "https://image.pollinations.ai/prompt/Zayn%20Malik%20sitting%20on%20a%20hospital%20bed%20with%20a%20guitar?width=1200&height=630&model=flux&nologo=true&seed=849699",
+  "cover_image_bn": "https://image.pollinations.ai/prompt/%E0%A6%9C%E0%A7%87%E0%A6%87%E0%A6%A8%20%E0%A6%AE%E0%A6%BE%E0%A6%B2%E0%A6%BF%E0%A6%95%20%E0%A6%8F%E0%A6%95%E0%A6%9F%E0%A6%BF%20%E0%A6%B9%E0%A6%BE%E0%A6%B8%E0%A6%AA%E0%A6%BE%E0%A6%A4%E0%A6%BE%E0%A6%B2%E0%A7%87%E0%A6%B0%20%E0%A6%AC%E0%A6%BF%E0%A6%9B%E0%A6%BE%E0%A6%A8%E0%A6%BE%E0%A6%AF%E0%A6%BC%20%E0%A6%AC%E0%A6%B8%E0%A7%87%20%E0%A6%86%E0%A6%9B%E0%A7%87%E0%A6%A8%20%E0%A6%8F%E0%A6%95%E0%A6%9F%E0%A6%BF%20%E0%A6%97%E0%A6%BF%E0%A6%9F%E0%A6%BE%E0%A6%B0%20%E0%A6%B8%E0%A6%B9?width=1200&height=630&model=flux&nologo=true&seed=248115",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://www.bbc.com/news/articles/cd6pv55y51wo?at_medium=RSS&at_campaign=rss",
+  "score": 20,
+  "category": "Other",
+  "published_at": "2026-05-01T19:34:02.002Z",
+  "pub_date": "2026-05-01T17:23:42.000Z",
+  "vanguard_analysis": {
+    "architecture": "Event-driven architecture for tour scheduling",
+    "algorithm_or_logic": "Simple decision-making based on health status",
+    "governance": "Artist management and health regulations",
+    "delta_of_change": "Changes in tour scheduling and fan expectations",
+    "impact_horizon": "Short-term"
+  },
+  "image_prompt_en": "Zayn Malik sitting on a hospital bed with a guitar",
+  "image_prompt_bn": "জেইন মালিক একটি হাসপাতালের বিছানায় বসে আছেন একটি গিটার সহ"
+}
