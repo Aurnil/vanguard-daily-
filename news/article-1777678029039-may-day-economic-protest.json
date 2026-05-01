@@ -1,0 +1,23 @@
+{
+  "title_en": "May Day Economic Protest",
+  "title_bn": "মে দিবস অর্থনৈতিক বিক্ষোভ",
+  "summary_en": "The May Day protest in the US involves a 'no school, no work, no shopping' economic blackout, where thousands participate in a nationwide strike. This movement is driven by social and economic grievances, leveraging collective action to bring attention to key issues. The protest's impact on the economy and social structures is being closely monitored.",
+  "summary_bn": "মার্কিন যুক্তরাষ্ট্রে মে দিবসের বিক্ষোভে 'কোনো স্কুল, কোনো কাজ, কোনো কেনাকাটা' নামক একটি অর্থনৈতিক ব্ল্যাকআউট জড়িত, যেখানে হাজার হাজার মানুষ একটি জাতীয় ধর্মঘটে অংশগ্রহণ করে। এই আন্দোলনটি সামাজিক ও অর্থনৈতিক অসন্তোষ দ্বারা চালিত, মূল সমস্যাগুলিতে মনোযোগ আকর্ষণ করার জন্য সমষ্টিগত পদক্ষেপ ব্যবহার করে। বিক্ষোভের অর্থনীতি ও সামাজিক কাঠামোর উপর প্রভাব সতর্কতার সাথে পর্যবেক্ষণ করা হচ্ছে।",
+  "cover_image_en": "https://i.guim.co.uk/img/media/030827a4c8fa6dfa684626c4ff20f4be012fdc81/515_0_4165_3333/master/4165.jpg?width=140&quality=85&auto=format&fit=max&s=6d48279007357beb25cfb7ae105eb05b",
+  "cover_image_bn": "https://i.guim.co.uk/img/media/030827a4c8fa6dfa684626c4ff20f4be012fdc81/515_0_4165_3333/master/4165.jpg?width=140&quality=85&auto=format&fit=max&s=6d48279007357beb25cfb7ae105eb05b",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://www.theguardian.com/us-news/2026/may/01/may-day-strong-economic-protests",
+  "score": 60,
+  "category": "Policy",
+  "published_at": "2026-05-01T23:27:09.038Z",
+  "pub_date": "2026-05-01T19:20:00.000Z",
+  "vanguard_analysis": {
+    "architecture": "Decentralized, grassroots movement",
+    "algorithm_or_logic": "Collective action, social mobilization",
+    "governance": "Regulatory, ethical implications on economic and social policies",
+    "delta_of_change": "Shift in public awareness and participation in economic and social issues",
+    "impact_horizon": "Short-term"
+  },
+  "image_prompt_en": "Protesters holding signs, empty streets, closed shops",
+  "image_prompt_bn": "বিক্ষোভকারীরা প্রতীক ধরে রাখছে, খালি রাস্তা, বন্ধ দোকান"
+}
