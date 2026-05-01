@@ -1,0 +1,23 @@
+{
+  "title_en": "Turkish Police Arrests at May Day Rallies",
+  "title_bn": "তুর্কিতে মে দিবসের বিক্ষোভে পুলিশের গ্রেফতার",
+  "summary_en": "Turkish police have arrested over 500 people during May Day rallies, sparking concerns about freedom of assembly and expression. The arrests highlight the ongoing tensions between the government and opposition groups. This event may lead to increased scrutiny of Turkey's human rights record.",
+  "summary_bn": "তুর্কিতে মে দিবসের বিক্ষোভে পুলিশ পাঁচশতাধিক লোককে গ্রেফতার করেছে, যা সমাবেশ ও অভিব্যক্তির স্বাধীনতা নিয়ে উদ্বেগ বাড়িয়েছে। গ্রেফতারগুলি সরকার ও বিরোধী দলগুলির মধ্যে চলমান উত্তেজনাকে তুলে ধরে। এই ঘটনার ফলে তুরস্কের মানবাধিকার রেকর্ড নিয়ে বাড়তে পারে সমালোচনা।",
+  "cover_image_en": "https://ichef.bbci.co.uk/ace/standard/240/cpsprodpb/1a44/live/e4dc2320-456d-11f1-b55d-0f258dce1735.jpg",
+  "cover_image_bn": "https://ichef.bbci.co.uk/ace/standard/240/cpsprodpb/1a44/live/e4dc2320-456d-11f1-b55d-0f258dce1735.jpg",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://www.bbc.com/news/articles/cwy2x7rq3nqo?at_medium=RSS&at_campaign=rss",
+  "score": 20,
+  "category": "Policy",
+  "published_at": "2026-05-01T20:25:24.436Z",
+  "pub_date": "2026-05-01T16:14:58.000Z",
+  "vanguard_analysis": {
+    "architecture": "Law Enforcement and Government Agency Coordination",
+    "algorithm_or_logic": "Risk Assessment and Crowd Control Strategies",
+    "governance": "Human Rights and Freedom of Assembly Regulations",
+    "delta_of_change": "Increased scrutiny of Turkey's human rights record and potential changes in government policies",
+    "impact_horizon": "Short-term"
+  },
+  "image_prompt_en": "Police in riot gear facing protesters with raised fists",
+  "image_prompt_bn": "বিক্ষোভকারীদের মুখোমুখি হচ্ছে দাঙ্গা পোশাকে পুলিশ"
+}
