@@ -1,0 +1,23 @@
+{
+  "title_en": "Trump's Iran Deadline Looms",
+  "title_bn": "ট্রাম্পের ইরান ডেডলাইন এগিয়ে আসছে",
+  "summary_en": "The US President has expressed dissatisfaction with Iran as a deadline to seek congressional approval for war approaches. This development may lead to increased tensions between the two nations. The situation is being closely monitored by the international community.",
+  "summary_bn": "মার্কিন প্রেসিডেন্ট ইরানের সাথে অসন্তুষ্ট বলে জানিয়েছেন যখন কংগ্রেসের কাছে যুদ্ধের অনুমোদন চাওয়ার ডেডলাইন এগিয়ে আসছে। এই ঘটনা দুই দেশের মধ্যে উত্তেজনা বাড়াতে পারে। আন্তর্জাতিক সম্প্রদায় পরিস্থিতি ঘনিষ্ঠভাবে পর্যবেক্ষণ করছে。",
+  "cover_image_en": "https://image.pollinations.ai/prompt/World%20map%20with%20US%20and%20Iran%20highlighted?width=1200&height=630&model=flux&nologo=true&seed=383596",
+  "cover_image_bn": "https://image.pollinations.ai/prompt/%E0%A6%AC%E0%A6%BF%E0%A6%B6%E0%A7%8D%E0%A6%AC%20%E0%A6%AE%E0%A6%BE%E0%A6%A8%E0%A6%9A%E0%A6%BF%E0%A6%A4%E0%A7%8D%E0%A6%B0%E0%A7%87%20%E0%A6%AE%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%95%E0%A6%BF%E0%A6%A8%20%E0%A6%AF%E0%A7%81%E0%A6%95%E0%A7%8D%E0%A6%A4%E0%A6%B0%E0%A6%BE%E0%A6%B7%E0%A7%8D%E0%A6%9F%E0%A7%8D%E0%A6%B0%20%E0%A6%93%20%E0%A6%87%E0%A6%B0%E0%A6%BE%E0%A6%A8%20%E0%A6%B9%E0%A6%BE%E0%A6%87%E0%A6%B2%E0%A6%BE%E0%A6%87%E0%A6%9F%20%E0%A6%95%E0%A6%B0%E0%A6%BE?width=1200&height=630&model=flux&nologo=true&seed=888575",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://www.bbc.com/news/articles/cvgz7l5v03po?at_medium=RSS&at_campaign=rss",
+  "score": 20,
+  "category": "Policy",
+  "published_at": "2026-05-01T19:33:54.218Z",
+  "pub_date": "2026-05-01T18:41:20.000Z",
+  "vanguard_analysis": {
+    "architecture": "Geopolitical",
+    "algorithm_or_logic": "Diplomatic negotiations and international relations",
+    "governance": "International law and United Nations regulations",
+    "delta_of_change": "Potential escalation of US-Iran conflict",
+    "impact_horizon": "Short-term"
+  },
+  "image_prompt_en": "World map with US and Iran highlighted",
+  "image_prompt_bn": "বিশ্ব মানচিত্রে মার্কিন যুক্তরাষ্ট্র ও ইরান হাইলাইট করা"
+}
