@@ -1,0 +1,23 @@
+{
+  "title_en": "War Criminal Mladic's Health Deteriorates",
+  "title_bn": "যুদ্ধাপরাধী ম্লাদিচের স্বাস্থ্য আশঙ্কাজনক",
+  "summary_en": "The health of war criminal Ratko Mladic is deteriorating, according to his lawyers. They are requesting his release from jail due to his poor health condition. This development may impact the ongoing war crime trials and proceedings.",
+  "summary_bn": "যুদ্ধাপরাধী রাতকো ম্লাদিচের স্বাস্থ্য খারাপ বলে জানিয়েছেন তার আইনজীবীরা। তারা তার খারাপ স্বাস্থ্যের কারণে জেল থেকে মুক্তি চাইছেন। এই বিকাশ চলমান যুদ্ধাপরাধ বিচার ও ব্যবস্থাকে প্রভাবিত করতে পারে",
+  "cover_image_en": "https://image.pollinations.ai/prompt/A%20frail%20Ratko%20Mladic%20in%20a%20courtroom?width=1200&height=630&model=flux&nologo=true&seed=740546",
+  "cover_image_bn": "https://image.pollinations.ai/prompt/%E0%A6%8F%E0%A6%95%E0%A6%9F%E0%A6%BF%20%E0%A6%86%E0%A6%A6%E0%A6%BE%E0%A6%B2%E0%A6%A4%E0%A7%87%20%E0%A6%A6%E0%A7%81%E0%A6%B0%E0%A7%8D%E0%A6%AC%E0%A6%B2%20%E0%A6%B0%E0%A6%BE%E0%A6%A4%E0%A6%95%E0%A7%8B%20%E0%A6%AE%E0%A7%8D%E0%A6%B2%E0%A6%BE%E0%A6%A6%E0%A6%BF%E0%A6%9A?width=1200&height=630&model=flux&nologo=true&seed=539407",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://www.bbc.com/news/articles/c3e283g80n4o?at_medium=RSS&at_campaign=rss",
+  "score": 20,
+  "category": "Other",
+  "published_at": "2026-05-01T19:33:57.300Z",
+  "pub_date": "2026-05-01T15:12:14.000Z",
+  "vanguard_analysis": {
+    "architecture": "None",
+    "algorithm_or_logic": "None",
+    "governance": "International law and war crime regulations",
+    "delta_of_change": "Potential release of a war criminal due to health reasons",
+    "impact_horizon": "Short-term"
+  },
+  "image_prompt_en": "A frail Ratko Mladic in a courtroom",
+  "image_prompt_bn": "একটি আদালতে দুর্বল রাতকো ম্লাদিচ"
+}
