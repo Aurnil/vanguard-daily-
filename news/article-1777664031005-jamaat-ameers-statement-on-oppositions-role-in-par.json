@@ -1,0 +1,23 @@
+{
+  "title_en": "Jamaat Ameer's Statement on Opposition's Role in Parliament",
+  "title_bn": "বিবেচনা বা ইতিহাসের পাঠের জন্য বিরোধীরা সংসদে যায়নি: জামায়াত আমীর",
+  "summary_en": "Jamaat Ameer stated that the opposition's presence in Parliament is not for gossiping or history lessons. The statement highlights the political tension in Bangladesh. The opposition's role in Parliament is crucial for the country's democratic process.",
+  "summary_bn": "জামায়াত আমীর বলেছেন, বিরোধীরা সংসদে গসিপ বা ইতিহাসের পাঠের জন্য যায় না। এই বক্তব্যটি বাংলাদেশের রাজনৈতিক উত্তেজনাকে তুলে ধরে। সংসদে বিরোধীদের ভূমিকা দেশের গণতান্ত্রিক প্রক্রিয়ার জন্য গুরুত্বপূর্ণ।",
+  "cover_image_en": "https://image.pollinations.ai/prompt/Bangladeshi%20parliament%20building%20with%20opposition%20leaders%20in%20discussion?width=1200&height=630&model=flux&nologo=true&seed=785277",
+  "cover_image_bn": "https://image.pollinations.ai/prompt/%E0%A6%AC%E0%A6%BE%E0%A6%82%E0%A6%B2%E0%A6%BE%E0%A6%A6%E0%A7%87%E0%A6%B6%E0%A7%87%E0%A6%B0%20%E0%A6%B8%E0%A6%82%E0%A6%B8%E0%A6%A6%20%E0%A6%AD%E0%A6%AC%E0%A6%A8%20%E0%A6%AC%E0%A6%BF%E0%A6%B0%E0%A7%8B%E0%A6%A7%E0%A7%80%20%E0%A6%A8%E0%A7%87%E0%A6%A4%E0%A6%BE%E0%A6%A6%E0%A7%87%E0%A6%B0%20%E0%A6%86%E0%A6%B2%E0%A7%8B%E0%A6%9A%E0%A6%A8%E0%A6%BE%E0%A6%AF%E0%A6%BC?width=1200&height=630&model=flux&nologo=true&seed=560503",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://en.prothomalo.com/bangladesh/politics/u0dnpmzrkm",
+  "score": 20,
+  "category": "Policy",
+  "published_at": "2026-05-01T19:33:51.005Z",
+  "pub_date": "2026-05-01T16:34:58.000Z",
+  "vanguard_analysis": {
+    "architecture": "Political party structure and opposition dynamics",
+    "algorithm_or_logic": "Rhetorical strategy and political discourse analysis",
+    "governance": "Parliamentary procedures and democratic norms",
+    "delta_of_change": "Shift in opposition's approach to parliamentary participation",
+    "impact_horizon": "Short-term"
+  },
+  "image_prompt_en": "Bangladeshi parliament building with opposition leaders in discussion",
+  "image_prompt_bn": "বাংলাদেশের সংসদ ভবন বিরোধী নেতাদের আলোচনায়"
+}
