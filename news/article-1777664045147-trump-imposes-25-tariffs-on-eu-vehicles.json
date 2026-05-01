@@ -1,0 +1,23 @@
+{
+  "title_en": "Trump Imposes 25% Tariffs on EU Vehicles",
+  "title_bn": "ট্রাম্প ইউরোপীয় ইউনিয়নের গাড়ি ও ট্রাকে ২৫ শতাংশ শুল্ক আরোপ করেছেন",
+  "summary_en": "The US has announced a 25% tariff on cars and trucks from the European Union. This move is expected to significantly impact the automotive industry and trade relations between the US and EU. The tariffs may lead to increased prices for consumers and potential retaliation from the EU.",
+  "summary_bn": "মার্কিন যুক্তরাষ্ট্র ইউরোপীয় ইউনিয়ন থেকে আগত গাড়ি ও ট্রাকে ২৫ শতাংশ শুল্ক আরোপ করেছে। এই সিদ্ধান্তের ফলে অটোমোবাইল শিল্প ও মার্কিন যুক্তরাষ্ট্র ও ইউরোপীয় ইউনিয়নের মধ্যে বাণিজ্য সম্পর্ক উল্লেখযোগ্যভাবে প্রভাবিত হবে। শুল্কের ফলে ভোক্তাদের জন্য দাম বৃদ্ধি পাবে এবং ইউরোপীয় ইউনিয়নের সম্ভাব্য প্রতিশোধ হতে পারে",
+  "cover_image_en": "https://image.pollinations.ai/prompt/A%20cargo%20ship%20with%20EU%20cars%20behind%20a%20US%20flag%20with%20a%20red%20X%20marked%20through%20it?width=1200&height=630&model=flux&nologo=true&seed=899255",
+  "cover_image_bn": "https://image.pollinations.ai/prompt/%E0%A6%87%E0%A6%89%E0%A6%B0%E0%A7%8B%E0%A6%AA%E0%A7%80%E0%A6%AF%E0%A6%BC%20%E0%A6%87%E0%A6%89%E0%A6%A8%E0%A6%BF%E0%A6%AF%E0%A6%BC%E0%A6%A8%E0%A7%87%E0%A6%B0%20%E0%A6%97%E0%A6%BE%E0%A6%A1%E0%A6%BC%E0%A6%BF%20%E0%A6%AC%E0%A6%B9%E0%A6%A8%E0%A6%95%E0%A6%BE%E0%A6%B0%E0%A7%80%20%E0%A6%8F%E0%A6%95%E0%A6%9F%E0%A6%BF%20%E0%A6%95%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%97%E0%A7%8B%20%E0%A6%9C%E0%A6%BE%E0%A6%B9%E0%A6%BE%E0%A6%9C%20%E0%A6%AE%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%95%E0%A6%BF%E0%A6%A8%20%E0%A6%AA%E0%A6%A4%E0%A6%BE%E0%A6%95%E0%A6%BE%E0%A6%B0%20%E0%A6%AA%E0%A6%BF%E0%A6%9B%E0%A6%A8%E0%A7%87%20%E0%A6%8F%E0%A6%95%E0%A6%9F%E0%A6%BF%20%E0%A6%B2%E0%A6%BE%E0%A6%B2%20X%20%E0%A6%9A%E0%A6%BF%E0%A6%B9%E0%A7%8D%E0%A6%A8%E0%A6%BF%E0%A6%A4?width=1200&height=630&model=flux&nologo=true&seed=752865",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://www.aljazeera.com/news/2026/5/1/trump-announces-25-percent-tariffs-on-european-union-cars-trucks?traffic_source=rss",
+  "score": 60,
+  "category": "Policy",
+  "published_at": "2026-05-01T19:34:05.147Z",
+  "pub_date": "2026-05-01T18:10:43.000Z",
+  "vanguard_analysis": {
+    "architecture": "Trade policy framework",
+    "algorithm_or_logic": "Tariff calculation and implementation",
+    "governance": "US trade law and international trade agreements",
+    "delta_of_change": "Shift in US-EU trade relations and potential trade war",
+    "impact_horizon": "Short-term"
+  },
+  "image_prompt_en": "A cargo ship with EU cars behind a US flag with a red X marked through it",
+  "image_prompt_bn": "ইউরোপীয় ইউনিয়নের গাড়ি বহনকারী একটি কার্গো জাহাজ মার্কিন পতাকার পিছনে একটি লাল X চিহ্নিত"
+}
