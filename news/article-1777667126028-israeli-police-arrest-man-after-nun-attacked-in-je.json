@@ -1,0 +1,23 @@
+{
+  "title_en": "Israeli Police Arrest Man After Nun Attacked in Jerusalem",
+  "title_bn": "ইজরায়েলি পুলিশ জেরুজালেমে নান আক্রমণের পর এক ব্যক্তিকে গ্রেফতার করেছে",
+  "summary_en": "A man has been arrested by Israeli police after a nun was attacked in Jerusalem. The incident has raised concerns about safety and security in the city. The police are investigating the matter and have not released any further details about the suspect or the attack.",
+  "summary_bn": "জেরুজালেমে এক নানকে আক্রমণের পর ইজরায়েলি পুলিশ এক ব্যক্তিকে গ্রেফতার করেছে। এই ঘটনাটি শহরে নিরাপত্তা নিয়ে উদ্বেগ বাড়িয়েছে। পুলিশ ব্যাপারটি তদন্ত করছে এবং সন্দেহভাজন বা আক্রমণ সম্পর্কে আর কোন বিবরণ প্রকাশ করেনি।",
+  "cover_image_en": "https://ichef.bbci.co.uk/ace/standard/240/cpsprodpb/9dd8/live/d2e496e0-455c-11f1-b55d-0f258dce1735.jpg",
+  "cover_image_bn": "https://ichef.bbci.co.uk/ace/standard/240/cpsprodpb/9dd8/live/d2e496e0-455c-11f1-b55d-0f258dce1735.jpg",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://www.bbc.com/news/articles/cy02gnzlvkko?at_medium=RSS&at_campaign=rss",
+  "score": 20,
+  "category": "Other",
+  "published_at": "2026-05-01T20:25:26.027Z",
+  "pub_date": "2026-05-01T17:03:11.000Z",
+  "vanguard_analysis": {
+    "architecture": "Incident reporting and response systems",
+    "algorithm_or_logic": "Investigative procedures and forensic analysis",
+    "governance": "Law enforcement protocols and community safety regulations",
+    "delta_of_change": "Increased focus on public safety and security measures in Jerusalem",
+    "impact_horizon": "Short-term"
+  },
+  "image_prompt_en": "A nun walking alone in Jerusalem with a police car in the background",
+  "image_prompt_bn": "জেরুজালেমে একা হাঁটতে থাকা এক নান, পটভূমিতে একটি পুলিশ গাড়ি"
+}
