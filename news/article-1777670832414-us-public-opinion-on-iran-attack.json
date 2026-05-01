@@ -1,0 +1,23 @@
+{
+  "title_en": "US Public Opinion on Iran Attack",
+  "title_bn": "ইরান আক্রমণ নিয়ে মার্কিন জনমত",
+  "summary_en": "A recent poll reveals that 61% of Americans believe attacking Iran was a mistake, indicating a shift in public opinion. This change in perception may influence future foreign policy decisions. The poll's findings highlight the complexities of international relations and the importance of public opinion in shaping political discourse.",
+  "summary_bn": "সাম্প্রতিক একটি জরিপে দেখা গেছে যে 61% আমেরিকান মনে করে ইরান আক্রমণ করা একটি ভুল ছিল, যা জনমতের একটি পরিবর্তন নির্দেশ করে। এই ধারণার পরিবর্তন ভবিষ্যতের পররাষ্ট্র নীতি সিদ্ধান্তগুলিকে প্রভাবিত করতে পারে। জরিপের ফলাফলগুলি আন্তর্জাতিক সম্পর্কের জটিলতা এবং রাজনৈতিক বক্তৃতাকে গঠন করার ক্ষেত্রে জনমতের গুরুত্ব তুলে ধরে",
+  "cover_image_en": "https://image.pollinations.ai/prompt/A%20divided%20American%20flag%20with%20a%20red%20X%20marked%20through%20a%20missile?width=1200&height=630&model=flux&nologo=true&seed=332643",
+  "cover_image_bn": "https://image.pollinations.ai/prompt/%E0%A6%8F%E0%A6%95%E0%A6%9F%E0%A6%BF%20%E0%A6%AC%E0%A6%BF%E0%A6%AD%E0%A6%95%E0%A7%8D%E0%A6%A4%20%E0%A6%86%E0%A6%AE%E0%A7%87%E0%A6%B0%E0%A6%BF%E0%A6%95%E0%A6%BE%E0%A6%A8%20%E0%A6%AA%E0%A6%A4%E0%A6%BE%E0%A6%95%E0%A6%BE%20%E0%A6%AF%E0%A6%BE%E0%A6%B0%20%E0%A6%89%E0%A6%AA%E0%A6%B0%20%E0%A6%8F%E0%A6%95%E0%A6%9F%E0%A6%BF%20%E0%A6%B2%E0%A6%BE%E0%A6%B2%20X%20%E0%A6%9A%E0%A6%BF%E0%A6%B9%E0%A7%8D%E0%A6%A8%E0%A6%BF%E0%A6%A4%20%E0%A6%AE%E0%A6%BF%E0%A6%B8%E0%A6%BE%E0%A6%87%E0%A6%B2?width=1200&height=630&model=flux&nologo=true&seed=610869",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://www.aljazeera.com/news/2026/5/1/poll-finds-61-percent-of-americans-believe-attacking-iran-was-a-mistake?traffic_source=rss",
+  "score": 20,
+  "category": "Policy",
+  "published_at": "2026-05-01T21:27:12.414Z",
+  "pub_date": "2026-05-01T17:51:54.000Z",
+  "vanguard_analysis": {
+    "architecture": "Public opinion polling and data analysis",
+    "algorithm_or_logic": "Statistical analysis of survey responses",
+    "governance": "International relations and foreign policy decision-making",
+    "delta_of_change": "Shift in US public opinion on Iran policy",
+    "impact_horizon": "Short-term"
+  },
+  "image_prompt_en": "A divided American flag with a red X marked through a missile",
+  "image_prompt_bn": "একটি বিভক্ত আমেরিকান পতাকা যার উপর একটি লাল X চিহ্নিত মিসাইল"
+}
