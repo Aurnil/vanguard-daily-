@@ -1,0 +1,23 @@
+{
+  "title_en": "Arms Recovered After Police Attack in Narayanganj",
+  "title_bn": "নারায়ণগঞ্জে পুলিশ আক্রান্তের পর ছিনতাই করা অস্ত্র উদ্ধার",
+  "summary_en": "The recent attack on police in Narayanganj resulted in the theft of arms, which were recovered within four hours. Three individuals have been arrested in connection with the incident. The swift recovery of the stolen arms highlights the efficiency of the law enforcement agencies in Bangladesh.",
+  "summary_bn": "নারায়ণগঞ্জে পুলিশে আক্রমণের পর ছিনতাই করা অস্ত্রগুলো চার ঘন্টার মধ্যে উদ্ধার করা হয়েছে। এই ঘটনার সাথে জড়িত তিনজনকে গ্রেফতার করা হয়েছে। চুরি করা অস্ত্রগুলো দ্রুত উদ্ধার করা বাংলাদেশের আইন প্রয়োগকারী সংস্থাগুলোর দক্ষতা তুলে ধরে।",
+  "cover_image_en": "https://image.pollinations.ai/prompt/Police%20officers%20recovering%20stolen%20arms%20in%20Narayanganj?width=1200&height=630&model=flux&nologo=true&seed=487932",
+  "cover_image_bn": "https://image.pollinations.ai/prompt/%E0%A6%A8%E0%A6%BE%E0%A6%B0%E0%A6%BE%E0%A7%9F%E0%A6%A3%E0%A6%97%E0%A6%9E%E0%A7%8D%E0%A6%9C%E0%A7%87%20%E0%A6%AA%E0%A7%81%E0%A6%B2%E0%A6%BF%E0%A6%B6%20%E0%A6%9B%E0%A6%BF%E0%A6%A8%E0%A6%A4%E0%A6%BE%E0%A6%87%20%E0%A6%95%E0%A6%B0%E0%A6%BE%20%E0%A6%85%E0%A6%B8%E0%A7%8D%E0%A6%A4%E0%A7%8D%E0%A6%B0%20%E0%A6%89%E0%A6%A6%E0%A7%8D%E0%A6%A7%E0%A6%BE%E0%A6%B0%20%E0%A6%95%E0%A6%B0%E0%A6%9B%E0%A7%87?width=1200&height=630&model=flux&nologo=true&seed=456891",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://en.prothomalo.com/bangladesh/local-news/v9y6iq9pv1",
+  "score": 20,
+  "category": "Other",
+  "published_at": "2026-05-01T19:33:52.591Z",
+  "pub_date": "2026-05-01T15:24:12.000Z",
+  "vanguard_analysis": {
+    "architecture": "Incident Response and Recovery",
+    "algorithm_or_logic": "Standard Operating Procedures for Law Enforcement",
+    "governance": "Law Enforcement Protocols and Regulations",
+    "delta_of_change": "Improved response time and recovery of stolen arms",
+    "impact_horizon": "Short-term"
+  },
+  "image_prompt_en": "Police officers recovering stolen arms in Narayanganj",
+  "image_prompt_bn": "নারায়ণগঞ্জে পুলিশ ছিনতাই করা অস্ত্র উদ্ধার করছে"
+}
