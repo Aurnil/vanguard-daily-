@@ -1,0 +1,23 @@
+{
+  "title_en": "Michael Jackson Biopic Analysis",
+  "title_bn": "মাইকেল জ্যাকসনের জীবনীভিত্তিক চলচ্চিত্র এবং এটি কী বাদ দেয়",
+  "summary_en": "The biopic of Michael Jackson has sparked controversy over its portrayal of the artist's life. The film's narrative has been criticized for omitting key aspects of Jackson's history. This raises questions about the responsibility of filmmakers to accurately represent their subjects.",
+  "summary_bn": "মাইকেল জ্যাকসনের জীবনীভিত্তিক চলচ্চিত্রটি শিল্পীর জীবনের চিত্রায়ন নিয়ে বিতর্কের সৃষ্টি করেছে। চলচ্চিত্রের বর্ণনাটি জ্যাকসনের ইতিহাসের মূল দিকগুলি বাদ দেওয়ার জন্য সমালোচিত হয়েছে। এটি চলচ্চিত্র নির্মাতাদের তাদের বিষয়গুলিকে সঠিকভাবে উপস্থাপন করার দায়িত্ব সম্পর্কে প্রশ্ন তোলে।",
+  "cover_image_en": "https://image.pollinations.ai/prompt/A%20split-screen%20image%20of%20Michael%20Jackson's%20life%20and%20the%20biopic's%20portrayal?width=1200&height=630&model=flux&nologo=true&seed=598632",
+  "cover_image_bn": "https://image.pollinations.ai/prompt/%E0%A6%AE%E0%A6%BE%E0%A6%87%E0%A6%95%E0%A7%87%E0%A6%B2%20%E0%A6%9C%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%95%E0%A6%B8%E0%A6%A8%E0%A7%87%E0%A6%B0%20%E0%A6%9C%E0%A7%80%E0%A6%AC%E0%A6%A8%20%E0%A6%8F%E0%A6%AC%E0%A6%82%20%E0%A6%9C%E0%A7%80%E0%A6%AC%E0%A6%A8%E0%A7%80%E0%A6%AD%E0%A6%BF%E0%A6%A4%E0%A7%8D%E0%A6%A4%E0%A6%BF%E0%A6%95%20%E0%A6%9A%E0%A6%B2%E0%A6%9A%E0%A7%8D%E0%A6%9A%E0%A6%BF%E0%A6%A4%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%B0%20%E0%A6%9A%E0%A6%BF%E0%A6%A4%E0%A7%8D%E0%A6%B0%E0%A6%BE%E0%A6%AF%E0%A6%BC%E0%A6%A8%E0%A7%87%E0%A6%B0%20%E0%A6%8F%E0%A6%95%E0%A6%9F%E0%A6%BF%20%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BF%E0%A6%A7%E0%A6%BE%20%E0%A6%AA%E0%A6%B0%E0%A7%8D%E0%A6%A6%E0%A6%BE%20%E0%A6%9A%E0%A6%BF%E0%A6%A4%E0%A7%8D%E0%A6%B0?width=1200&height=630&model=flux&nologo=true&seed=554072",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://www.aljazeera.com/video/the-take-2/2026/5/1/aje-onl-tt_usa_jacksonfilm_av_v2-010526",
+  "score": 20,
+  "category": "Other",
+  "published_at": "2026-05-01T21:27:16.657Z",
+  "pub_date": "2026-05-01T16:59:54.000Z",
+  "vanguard_analysis": {
+    "architecture": "Narrative storytelling",
+    "algorithm_or_logic": "Selective representation of historical events",
+    "governance": "Ethical considerations in biographical filmmaking",
+    "delta_of_change": "Shift in public perception of Michael Jackson's legacy",
+    "impact_horizon": "Short-term"
+  },
+  "image_prompt_en": "A split-screen image of Michael Jackson's life and the biopic's portrayal",
+  "image_prompt_bn": "মাইকেল জ্যাকসনের জীবন এবং জীবনীভিত্তিক চলচ্চিত্রের চিত্রায়নের একটি দ্বিধা পর্দা চিত্র"
+}
