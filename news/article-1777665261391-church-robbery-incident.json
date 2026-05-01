@@ -1,0 +1,23 @@
+{
+  "title_en": "Church Robbery Incident",
+  "title_bn": "গির্জার পাদ্রীকে বাঁধা পড়ে, টাকা আর অন্যান্য মালামাল লুট",
+  "summary_en": "A church was robbed with the priest tied up, resulting in significant financial loss. The incident highlights the need for improved security measures in places of worship. This event may lead to increased security protocols in churches and other religious institutions.",
+  "summary_bn": "একটি গির্জায় পাদ্রীকে বাঁধা পড়ে ডাকাতি করা হয়, যার ফলে উল্লেখযোগ্য আর্থিক ক্ষতি হয়। এই ঘটনাটি উপাসনালয়গুলিতে নিরাপত্তা ব্যবস্থা উন্নত করার প্রয়োজনীয়তা তুলে ধরে। এই ঘটনার ফলে গির্জা এবং অন্যান্য ধর্মীয় প্রতিষ্ঠানগুলিতে নিরাপত্তা প্রোটোকল বৃদ্ধি পেতে পারে।",
+  "cover_image_en": "https://media.prothomalo.com/prothomalo-english/2026-05-01/a4kkytqc/prothomalo-bangla2026-05-01sfz5uey9Church-Robery-01.webp",
+  "cover_image_bn": "https://media.prothomalo.com/prothomalo-english/2026-05-01/a4kkytqc/prothomalo-bangla2026-05-01sfz5uey9Church-Robery-01.webp",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://en.prothomalo.com/bangladesh/crime-and-law/pw9f7dtbjc",
+  "score": 20,
+  "category": "Security",
+  "published_at": "2026-05-01T19:54:21.388Z",
+  "pub_date": "2026-05-01T16:52:09.000Z",
+  "vanguard_analysis": {
+    "architecture": "Physical security protocols",
+    "algorithm_or_logic": "Risk assessment and threat analysis",
+    "governance": "Law enforcement and community engagement",
+    "delta_of_change": "Increased focus on security measures in places of worship",
+    "impact_horizon": "Short-term"
+  },
+  "image_prompt_en": "A priest tied up in a church with a broken window",
+  "image_prompt_bn": "একজন পাদ্রী গির্জায় বাঁধা পড়ে আছেন, ভাঙা জানালা"
+}
