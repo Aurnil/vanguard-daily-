@@ -1,0 +1,23 @@
+{
+  "title_en": "US Sanctions DR Congo Ex-President Kabila",
+  "title_bn": "মার্কিন যুক্তরাষ্ট্র গণতান্ত্রিক কঙ্গোর প্রাক্তন রাষ্ট্রপতি কাবিলার উপর নিষেধাজ্ঞা আরোপ করেছে",
+  "summary_en": "The US has imposed sanctions on the former President of the Democratic Republic of Congo, Joseph Kabila, alleging support for rebel groups. This move is expected to have significant implications for the region's political landscape. The sanctions are part of a broader effort to address instability and conflict in the region.",
+  "summary_bn": "মার্কিন যুক্তরাষ্ট্র গণতান্ত্রিক কঙ্গোর প্রাক্তন রাষ্ট্রপতি জোসেফ কাবিলার উপর বিদ্রোহী গোষ্ঠীগুলির সমর্থনের অভিযোগ এনে নিষেধাজ্ঞা আরোপ করেছে। এই পদক্ষেপটি অঞ্চলের রাজনৈতিক ল্যান্ডস্কেপের জন্য উল্লেখযোগ্য প্রভাব ফেলবে বলে আশা করা হচ্ছে। নিষেধাজ্ঞাগুলি অঞ্চলে অস্থিতিশীলতা এবং সংঘর্ষ মোকাবেলার জন্য একটি বিস্তৃত প্রচেষ্টার অংশ।",
+  "cover_image_en": "https://image.pollinations.ai/prompt/African%20leader%20in%20a%20suit%20with%20a%20red%20X%20marked%20through%20it?width=1200&height=630&model=flux&nologo=true&seed=552881",
+  "cover_image_bn": "https://image.pollinations.ai/prompt/%E0%A6%8F%E0%A6%95%E0%A6%9C%E0%A6%A8%20%E0%A6%86%E0%A6%AB%E0%A7%8D%E0%A6%B0%E0%A6%BF%E0%A6%95%E0%A6%BE%E0%A6%A8%20%E0%A6%A8%E0%A7%87%E0%A6%A4%E0%A6%BE%20%E0%A6%B8%E0%A7%81%E0%A6%9F%E0%A7%87%20%E0%A6%8F%E0%A6%95%E0%A6%9F%E0%A6%BF%20%E0%A6%B2%E0%A6%BE%E0%A6%B2%20X%20%E0%A6%9A%E0%A6%BF%E0%A6%B9%E0%A7%8D%E0%A6%A8%E0%A6%BF%E0%A6%A4%20%E0%A6%95%E0%A6%B0%E0%A6%BE%20%E0%A6%B9%E0%A6%AF%E0%A6%BC%E0%A7%87%E0%A6%9B%E0%A7%87?width=1200&height=630&model=flux&nologo=true&seed=105024",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://www.bbc.com/news/articles/clyprzx10w2o?at_medium=RSS&at_campaign=rss",
+  "score": 20,
+  "category": "Policy",
+  "published_at": "2026-05-01T19:34:03.546Z",
+  "pub_date": "2026-05-01T14:47:46.000Z",
+  "vanguard_analysis": {
+    "architecture": "Geopolitical sanction architecture",
+    "algorithm_or_logic": "Diplomatic pressure and economic leverage",
+    "governance": "International relations and global governance",
+    "delta_of_change": "Shift in US policy towards the Democratic Republic of Congo",
+    "impact_horizon": "Short-term"
+  },
+  "image_prompt_en": "African leader in a suit with a red X marked through it",
+  "image_prompt_bn": "একজন আফ্রিকান নেতা সুটে একটি লাল X চিহ্নিত করা হয়েছে"
+}
