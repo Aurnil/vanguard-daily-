@@ -1,0 +1,23 @@
+{
+  "title_en": "Smart Indoor Garden Sale: 20% Off",
+  "title_bn": "স্মার্ট ইনডোর গার্ডেন বিক্রি: ২০% ছাড়",
+  "summary_en": "The Lettuce Grow indoor garden is a smart gardening system that allows users to grow their own herbs and vegetables indoors. The system uses a hydroponic method and includes a built-in LED grow light. The product is currently on sale for 20% off, making it an attractive option for those looking to start their own indoor garden.",
+  "summary_bn": "লেটুস গ্রো ইনডোর গার্ডেন হল একটি স্মার্ট বাগান সিস্টেম যা ব্যবহারকারীদের তাদের নিজস্ব মশলা এবং সবজি অভ্যন্তরীণ জন্য অনুমতি দেয়। সিস্টেমটি একটি হাইড্রোপনিক পদ্ধতি ব্যবহার করে এবং একটি বিল্ট-ইন এলইডি গ্রো লাইট অন্তর্ভুক্ত। পণ্যটি বর্তমানে ২০% ছাড়ে বিক্রি হচ্ছে, যা তাদের জন্য একটি আকর্ষণীয় বিকল্প তৈরি করে যারা তাদের নিজস্ব ইনডোর গার্ডেন শুরু করতে চায়।",
+  "cover_image_en": "https://media.wired.com/photos/69f3fab8a65a1629efd80607/master/pass/The-Most-Dramatic-Indoor-Garden-Is-20-Percent-Off-Right-Now.jpg",
+  "cover_image_bn": "https://media.wired.com/photos/69f3fab8a65a1629efd80607/master/pass/The-Most-Dramatic-Indoor-Garden-Is-20-Percent-Off-Right-Now.jpg",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://www.wired.com/story/lettuce-grow-mothers-day-sale-2026/",
+  "score": 20,
+  "category": "Hardware",
+  "published_at": "2026-05-01T23:27:10.517Z",
+  "pub_date": "2026-05-01T19:05:53.000Z",
+  "vanguard_analysis": {
+    "architecture": "Modular and compact design for indoor gardening",
+    "algorithm_or_logic": "Hydroponic method for efficient plant growth",
+    "governance": "No significant regulatory or ethical implications",
+    "delta_of_change": "Increased accessibility to indoor gardening for urban residents",
+    "impact_horizon": "Short-term"
+  },
+  "image_prompt_en": "A sleek indoor garden with lush green plants and a modern LED grow light",
+  "image_prompt_bn": "একটি আধুনিক ইনডোর গার্ডেন সবুজ গাছপালা এবং একটি মডার্ন এলইডি গ্রো লাইট"
+}
