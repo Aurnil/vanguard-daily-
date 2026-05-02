@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — Vanguard Daily</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#fff;--surface:#F8F9FA;--border:#F3F4F6;--border2:#E5E7EB;--ink:#000;--ink-mid:#555;--ink-light:#888;--red:#C0392B;--font-serif:'Playfair Display',Georgia,serif;--font-body:'Lora',Georgia,serif;--font-ui:'Inter',sans-serif;--trans:0.2s ease-in-out}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-ui);min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+#site-header{position:sticky;top:0;z-index:200;background:var(--bg);border-bottom:2.5px solid var(--ink)}
+.header-row{display:flex;align-items:center;min-height:64px;padding:0 5%;max-width:1280px;margin:0 auto;gap:16px}
+.site-logo{display:flex;flex-direction:column;align-items:flex-start;line-height:1;flex-shrink:0;border-bottom:1.5px solid var(--ink);padding-bottom:2px}
+.logo-l1{font-family:var(--font-serif);font-weight:900;font-size:1.5rem;letter-spacing:.07em;text-transform:uppercase}
+.logo-l2{font-family:var(--font-serif);font-weight:700;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase}
+.header-back{margin-left:auto;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border:1.5px solid var(--border2);padding:6px 14px;color:var(--ink-mid);transition:border-color var(--trans),color var(--trans),background var(--trans)}
+.header-back:hover{border-color:var(--ink);color:var(--ink);background:var(--surface)}
+.page-wrap{max-width:780px;margin:0 auto;padding:56px 5% 80px}
+.page-tag{font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:14px}
+.page-title{font-family:var(--font-serif);font-size:clamp(2rem,6vw,3.2rem);font-weight:900;line-height:1.1;margin-bottom:24px;border-bottom:2.5px solid var(--ink);padding-bottom:20px}
+.page-body{font-family:var(--font-body);font-size:1rem;line-height:1.8;color:var(--ink-mid)}
+.page-body p{margin-bottom:1.3em}
+.page-body h2{font-family:var(--font-serif);font-size:1.25rem;font-weight:700;color:var(--ink);margin:2em 0 .6em;border-left:3px solid var(--ink);padding-left:12px}
+.page-body a{color:var(--red);text-decoration:underline;text-underline-offset:2px}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0 36px}
+@media(max-width:560px){.contact-grid{grid-template-columns:1fr}}
+.contact-card{border:1.5px solid var(--border2);padding:20px 22px}
+.contact-card-label{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.contact-card-title{font-family:var(--font-serif);font-weight:700;font-size:1rem;margin-bottom:6px}
+.contact-card-value{font-size:.82rem;color:var(--ink-mid)}
+.contact-card-value a{color:var(--red);text-decoration:underline;text-underline-offset:2px}
+.contact-form{display:flex;flex-direction:column;gap:14px;margin-top:8px}
+.cf-field{display:flex;flex-direction:column;gap:6px}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:560px){.cf-row{grid-template-columns:1fr}}
+.cf-label{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mid)}
+.cf-input,.cf-textarea,.cf-select{border:1.5px solid var(--border2);padding:10px 14px;font-family:var(--font-ui);font-size:.9rem;color:var(--ink);background:var(--bg);outline:none;transition:border-color var(--trans);width:100%}
+.cf-input:focus,.cf-textarea:focus,.cf-select:focus{border-color:var(--ink)}
+.cf-textarea{min-height:140px;resize:vertical}
+.cf-btn{align-self:flex-start;border:2px solid var(--ink);padding:11px 32px;font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--bg);color:var(--ink);cursor:pointer;transition:background var(--trans),color var(--trans)}
+.cf-btn:hover{background:var(--ink);color:var(--bg)}
+.cf-note{font-size:.72rem;color:var(--ink-light);margin-top:-6px}
+#site-footer{border-top:2.5px solid var(--ink);padding:24px 5%;margin-top:auto}
+.footer-bottom-simple{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.67rem;color:var(--ink-light);letter-spacing:.05em}
+.footer-links{display:flex;gap:14px;flex-wrap:wrap}
+.footer-links a{color:var(--ink-mid)}
+.footer-links a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<header id="site-header">
+  <div class="header-row">
+    <a href="index.html" class="site-logo"><span class="logo-l1">Vanguard</span><span class="logo-l2">Daily</span></a>
+    <a href="index.html" class="header-back">← Back to News</a>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <div class="page-tag">Get in Touch</div>
+  <h1 class="page-title">Contact Us</h1>
+  <div class="page-body">
+    <p>We welcome correspondence from readers, journalists, organisations, and anyone with a tip, correction, or query. We read every message and aim to respond within 2 business days.</p>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-card-label">General Inquiries</div>
+        <div class="contact-card-title">Editorial &amp; Feedback</div>
+        <div class="contact-card-value"><a href="mailto:vangurddaily@gmail.com">vangurddaily@gmail.com</a></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-label">News Tips</div>
+        <div class="contact-card-title">Submit a Story Tip</div>
+        <div class="contact-card-value">Use the form below and select "News Tip" as your reason.</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-label">Corrections</div>
+        <div class="contact-card-title">Report an Error</div>
+        <div class="contact-card-value">We correct all factual errors promptly. Please include the article title and the specific error.</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-label">Partnerships</div>
+        <div class="contact-card-title">Editorial Partnerships</div>
+        <div class="contact-card-value">For syndication or content partnerships, use the form below.</div>
+      </div>
+    </div>
+
+    <h2>Send Us a Message</h2>
+    <p class="cf-note">All fields are required. We do not share your information with third parties.</p>
+
+    <div class="contact-form">
+      <div class="cf-row">
+        <div class="cf-field">
+          <label class="cf-label" for="cf-name">Your Name</label>
+          <input class="cf-input" type="text" id="cf-name" placeholder="Ahnaf Hassan" />
+        </div>
+        <div class="cf-field">
+          <label class="cf-label" for="cf-email">Email Address</label>
+          <input class="cf-input" type="email" id="cf-email" placeholder="you@example.com" />
+        </div>
+      </div>
+      <div class="cf-field">
+        <label class="cf-label" for="cf-reason">Reason for Contact</label>
+        <select class="cf-select" id="cf-reason">
+          <option value="">Select a reason…</option>
+          <option>General Feedback</option>
+          <option>News Tip</option>
+          <option>Correction Request</option>
+          <option>Press Accreditation</option>
+          <option>Editorial Partnership</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="cf-field">
+        <label class="cf-label" for="cf-msg">Message</label>
+        <textarea class="cf-textarea" id="cf-msg" placeholder="Write your message here…"></textarea>
+      </div>
+      <button class="cf-btn" onclick="submitContact()">Send Message</button>
+      <p id="cf-feedback" style="font-size:.82rem;color:var(--red);display:none;"></p>
+    </div>
+  </div>
+</div>
+
+<footer id="site-footer">
+  <div class="footer-bottom-simple">
+    <span>© 2025 Vanguard Daily. All rights reserved.</span>
+    <nav class="footer-links">
+      <a href="about.html">About</a><a href="contact.html">Contact</a>
+      <a href="advertise.html">Advertise</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a>
+    </nav>
+  </div>
+</footer>
+<script>
+function submitContact() {
+  const name   = document.getElementById('cf-name').value.trim();
+  const email  = document.getElementById('cf-email').value.trim();
+  const reason = document.getElementById('cf-reason').value;
+  const msg    = document.getElementById('cf-msg').value.trim();
+  const fb     = document.getElementById('cf-feedback');
+  if (!name || !email || !reason || !msg) {
+    fb.textContent = 'Please fill in all fields before sending.';
+    fb.style.display = 'block'; return;
+  }
+  /* Opens the user's mail client pre-filled — no server needed */
+  const subject = encodeURIComponent('[Vanguard Daily] ' + reason + ' — from ' + name);
+  const body    = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\nReason: ' + reason + '\n\n' + msg);
+  window.location.href = 'mailto:vangurddaily@gmail.com?subject=' + subject + '&body=' + body;
+  fb.style.color = '#27ae60';
+  fb.textContent = 'Opening your mail client… Thank you for reaching out.';
+  fb.style.display = 'block';
+}
+</script>
+</body>
+</html>

@@ -338,6 +338,23 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .cc-sports     { border-color: #3b1a6e; color: #3b1a6e; }
 .cc-default    { border-color: #000;    color: #000; }
 
+/* ============================================================
+   LANGUAGE TOGGLE — permanent pill next to logo
+   ============================================================ */
+#lang-toggle {
+  display: flex; align-items: center;
+  border: 1.5px solid var(--border2); border-radius: 20px;
+  overflow: hidden; flex-shrink: 0; height: 30px;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+}
+#lang-toggle button {
+  padding: 0 10px; height: 100%; color: var(--ink-mid);
+  transition: background var(--trans), color var(--trans);
+  border-radius: 0; white-space: nowrap;
+}
+#lang-toggle button.active { background: var(--ink); color: var(--bg); }
+#lang-toggle button:first-child { border-right: 1.5px solid var(--border2); }
+
 .no-results { grid-column: 1/-1; padding: 48px 16px; text-align: center; color: var(--ink-light); font-size: 0.9rem; }
 .spinner-wrap { grid-column: 1/-1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 64px 16px; gap: 14px; color: var(--ink-mid); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; }
 .spinner { width: 28px; height: 28px; border: 2.5px solid var(--border); border-top-color: var(--ink); border-radius: 50%; animation: spin 0.7s linear infinite; }
@@ -428,14 +445,20 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
       <span class="logo-l2">Daily</span>
     </a>
 
+    <!-- Permanent language toggle — always next to logo -->
+    <div id="lang-toggle" aria-label="Switch language">
+      <button id="lt-en" onclick="setLang('en')" aria-label="English">EN</button>
+      <button id="lt-bn" onclick="setLang('bn')" aria-label="বাংলা">বাং</button>
+    </div>
+
     <!-- Desktop/Tablet nav — inline list, right-aligned (hidden on mobile) -->
     <nav id="desktop-nav" aria-label="Category filter">
-      <button class="active" onclick="filterCat('all',this)">All</button>
-      <button onclick="filterCat('politics',this)">Politics</button>
-      <button onclick="filterCat('economy',this)">Economy</button>
-      <button onclick="filterCat('world',this)">World</button>
-      <button onclick="filterCat('technology',this)">Tech</button>
-      <button onclick="filterCat('sports',this)">Sports</button>
+      <button data-cat="all" class="active" onclick="filterCat('all',this)">All</button>
+      <button data-cat="politics" onclick="filterCat('politics',this)">Politics</button>
+      <button data-cat="economy" onclick="filterCat('economy',this)">Economy</button>
+      <button data-cat="world" onclick="filterCat('world',this)">World</button>
+      <button data-cat="technology" onclick="filterCat('technology',this)">Tech</button>
+      <button data-cat="sports" onclick="filterCat('sports',this)">Sports</button>
     </nav>
 
     <!-- Desktop search bar — right side, desktop only (≥1024px) -->
@@ -463,12 +486,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   <!-- Mobile drawer — category pills, toggled by hamburger -->
   <div id="mobile-drawer">
     <div class="mobile-cats">
-      <button class="active" onclick="filterCat('all',this)">All</button>
-      <button onclick="filterCat('politics',this)">Politics</button>
-      <button onclick="filterCat('economy',this)">Economy</button>
-      <button onclick="filterCat('world',this)">World</button>
-      <button onclick="filterCat('technology',this)">Technology</button>
-      <button onclick="filterCat('sports',this)">Sports</button>
+      <button data-cat="all" class="active" onclick="filterCat('all',this)">All</button>
+      <button data-cat="politics" onclick="filterCat('politics',this)">Politics</button>
+      <button data-cat="economy" onclick="filterCat('economy',this)">Economy</button>
+      <button data-cat="world" onclick="filterCat('world',this)">World</button>
+      <button data-cat="technology" onclick="filterCat('technology',this)">Technology</button>
+      <button data-cat="sports" onclick="filterCat('sports',this)">Sports</button>
     </div>
   </div>
 </header>
@@ -566,12 +589,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
     <!-- Footer nav -->
     <nav class="footer-nav" aria-label="Footer navigation">
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-      <a href="#">Advertise</a>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Use</a>
-      <a href="#">RSS Feed</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="advertise.html">Advertise</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="./news/manifest.json" target="_blank">RSS Feed</a>
       <a href="#">Archive</a>
     </nav>
 
@@ -588,58 +611,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
      JAVASCRIPT ENGINE
      ============================================================ -->
 <script>
-/* ============================================================
-   HOW THE DATA ENGINE WORKS
-   ════════════════════════════════════════════════════════════
-   1. On load, fetch('./news/manifest.json') — an array of
-      filenames, e.g. ["story-001.json", "breaking-today.json"]
-
-   2. Each file in /news/ is fetched in parallel. A file can
-      be a single article object OR an array of objects.
-
-   3. Articles with  isBreaking: true  go to the Breaking
-      sidebar. All others go to the main grid.
-
-   4. Every article MUST include:
-        publisher    — human-readable publisher name
-        sourceUrl    — clickable link to the original article
-
-   5. All articles are auto-sorted newest-first by timestamp.
-
-   6. If manifest.json is missing or the folder is empty,
-      the engine silently falls back to DEMO data so the
-      site always shows content.
-
-   ─── manifest.json format ─────────────────────────────────
-   [
-     "story-001.json",
-     "story-002.json",
-     "breaking-today.json"
-   ]
-
-   ─── article JSON format (all fields) ────────────────────
-   {
-     "id":          "unique-slug",
-     "isBreaking":  true,            ← routes to sidebar
-     "category":    "World",
-     "author":      "Jane Doe",
-     "publisher":   "Reuters",
-     "sourceUrl":   "https://reuters.com/article/...",
-     "timestamp":   "2025-05-01T09:00:00Z",
-     "image":       "https://example.com/photo.jpg",
-     "title_en":    "English headline",
-     "title_bn":    "বাংলা শিরোনাম",
-     "summary_en":  "Short English summary.",
-     "summary_bn":  "সংক্ষিপ্ত বাংলা সারাংশ।",
-     "body_en":     "Full body. Use \\n for paragraphs.",
-     "body_bn":     "সম্পূর্ণ বাংলা বডি।"
-   }
-
-   Single-language setup: use "title", "summary", "body"
-   instead of the _en / _bn variants.
-   ============================================================ */
-
-/* ── DEMO content — shown when /news/ folder is absent ─────── */
+/* ── DEMO content ─────────────────────────────────────────── */
 const DEMO = [
   {
     id:"d1", isBreaking:false, category:"Economy", author:"Priya Mehta",
@@ -649,9 +621,9 @@ const DEMO = [
     title_en:"Global Markets Surge as Central Banks Signal Rate Pause",
     title_bn:"কেন্দ্রীয় ব্যাংকের সুদের হার বিরতির ইঙ্গিতে বৈশ্বিক বাজারে উল্লম্ফন",
     summary_en:"Stock indices across Asia, Europe, and North America recorded significant gains after major central banks hinted at pausing rate hikes, easing months of investor anxiety.",
-    summary_bn:"বিশ্বের প্রধান কেন্দ্রীয় ব্যাংকগুলোর ইঙ্গিতের পরে এশিয়া, ইউরোপ ও উত্তর আমেরিকার শেয়ারবাজারে উল্লেখযোগ্য উত্থান ঘটে।",
-    body_en:"Financial markets responded with broad optimism as the Federal Reserve, European Central Bank, and Bank of England issued coordinated statements suggesting they are comfortable holding rates steady. The S&P 500 climbed 1.8%, European equities posted their strongest session in three months, and emerging market currencies also rallied.\n\nAnalysts caution that the relief may be temporary — inflation data due next week could quickly reverse the mood. Bond yields fell sharply, with the 10-year US Treasury dipping below 4.2% for the first time since January.",
-    body_bn:"আর্থিক বাজার ব্যাপক আশাবাদে সাড়া দিয়েছে।\n\nবিশ্লেষকরা সতর্ক করছেন যে স্বস্তি সাময়িক হতে পারে।"
+    summary_bn:"বিশ্বের প্রধান কেন্দ্রীয় ব্যাংকগুলোর ইঙ্গিতের পরে এশিয়া, ইউরোপ ও উত্তর আমেরিকার শেয়ারবাজারে উল্লেখযোগ্য উত্থান ঘটেছে, যা বিনিয়োগকারীদের মাসব্যাপী উদ্বেগ প্রশমিত করেছে।",
+    body_en:"Financial markets responded with broad optimism as the Federal Reserve, European Central Bank, and Bank of England issued coordinated statements suggesting they are comfortable holding rates steady. The S&P 500 climbed 1.8%, European equities posted their strongest session in three months, and emerging market currencies also rallied.\n\nAnalysts caution that the relief may be temporary — inflation data due next week could quickly reverse the mood. Bond yields fell sharply, with the 10-year US Treasury dipping below 4.2% for the first time since January.\n\nThe coordinated signalling marks a significant shift in tone from the aggressive hiking cycle that dominated 2023 and 2024. Markets are now pricing in at least two rate cuts before year-end.",
+    body_bn:"ফেডারেল রিজার্ভ, ইউরোপীয় কেন্দ্রীয় ব্যাংক এবং ব্যাংক অব ইংল্যান্ড একযোগে বিবৃতি দেওয়ার পর আর্থিক বাজার ব্যাপক আশাবাদে সাড়া দিয়েছে। এস অ্যান্ড পি ৫০০ সূচক ১.৮% বৃদ্ধি পেয়েছে এবং উদীয়মান বাজারের মুদ্রাগুলোও শক্তিশালী হয়েছে।\n\nবিশ্লেষকরা সতর্ক করছেন যে এই স্বস্তি সাময়িক হতে পারে — আগামী সপ্তাহে প্রকাশিতব্য মূল্যস্ফীতির তথ্য পরিস্থিতি দ্রুত পাল্টে দিতে পারে।\n\nএই সমন্বিত সংকেত ২০২৩-২০২৪ সালের আক্রমণাত্মক সুদ বৃদ্ধি চক্র থেকে একটি উল্লেখযোগ্য পরিবর্তন চিহ্নিত করে।"
   },
   {
     id:"d2", isBreaking:true, category:"World", author:"James Okafor",
@@ -659,11 +631,11 @@ const DEMO = [
     timestamp:"2025-04-29T06:15:00Z",
     image:"https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=900&q=80",
     title_en:"Summit Diplomacy: Leaders Convene to Address Pacific Tensions",
-    title_bn:"শীর্ষ কূটনীতি: প্রশান্ত মহাসাগরীয় উত্তেজনা সমাধানে নেতারা একত্রিত",
+    title_bn:"শীর্ষ সম্মেলন কূটনীতি: প্রশান্ত মহাসাগরীয় উত্তেজনা নিরসনে নেতারা একত্রিত",
     summary_en:"A rare trilateral summit opened in Singapore, bringing heads of state together to de-escalate the most serious maritime dispute the region has seen in a decade.",
-    summary_bn:"সিঙ্গাপুরে বিরল ত্রিপক্ষীয় সম্মেলন শুরু হয়েছে।",
-    body_en:"Delegations from three Pacific nations gathered in Singapore for 'frank and necessary' talks. The ASEAN-brokered summit runs two days with bilateral side sessions.\n\nSecurity analysts note that informal confidence-building measures may prove more durable than any formal communiqué.",
-    body_bn:"তিনটি প্রশান্ত মহাসাগরীয় দেশের প্রতিনিধিদল সিঙ্গাপুরে একত্রিত হয়েছে।"
+    summary_bn:"সিঙ্গাপুরে একটি বিরল ত্রিপক্ষীয় শীর্ষ সম্মেলন শুরু হয়েছে, যেখানে রাষ্ট্রপ্রধানরা এক দশকের মধ্যে সবচেয়ে গুরুতর সামুদ্রিক বিরোধ নিরসনে একত্রিত হয়েছেন।",
+    body_en:"Delegations from three Pacific nations gathered in Singapore for 'frank and necessary' talks. The ASEAN-brokered summit runs two days with bilateral side sessions.\n\nSecurity analysts note that informal confidence-building measures may prove more durable than any formal communiqué. The dispute centres on overlapping territorial claims in a strategically vital shipping corridor.\n\nA joint statement is expected by Friday, though observers warn that implementation will be the true test of diplomatic progress.",
+    body_bn:"তিনটি প্রশান্ত মহাসাগরীয় দেশের প্রতিনিধিদল সিঙ্গাপুরে 'আন্তরিক ও প্রয়োজনীয়' আলোচনার জন্য একত্রিত হয়েছে। আসিয়ান-মধ্যস্থতায় এই সম্মেলন দুই দিন ধরে চলবে।\n\nনিরাপত্তা বিশ্লেষকরা মনে করেন যে অনানুষ্ঠানিক আস্থা-নির্মাণমূলক পদক্ষেপগুলো যেকোনো আনুষ্ঠানিক ইশতেহারের চেয়ে বেশি স্থায়ী হতে পারে।\n\nশুক্রবারের মধ্যে একটি যৌথ বিবৃতি প্রত্যাশিত, তবে পর্যবেক্ষকরা সতর্ক করেছেন যে বাস্তবায়নই কূটনৈতিক অগ্রগতির প্রকৃত পরীক্ষা হবে।"
   },
   {
     id:"d3", isBreaking:false, category:"Technology", author:"Sara Lindqvist",
@@ -671,11 +643,11 @@ const DEMO = [
     timestamp:"2025-04-28T22:00:00Z",
     image:"https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=900&q=80",
     title_en:"AI Regulation Bill Passes Committee in Historic Vote",
-    title_bn:"ঐতিহাসিক ভোটে কমিটিতে কৃত্রিম বুদ্ধিমত্তা নিয়ন্ত্রণ বিল পাস",
+    title_bn:"ঐতিহাসিক ভোটে কৃত্রিম বুদ্ধিমত্তা নিয়ন্ত্রণ বিল কমিটিতে পাস",
     summary_en:"Lawmakers approved a sweeping framework requiring transparency disclosures for high-risk AI systems and mandatory independent audits before deployment in critical infrastructure.",
-    summary_bn:"আইনপ্রণেতারা একটি ব্যাপক কাঠামো অনুমোদন করেছেন।",
-    body_en:"The Senate Commerce Committee voted 14-9 to advance the Algorithmic Accountability and Safety Act.\n\nTechnology companies have expressed mixed reactions — smaller firms warn compliance costs could stifle innovation.",
-    body_bn:"সিনেট বাণিজ্য কমিটি ১৪-৯ ভোটে আইনটি পাস করেছে।"
+    summary_bn:"আইনপ্রণেতারা উচ্চ-ঝুঁকির কৃত্রিম বুদ্ধিমত্তা সিস্টেমের জন্য স্বচ্ছতা প্রকাশ এবং গুরুত্বপূর্ণ অবকাঠামোয় স্থাপনার আগে বাধ্যতামূলক স্বাধীন নিরীক্ষা প্রয়োজনীয় একটি ব্যাপক কাঠামো অনুমোদন করেছেন।",
+    body_en:"The Senate Commerce Committee voted 14-9 to advance the Algorithmic Accountability and Safety Act. The bill now heads to the full Senate floor where passage is uncertain.\n\nTechnology companies have expressed mixed reactions — larger firms say they welcome clear rules, while smaller firms warn compliance costs could stifle innovation. The bill requires any AI system used in hiring, lending, healthcare, or law enforcement to undergo third-party auditing annually.\n\nCivil liberties groups largely praised the bill, though some argued the audit requirements do not go far enough to address algorithmic bias.",
+    body_bn:"সিনেট বাণিজ্য কমিটি ১৪-৯ ভোটে অ্যালগরিদমিক জবাবদিহিতা ও নিরাপত্তা আইন অগ্রগামী করেছে। বিলটি এখন পূর্ণ সিনেট ফ্লোরে যাবে যেখানে পাস হওয়া অনিশ্চিত।\n\nপ্রযুক্তি কোম্পানিগুলো মিশ্র প্রতিক্রিয়া জানিয়েছে — বড় প্রতিষ্ঠানগুলো স্পষ্ট নিয়ম স্বাগত জানালেও ছোট প্রতিষ্ঠানগুলো সতর্ক করছে যে সম্মতির খরচ উদ্ভাবনকে বাধাগ্রস্ত করতে পারে।\n\nনাগরিক স্বাধীনতা গোষ্ঠীগুলো বিলটির প্রশংসা করেছে, তবে কেউ কেউ যুক্তি দিয়েছেন যে নিরীক্ষার প্রয়োজনীয়তা অ্যালগরিদমিক পক্ষপাত মোকাবেলায় যথেষ্ট নয়।"
   },
   {
     id:"d4", isBreaking:true, category:"Politics", author:"David Krane",
@@ -683,11 +655,11 @@ const DEMO = [
     timestamp:"2025-04-28T16:45:00Z",
     image:"https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=900&q=80",
     title_en:"Election Watch: Early Polls Show Tightening Race",
-    title_bn:"নির্বাচন পর্যবেক্ষণ: প্রাথমিক জরিপে প্রতিযোগিতা আরও কঠিন",
+    title_bn:"নির্বাচন পর্যবেক্ষণ: প্রাথমিক জরিপে প্রতিযোগিতা আরও তীব্র",
     summary_en:"New data shows the incumbent's lead has narrowed significantly in key constituencies, with undecided voters holding unusual sway just six weeks before the national vote.",
-    summary_bn:"নতুন তথ্য দেখাচ্ছে যে প্রধান আসনগুলোতে ক্ষমতাসীনের ব্যবধান উল্লেখযোগ্যভাবে কমেছে।",
-    body_en:"Four independent polling firms show the incumbent party's advantage has shrunk from 8 points to 3 in battleground regions.\n\nThe opposition has redoubled canvassing in suburban districts.",
-    body_bn:"চারটি স্বাধীন জরিপ সংস্থা তথ্য প্রকাশ করেছে।"
+    summary_bn:"নতুন তথ্য দেখাচ্ছে যে জাতীয় ভোটের মাত্র ছয় সপ্তাহ আগে মূল নির্বাচনী এলাকাগুলোতে ক্ষমতাসীনের ব্যবধান উল্লেখযোগ্যভাবে সংকুচিত হয়েছে।",
+    body_en:"Four independent polling firms show the incumbent party's advantage has shrunk from 8 points to 3 in battleground regions. The shift has been most pronounced among voters aged 25–44.\n\nThe opposition has redoubled canvassing in suburban districts and launched a new digital campaign targeting undecided voters. Internal party polling reportedly shows even tighter numbers.\n\nElection analysts caution that six weeks is ample time for momentum to shift again, particularly given two scheduled national debates still to come.",
+    body_bn:"চারটি স্বাধীন জরিপ সংস্থার তথ্য অনুযায়ী, প্রতিদ্বন্দ্বিতাপূর্ণ অঞ্চলগুলোতে ক্ষমতাসীন দলের সুবিধা ৮ পয়েন্ট থেকে ৩-এ নেমে এসেছে। ২৫-৪৪ বছর বয়সী ভোটারদের মধ্যে এই পরিবর্তন সবচেয়ে স্পষ্ট।\n\nবিরোধী দল শহরতলির এলাকায় প্রচারণা দ্বিগুণ করেছে এবং অনিশ্চিত ভোটারদের লক্ষ্য করে একটি নতুন ডিজিটাল প্রচারণা চালু করেছে।\n\nনির্বাচন বিশ্লেষকরা সতর্ক করেছেন যে ছয় সপ্তাহ গতিধারা আবার পরিবর্তনের জন্য যথেষ্ট সময়, বিশেষত দুটি জাতীয় বিতর্ক এখনও বাকি।"
   },
   {
     id:"d5", isBreaking:false, category:"Sports", author:"Tomás Rivera",
@@ -695,11 +667,11 @@ const DEMO = [
     timestamp:"2025-04-28T10:00:00Z",
     image:"https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=900&q=80",
     title_en:"Champions League Semi-Finals: Dramatic Night Across Europe",
-    title_bn:"চ্যাম্পিয়ন্স লিগ সেমি-ফাইনাল: ইউরোপজুড়ে নাটকীয় রাত",
+    title_bn:"চ্যাম্পিয়ন্স লিগ সেমি-ফাইনাল: ইউরোপজুড়ে রোমাঞ্চকর রাত",
     summary_en:"Two closely contested matches produced late drama, with both decided in stoppage time, setting up an enthralling final pairing for next month.",
-    summary_bn:"দুটি হাড্ডাহাড্ডি ম্যাচে শেষ মুহূর্তে নাটক তৈরি হয়।",
-    body_en:"Tuesday's Champions League semi-finals delivered everything neutral fans could hope for.\n\nThe final next month has already broken pre-sale ticketing records.",
-    body_bn:"মঙ্গলবারের চ্যাম্পিয়ন্স লিগ সেমি-ফাইনাল নিরপেক্ষ সমর্থকদের জন্য সবকিছু সরবরাহ করেছিল।"
+    summary_bn:"দুটি হাড্ডাহাড্ডি ম্যাচে যোগ করা সময়ে নাটকীয় পরিণতি হয়েছে, যা আগামী মাসের ফাইনালে অসাধারণ একটি জুটি নিশ্চিত করেছে।",
+    body_en:"Tuesday's Champions League semi-finals delivered everything neutral fans could hope for. Both matches were decided in injury time, with a combined four goals scored in the final ten minutes across the two ties.\n\nThe final next month has already broken pre-sale ticketing records, with demand outstripping supply by a ratio of 12 to 1. UEFA confirmed the venue will host a record broadcast audience.\n\nBoth winning managers praised the resilience of their squads, while noting the physical toll of a congested fixture schedule heading into the final weeks of domestic leagues.",
+    body_bn:"মঙ্গলবারের চ্যাম্পিয়ন্স লিগ সেমি-ফাইনাল নিরপেক্ষ সমর্থকদের সকল প্রত্যাশা পূরণ করেছে। দুটি ম্যাচই ইনজুরি সময়ে নির্ধারিত হয়েছে, যেখানে শেষ দশ মিনিটে মোট চারটি গোল হয়েছে।\n\nআগামী মাসের ফাইনাল ইতোমধ্যে প্রি-সেল টিকেট বিক্রির রেকর্ড ভেঙেছে, চাহিদা সরবরাহের চেয়ে ১২ গুণ বেশি। উয়েফা নিশ্চিত করেছে যে ভেন্যুতে রেকর্ড সম্প্রচার দর্শক থাকবে।\n\nউভয় বিজয়ী কোচ তাদের দলের মানসিক দৃঢ়তার প্রশংসা করেছেন।"
   },
   {
     id:"d6", isBreaking:false, category:"World", author:"Nadia Petrov",
@@ -709,109 +681,201 @@ const DEMO = [
     title_en:"Climate Report: Arctic Ice Reaches Record Low for April",
     title_bn:"জলবায়ু প্রতিবেদন: এপ্রিলে আর্কটিক বরফ রেকর্ড সর্বনিম্নে",
     summary_en:"Scientists confirmed this week that Arctic sea ice extent hit its lowest April measurement on record, raising renewed alarm about accelerating polar melt.",
-    summary_bn:"বিজ্ঞানীরা নিশ্চিত করেছেন যে আর্কটিক সমুদ্রের বরফ এপ্রিলে রেকর্ড সর্বনিম্নে পৌঁছেছে।",
-    body_en:"Arctic sea ice measured 13.1 million square kilometers this April — the lowest in the 46-year satellite record.\n\nReduced ice coverage lowers albedo and further warms surrounding waters.",
-    body_bn:"এই এপ্রিলে আর্কটিক সমুদ্রের বরফ ছিল ১৩.১ মিলিয়ন বর্গকিলোমিটার।"
+    summary_bn:"বিজ্ঞানীরা এই সপ্তাহে নিশ্চিত করেছেন যে আর্কটিক সমুদ্রের বরফ এপ্রিলে রেকর্ড সর্বনিম্নে পৌঁছেছে, যা ত্বরান্বিত মেরু গলনের বিষয়ে নতুন উদ্বেগ জাগিয়েছে।",
+    body_en:"Arctic sea ice measured 13.1 million square kilometers this April — the lowest in the 46-year satellite record, beating the previous low set in 2017 by a margin scientists described as 'alarming'.\n\nReduced ice coverage lowers albedo and further warms surrounding waters, creating a feedback loop that accelerates melting beyond linear projections. The phenomenon is being closely monitored by climate scientists in Bangladesh, where sea-level rise poses an existential threat to coastal communities.\n\nThe UN's latest assessment projects that without significant emissions reductions, the Arctic could see its first ice-free summer before 2035 — a threshold previously not expected until mid-century.",
+    body_bn:"এই এপ্রিলে আর্কটিক সমুদ্রের বরফ ছিল ১৩.১ মিলিয়ন বর্গকিলোমিটার — ৪৬ বছরের স্যাটেলাইট রেকর্ডে সর্বনিম্ন, ২০১৭ সালের আগের নিম্নমান ছাড়িয়ে গেছে।\n\nবরফের আচ্ছাদন কমে যাওয়া তাপমাত্রা শোষণ ক্ষমতা হ্রাস করে এবং আশেপাশের জলকে আরও উষ্ণ করে, একটি প্রতিক্রিয়া চক্র তৈরি করে। এই ঘটনাটি বাংলাদেশের জলবায়ু বিজ্ঞানীরা ঘনিষ্ঠভাবে পর্যবেক্ষণ করছেন, যেখানে সমুদ্রপৃষ্ঠের উচ্চতা বৃদ্ধি উপকূলীয় সম্প্রদায়ের জন্য অস্তিত্বগত হুমকি।\n\nজাতিসংঘের সর্বশেষ মূল্যায়ন অনুমান করেছে যে উল্লেখযোগ্য নির্গমন হ্রাস ছাড়া, আর্কটিক ২০৩৫ সালের আগে তার প্রথম বরফমুক্ত গ্রীষ্মকাল দেখতে পারে।"
   }
 ];
 
 /* ── Global state ──────────────────────────────────────────── */
 let currentLang    = 'en';
-let allArticles    = [];     // non-breaking articles
-let breakingItems  = [];     // isBreaking === true articles
+let allArticles    = [];
+let breakingItems  = [];
 let activeCategory = 'all';
 let searchQuery    = '';
+
+/* ── Category normalisation map ───────────────────────────────
+   Maps ANY Gemini output → one of the 5 website categories.
+   Comparison is always done in lowercase so case never matters. */
+const CAT_NORM = {
+  /* TECH group */
+  'tech':        'technology',
+  'technology':  'technology',
+  'ai/ml':       'technology',
+  'ai':          'technology',
+  'ml':          'technology',
+  'systems':     'technology',
+  'security':    'technology',
+  'hardware':    'technology',
+  'web3':        'technology',
+  'software':    'technology',
+  /* WORLD group */
+  'world':       'world',
+  'biotech':     'world',
+  'other':       'world',
+  'environment': 'world',
+  'science':     'world',
+  'health':      'world',
+  'international':'world',
+  /* POLITICS group */
+  'politics':    'politics',
+  'policy':      'politics',
+  'government':  'politics',
+  /* ECONOMY group */
+  'economy':     'economy',
+  'economics':   'economy',
+  'finance':     'economy',
+  'business':    'economy',
+  /* SPORTS group */
+  'sports':      'sports',
+  'sport':       'sports',
+};
+
+/* Normalise any category string to one of the 5 known values */
+function normaliseCategory(raw) {
+  if (!raw) return 'world';
+  return CAT_NORM[(raw).toLowerCase().trim()] || 'world';
+}
 
 /* ── i18n strings ─────────────────────────────────────────── */
 const L = {
   en: {
-    loading:      'Loading stories…',
-    breaking:     'Breaking',
-    edition:      'Morning Edition',
-    noArticles:   'No stories match your search.',
-    footerDesc:   'Rigorous, independent journalism. Trusted by readers across the world.',
-    footerCopy:   '© 2025 Vanguard Daily. All rights reserved.',
-    socialsLabel: 'Follow Us',
-    source:       'Source:',
-    publisher:    'Published by'
+    loading:       'Loading stories…',
+    breaking:      'Breaking',
+    edition:       'Morning Edition',
+    noArticles:    'No stories found in this category.',
+    noSearch:      'No stories match your search.',
+    footerDesc:    'Rigorous, independent journalism. Trusted by readers across Bangladesh and the world.',
+    footerCopy:    '© 2025 Vanguard Daily. All rights reserved.',
+    socialsLabel:  'Follow Us',
+    source:        'Source:',
+    publisher:     'Published by',
+    readMore:      'Read full story ↗',
+    searchPh:      'Search stories…',
+    all:           'All',
+    politics:      'Politics',
+    economy:       'Economy',
+    world:         'World',
+    technology:    'Tech',
+    sports:        'Sports',
   },
   bn: {
-    loading:      'সংবাদ লোড হচ্ছে…',
-    breaking:     'ব্রেকিং',
-    edition:      'সকালের সংস্করণ',
-    noArticles:   'আপনার অনুসন্ধানের সাথে কোনো সংবাদ মেলেনি।',
-    footerDesc:   'কঠোর, স্বাধীন সাংবাদিকতা। বিশ্বজুড়ে পাঠকদের বিশ্বাসযোগ্য।',
-    footerCopy:   '© ২০২৫ ভ্যানগার্ড ডেইলি। সর্বস্বত্ব সংরক্ষিত।',
-    socialsLabel: 'আমাদের অনুসরণ করুন',
-    source:       'সূত্র:',
-    publisher:    'প্রকাশক'
+    loading:       'সংবাদ লোড হচ্ছে…',
+    breaking:      'ব্রেকিং',
+    edition:       'সকালের সংস্করণ',
+    noArticles:    'এই বিভাগে কোনো সংবাদ পাওয়া যায়নি।',
+    noSearch:      'আপনার অনুসন্ধানের সাথে কোনো সংবাদ মেলেনি।',
+    footerDesc:    'কঠোর, স্বাধীন সাংবাদিকতা। বাংলাদেশ ও বিশ্বজুড়ে পাঠকদের বিশ্বাসযোগ্য।',
+    footerCopy:    '© ২০২৫ ভ্যানগার্ড ডেইলি। সর্বস্বত্ব সংরক্ষিত।',
+    socialsLabel:  'আমাদের অনুসরণ করুন',
+    source:        'সূত্র:',
+    publisher:     'প্রকাশক',
+    readMore:      'সম্পূর্ণ সংবাদ পড়ুন ↗',
+    searchPh:      'সংবাদ খুঁজুন…',
+    all:           'সব',
+    politics:      'রাজনীতি',
+    economy:       'অর্থনীতি',
+    world:         'বিশ্ব',
+    technology:    'প্রযুক্তি',
+    sports:        'খেলাধুলা',
   }
 };
-const t = k => (L[currentLang][k] || L.en[k]);
+const t = k => (L[currentLang][k] || L.en[k] || k);
 
-/* ── Language gate ─────────────────────────────────────────── */
+/* ── Language gate & toggle ───────────────────────────────── */
 function setLang(lang) {
   currentLang = lang;
   localStorage.setItem('vd_lang', lang);
-  document.body.className = 'lang-' + lang;
-  document.documentElement.lang = lang === 'bn' ? 'bn' : 'en';
+  document.body.className        = 'lang-' + lang;
+  document.documentElement.lang  = lang === 'bn' ? 'bn' : 'en';
   document.getElementById('lang-gate').classList.add('hidden');
+
+  /* Update toggle button active state */
+  const ltEn = document.getElementById('lt-en');
+  const ltBn = document.getElementById('lt-bn');
+  if (ltEn) ltEn.classList.toggle('active', lang === 'en');
+  if (ltBn) ltBn.classList.toggle('active', lang === 'bn');
+
   applyI18n();
+
   if (allArticles.length || breakingItems.length) {
-    /* Articles already loaded (returning visitor path) — just re-render
-       so images and text switch to the chosen language immediately */
     renderGrid();
     renderTicker();
   } else {
-    /* First visit — language just chosen, now fetch news */
     loadNews();
   }
 }
 
 function applyI18n() {
   const safe = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  const safeAttr = (id, attr, val) => { const el = document.getElementById(id); if (el) el.setAttribute(attr, val); };
+
   safe('loading-text',   t('loading'));
   safe('breaking-label', t('breaking'));
   safe('edition-label',  t('edition'));
   safe('footer-copy',    t('footerCopy'));
   safe('footer-desc',    t('footerDesc'));
   safe('socials-label',  t('socialsLabel'));
+
+  /* Update search placeholders */
+  safeAttr('desktop-search-input', 'placeholder', t('searchPh'));
+  safeAttr('mobile-search-input',  'placeholder', t('searchPh'));
+
+  /* Update category nav buttons */
+  const catMap = {
+    'all': t('all'), 'politics': t('politics'), 'economy': t('economy'),
+    'world': t('world'), 'technology': t('technology'), 'sports': t('sports')
+  };
+  document.querySelectorAll('#desktop-nav button[data-cat], .mobile-cats button[data-cat]').forEach(btn => {
+    const cat = btn.dataset.cat;
+    if (catMap[cat]) btn.textContent = catMap[cat];
+  });
 }
 
 /* ── Text & media helpers ──────────────────────────────────── */
 const getTitle   = a => (currentLang==='bn' && a.title_bn)   ? a.title_bn   : (a.title_en   || a.title   || '');
 const getSummary = a => (currentLang==='bn' && a.summary_bn) ? a.summary_bn : (a.summary_en || a.summary || '');
 const getBody    = a => (currentLang==='bn' && a.body_bn)    ? a.body_bn    : (a.body_en    || a.body    || '');
-
-/* Dual cover image: pick image_bn for Bangla, image_en for English.
-   Falls back gracefully: image_en → image → null              */
-const getImage   = a => (currentLang==='bn' && a.image_bn)
-  ? a.image_bn
-  : (a.image_en || a.image || null);
+const getImage   = a => (currentLang==='bn' && a.image_bn)   ? a.image_bn   : (a.image_en   || a.image   || null);
 
 function fmtDate(iso) {
-  return new Date(iso).toLocaleString(currentLang==='bn' ? 'bn-BD' : 'en-GB', {
-    day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'
-  });
+  try {
+    return new Date(iso).toLocaleString(currentLang==='bn' ? 'bn-BD' : 'en-GB', {
+      day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'
+    });
+  } catch(_) { return iso || ''; }
 }
 
-function catClass(cat) {
+function catClass(raw) {
+  const norm = normaliseCategory(raw);
   const m = { politics:'cc-politics', economy:'cc-economy', world:'cc-world', technology:'cc-technology', sports:'cc-sports' };
-  return m[(cat||'').toLowerCase()] || 'cc-default';
+  return m[norm] || 'cc-default';
 }
 
-function esc(s) { return String(s).replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+/* Display label for a category (translated) */
+function catLabel(raw) {
+  const norm = normaliseCategory(raw);
+  const labels = {
+    politics:'politics', economy:'economy', world:'world',
+    technology:'technology', sports:'sports'
+  };
+  return t(labels[norm] || 'world');
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 /* ── Category + search filter ─────────────────────────────── */
 function filteredArticles() {
   return allArticles.filter(a => {
-    const catOk = activeCategory === 'all' || (a.category||'').toLowerCase() === activeCategory;
-    const q = searchQuery.trim().toLowerCase();
+    /* Normalise article category for comparison */
+    const normCat = normaliseCategory(a.category);
+    const catOk   = activeCategory === 'all' || normCat === activeCategory;
+    const q       = searchQuery.trim().toLowerCase();
     if (!q) return catOk;
     const textOk =
-      getTitle(a).toLowerCase().includes(q) ||
+      getTitle(a).toLowerCase().includes(q)   ||
       getSummary(a).toLowerCase().includes(q) ||
-      (a.author||'').toLowerCase().includes(q) ||
+      (a.author||'').toLowerCase().includes(q)    ||
       (a.publisher||'').toLowerCase().includes(q) ||
       (a.category||'').toLowerCase().includes(q);
     return catOk && textOk;
@@ -821,9 +885,8 @@ function filteredArticles() {
 function filterCat(cat, _btn) {
   activeCategory = cat;
   document.querySelectorAll('#desktop-nav button, .mobile-cats button').forEach(b => {
-    const lbl = b.textContent.trim().toLowerCase();
-    b.classList.toggle('active',
-      cat === 'all' ? lbl === 'all' : lbl === cat || (cat==='technology' && lbl==='tech')
+    b.classList.toggle('active', (b.dataset.cat || b.textContent.trim().toLowerCase()) === cat
+      || (cat === 'all' && (b.dataset.cat === 'all' || b.textContent.trim().toLowerCase() === t('all').toLowerCase()))
     );
   });
   renderGrid();
@@ -831,7 +894,6 @@ function filterCat(cat, _btn) {
 
 function onSearch(val) {
   searchQuery = val;
-  // Sync all search inputs without re-triggering oninput
   ['desktop-search-input','mobile-search-input'].forEach(id => {
     const el = document.getElementById(id);
     if (el && document.activeElement !== el) el.value = val;
@@ -846,49 +908,52 @@ function publisherHtml(a, compact) {
   const link = a.sourceUrl
     ? `<a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${name}</a>`
     : name;
-  if (compact) {
-    return `<span class="card-publisher">${link}</span>`;
-  }
-  return `<div id="modal-source"><strong>${t('publisher')}:</strong>&nbsp;${link}&nbsp;·&nbsp;<a href="${esc(a.sourceUrl||'#')}" target="_blank" rel="noopener">${t('source')} ↗</a></div>`;
+  if (compact) return `<span class="card-publisher">${link}</span>`;
+  const readMore = a.sourceUrl
+    ? `<a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener">${t('readMore')}</a>`
+    : '';
+  return `<div id="modal-source"><strong>${t('publisher')}:</strong>&nbsp;${link}${readMore ? '&nbsp;·&nbsp;' + readMore : ''}</div>`;
 }
 
 /* ── Render main grid ─────────────────────────────────────── */
 function renderGrid() {
   const grid  = document.getElementById('news-grid');
   const items = filteredArticles();
+
   if (!items.length) {
-    /* Only show "no stories" if there's genuinely nothing — not if
-       everything is in breakingItems (sidebar). Show breaking items
-       in the grid too in that edge case so the page isn't blank.   */
     const allPooled = [...allArticles, ...breakingItems];
     if (allPooled.length === 0) {
       grid.innerHTML = `<div class="no-results">${t('noArticles')}</div>`;
     } else if (allArticles.length === 0 && breakingItems.length > 0) {
-      /* All articles are breaking — display them in the grid as well */
-      grid.innerHTML = breakingItems.map((a, i) => renderCard(a, i)).join('');
+      grid.innerHTML = breakingItems.map((a,i) => renderCard(a,i)).join('');
     } else {
-      grid.innerHTML = `<div class="no-results">${t('noArticles')}</div>`;
+      grid.innerHTML = `<div class="no-results">${searchQuery ? t('noSearch') : t('noArticles')}</div>`;
     }
     return;
   }
-  grid.innerHTML = items.map((a, i) => renderCard(a, i)).join('');
+  grid.innerHTML = items.map((a,i) => renderCard(a,i)).join('');
 }
 
 function renderCard(a, i) {
+  /* Skip cards with no title — prevents blank hero cards */
+  const title = getTitle(a);
+  if (!title) return '';
+
   const coverImg = getImage(a);
   const imgBlock = coverImg
-    ? `<div class="card-img"><img src="${esc(coverImg)}" alt="${esc(getTitle(a))}" loading="${i<2?'eager':'lazy'}" /></div>`
+    ? `<div class="card-img"><img src="${esc(coverImg)}" alt="${esc(title)}" loading="${i<2?'eager':'lazy'}" /></div>`
     : `<div class="card-img card-img-blank"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>`;
-  return `<article class="news-card" onclick="openModal('${esc(a.id)}')" tabindex="0" role="button" aria-label="${esc(getTitle(a))}">
+
+  return `<article class="news-card" onclick="openModal('${esc(a.id)}')" tabindex="0" role="button" aria-label="${esc(title)}">
     ${imgBlock}
     <div class="card-body">
-      <span class="card-cat ${catClass(a.category)}">${esc(a.category||'')}</span>
-      <h2 class="card-headline">${getTitle(a)}</h2>
+      <span class="card-cat ${catClass(a.category)}">${catLabel(a.category)}</span>
+      <h2 class="card-headline">${title}</h2>
       <p class="card-summary">${getSummary(a)}</p>
       <div class="card-meta">
         <span class="card-byline">${esc(a.author||'')}</span>
         <span class="card-dot"></span>
-        <time datetime="${esc(a.timestamp)}">${fmtDate(a.timestamp)}</time>
+        <time datetime="${esc(a.timestamp||'')}">${fmtDate(a.timestamp)}</time>
         ${publisherHtml(a, true)}
       </div>
     </div>
@@ -899,148 +964,91 @@ function renderCard(a, i) {
 function renderTicker() {
   const items = breakingItems.length ? breakingItems : allArticles.slice(0,8);
   document.getElementById('ticker-list').innerHTML = items.map(a => {
+    const title = getTitle(a);
+    if (!title) return '';
     const srcHtml = a.publisher
       ? `<div class="t-source">${t('publisher')}: ${a.sourceUrl ? `<a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${esc(a.publisher)}</a>` : esc(a.publisher)}</div>`
       : '';
     return `<div class="ticker-item" onclick="openModal('${esc(a.id)}')">
-      <div class="t-cat">${esc(a.category||'')}</div>
-      <div class="t-title">${getTitle(a)}</div>
+      <div class="t-cat">${catLabel(a.category)}</div>
+      <div class="t-title">${title}</div>
       ${srcHtml}
       <div class="t-time">${fmtDate(a.timestamp)}</div>
     </div>`;
   }).join('');
 }
 
-/* ── DATA ENGINE — Vanguard manifest loader ──────────────── */
+/* ── DATA ENGINE ──────────────────────────────────────────── */
 async function loadNews() {
   let fetched   = [];
   let usingDemo = false;
 
-  /* ── STEP 1: Fetch manifest.json ────────────────────────────
-     Vanguard manifest format:
-     {
-       "generated_at": "...",
-       "total_articles": N,
-       "articles": [ { title_en, title_bn, summary_en, ... }, ... ]
-     }
-     We also support the legacy plain-array format as fallback.
-  ──────────────────────────────────────────────────────────── */
   try {
     const mRes = await fetch('./manifest.json', { cache: 'no-store' });
     if (!mRes.ok) {
-      console.warn(`[VD] manifest.json HTTP ${mRes.status} — trying ./news/manifest.json`);
-      // Try alternate path
       const mRes2 = await fetch('./news/manifest.json', { cache: 'no-store' });
-      if (!mRes2.ok) {
-        console.warn('[VD] Both manifest paths failed. Using demo.');
-        usingDemo = true;
-      } else {
-        const raw2 = await mRes2.json();
-        fetched = normaliseManifest(raw2);
-        if (!fetched.length) usingDemo = true;
-      }
+      if (!mRes2.ok) { usingDemo = true; }
+      else { const raw2 = await mRes2.json(); fetched = normaliseManifest(raw2); if (!fetched.length) usingDemo = true; }
     } else {
       const raw = await mRes.json();
       fetched = normaliseManifest(raw);
-      if (!fetched.length) {
-        console.warn('[VD] manifest.json had no articles. Using demo.');
-        usingDemo = true;
-      }
+      if (!fetched.length) usingDemo = true;
     }
   } catch (err) {
-    console.error('[VD] manifest.json error:', err);
+    console.error('[VD] manifest error:', err);
     usingDemo = true;
   }
 
-  /* ── STEP 2: Fall back to DEMO ───────────────────────────── */
-  if (usingDemo) {
-    fetched = DEMO;
-    console.log('[VD] Using built-in demo data.');
-  }
+  if (usingDemo) { fetched = DEMO; console.log('[VD] Using demo data.'); }
 
-  /* ── STEP 3: Deduplicate by id ───────────────────────────── */
+  /* Deduplicate */
   const seen = new Set();
   fetched = fetched.filter(a => {
     if (!a || !a.id) return false;
     if (seen.has(a.id)) return false;
-    seen.add(a.id);
-    return true;
+    seen.add(a.id); return true;
   });
 
-  /* ── STEP 4: Sort newest first ───────────────────────────── */
-  fetched.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  /* Sort newest first */
+  fetched.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-  /* ── STEP 5: Route — breaking vs main feed ───────────────── */
+  /* Normalise categories BEFORE routing */
+  fetched.forEach(a => { a.category = normaliseCategory(a.category); });
+
   breakingItems = fetched.filter(a => a.isBreaking === true);
   allArticles   = fetched.filter(a => a.isBreaking !== true);
 
-  console.log(`[VD] Breaking: ${breakingItems.length}, Main feed: ${allArticles.length}`);
+  console.log(`[VD] Breaking: ${breakingItems.length} | Feed: ${allArticles.length}`);
   renderGrid();
   renderTicker();
 }
 
-/* ── NORMALISE: handles both Vanguard object format AND legacy
-   plain-array format. Returns a clean array of article objects. */
+/* ── Normalise manifest format ────────────────────────────── */
 function normaliseManifest(raw) {
   let items = [];
-
-  // Vanguard v4 format: { articles: [...] }
-  if (raw && typeof raw === 'object' && !Array.isArray(raw) && Array.isArray(raw.articles)) {
-    items = raw.articles;
-    console.log(`[VD] Vanguard manifest — ${items.length} articles`);
-  }
-  // Legacy format: plain array of filenames ["file.json", ...]
-  else if (Array.isArray(raw) && raw.length && typeof raw[0] === 'string') {
-    console.warn('[VD] Legacy filename-array manifest not supported in this version.');
-    return [];
-  }
-  // Plain array of article objects
-  else if (Array.isArray(raw)) {
-    items = raw;
-    console.log(`[VD] Plain-array manifest — ${items.length} articles`);
-  } else {
-    console.warn('[VD] Unknown manifest format:', typeof raw);
-    return [];
-  }
+  if (raw && !Array.isArray(raw) && Array.isArray(raw.articles)) items = raw.articles;
+  else if (Array.isArray(raw) && raw.length && typeof raw[0] === 'string') { console.warn('[VD] Legacy filename manifest.'); return []; }
+  else if (Array.isArray(raw)) items = raw;
+  else { console.warn('[VD] Unknown manifest format'); return []; }
 
   return items.map((item, idx) => {
     if (!item || typeof item !== 'object') return null;
     const a = { ...item };
-
-    // ID: use filename → published_at → index
-    if (!a.id) {
-      a.id = a.filename
-        ? a.filename.replace('.json','')
-        : (a.published_at || a.publishedAt || String(idx));
-    }
-
-    // Image: map cover_image_en/bn → image_en/bn (website uses image_en/bn)
+    if (!a.id) a.id = a.filename ? a.filename.replace('.json','') : (a.published_at || String(idx));
     if (!a.image_en) a.image_en = a.cover_image_en || a.imageUrl || a.thumbnail || a.image || '';
     if (!a.image_bn) a.image_bn = a.cover_image_bn || a.image_en || '';
-
-    // Timestamp: map published_at → timestamp
-    if (!a.timestamp) {
-      a.timestamp = a.published_at || a.pub_date || a.pubDate || a.date || new Date().toISOString();
-    }
-
-    // Source URL: map source_url → sourceUrl
+    if (!a.timestamp) a.timestamp = a.published_at || a.pub_date || a.pubDate || a.date || new Date().toISOString();
     if (!a.sourceUrl) a.sourceUrl = a.source_url || a.url || a.link || '';
-
-    // Publisher: extract domain from source_url if no publisher set
-    if (!a.publisher && a.sourceUrl) {
-      try { a.publisher = new URL(a.sourceUrl).hostname.replace('www.',''); } catch(_) {}
-    }
-
-    // Body: use vanguard_analysis delta as body if no body present
+    if (!a.publisher && a.sourceUrl) { try { a.publisher = new URL(a.sourceUrl).hostname.replace('www.',''); } catch(_){} }
     if (!a.body_en && !a.body) {
       const va = a.vanguard_analysis;
       if (va) {
         a.body_en = [
-          va.architecture     ? 'Architecture: '     + va.architecture     : '',
-          va.algorithm_or_logic ? 'Logic: '          + va.algorithm_or_logic : '',
-          va.governance       ? 'Governance: '       + va.governance       : '',
-          va.delta_of_change  ? 'Delta of Change: '  + va.delta_of_change  : '',
-          va.impact_horizon   ? 'Impact Horizon: '   + va.impact_horizon   : '',
+          va.architecture       ? 'Architecture: '     + va.architecture       : '',
+          va.algorithm_or_logic ? 'Analysis: '         + va.algorithm_or_logic : '',
+          va.governance         ? 'Governance: '       + va.governance         : '',
+          va.delta_of_change    ? 'Delta of Change: '  + va.delta_of_change    : '',
+          va.impact_horizon     ? 'Impact Horizon: '   + va.impact_horizon     : '',
         ].filter(Boolean).join('\n\n');
         a.body_bn = a.summary_bn || a.body_en;
       } else {
@@ -1048,43 +1056,30 @@ function normaliseManifest(raw) {
         a.body_bn = a.summary_bn || '';
       }
     }
-
-    // isBreaking: default false
-    if (a.isBreaking === undefined || a.isBreaking === null) a.isBreaking = false;
-
-    // Author default
+    if (!a.isBreaking) a.isBreaking = false;
     if (!a.author) a.author = 'Ahnaf Hassan';
-
     return a;
   }).filter(Boolean);
 }
 
 /* ── Modal ────────────────────────────────────────────────── */
 function openModal(id) {
-  // Search both pools
   const a = [...allArticles, ...breakingItems].find(x => x.id === id);
   if (!a) return;
-
   const img = document.getElementById('modal-img');
   const coverSrc = getImage(a);
   if (coverSrc) { img.src = coverSrc; img.alt = getTitle(a); img.classList.remove('hide'); }
   else img.classList.add('hide');
-
-  document.getElementById('modal-cat').textContent      = a.category||'';
+  document.getElementById('modal-cat').textContent      = catLabel(a.category);
   document.getElementById('modal-headline').textContent = getTitle(a);
   document.getElementById('modal-byline').textContent   = `${a.author||''}  ·  ${fmtDate(a.timestamp)}`;
   document.getElementById('modal-body').innerHTML       =
     getBody(a).split('\n').filter(p=>p.trim()).map(p=>`<p>${p}</p>`).join('');
   document.getElementById('modal-source').innerHTML     = publisherHtml(a, false);
-
   document.getElementById('modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); document.body.style.overflow = ''; }
 function overlayClick(e) { if (e.target===document.getElementById('modal-overlay')) closeModal(); }
 document.addEventListener('keydown', e => { if (e.key==='Escape') closeModal(); });
 
@@ -1101,13 +1096,10 @@ function toggleDrawer() {
 
   const stored = localStorage.getItem('vd_lang');
   if (stored === 'en' || stored === 'bn') {
-    /* Returning visitor — apply language immediately and skip gate */
     setLang(stored);
     loadNews();
   }
-  /* New visitor — gate stays visible; setLang() is called by the
-     gate buttons, which then calls loadNews() after lang is set.
-     Nothing pre-renders so the user never sees the wrong language. */
+  /* No stored preference — gate stays visible. setLang() called by gate buttons which then calls loadNews(). */
 })();
 </script>
 </body>
