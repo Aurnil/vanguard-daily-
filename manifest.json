@@ -1,9 +1,26 @@
 {
-  "generated_at": "2026-05-02T06:27:18.916Z",
+  "generated_at": "2026-05-02T08:27:20.125Z",
   "engine": "Vanguard Intelligence Engine v4.0",
   "author": "Ahnaf Hassan",
-  "total_articles": 24,
+  "total_articles": 25,
   "articles": [
+    {
+      "filename": "article-1777710428556-pm-visits-sylhet-development-and-governance-in-foc.json",
+      "file_url": "https://github.com/Aurnil/vanguard-daily-/blob/main/news/article-1777710428556-pm-visits-sylhet-development-and-governance-in-foc.json",
+      "download_url": "https://raw.githubusercontent.com/Aurnil/vanguard-daily-/main/news/article-1777710428556-pm-visits-sylhet-development-and-governance-in-foc.json",
+      "title_en": "PM Visits Sylhet: Development and Governance in Focus",
+      "title_bn": "প্রধানমন্ত্রী সিলেটে: উন্নয়ন ও শাসন কাঠামোর ওপর নজর",
+      "summary_en": "The Prime Minister's daylong visit to Sylhet underscores the government's commitment to regional development and governance",
+      "summary_bn": "প্রধানমন্ত্রীর সিলেট সফর আঞ্চলিক উন্নয়ন ও শাসনব্যবস্থার প্রতি সরকারের প্রতিশ্রুতি তুলে ধরে",
+      "cover_image_en": "https://media.prothomalo.com/prothomalo-english/2026-05-02/r16jowkz/image-383379-1777698567.jpg",
+      "cover_image_bn": "https://media.prothomalo.com/prothomalo-english/2026-05-02/r16jowkz/image-383379-1777698567.jpg",
+      "author": "Ahnaf Hassan",
+      "source_url": "https://en.prothomalo.com/bangladesh/1yid6hhxpu",
+      "score": 60,
+      "category": "POLITICS",
+      "published_at": "2026-05-02T08:27:08.555Z",
+      "pub_date": "2026-05-02T06:04:34.000Z"
+    },
     {
       "filename": "article-1777703228397-global-population-at-crossroads-deaths-surpass-bir.json",
       "file_url": "https://github.com/Aurnil/vanguard-daily-/blob/main/news/article-1777703228397-global-population-at-crossroads-deaths-surpass-bir.json",
