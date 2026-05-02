@@ -1,0 +1,23 @@
+{
+  "title_en": "Global Population at Crossroads: Deaths Surpass Births",
+  "title_bn": "বিশ্ব জনসংখ্যা এক যুগান্তকার মুখোমুখি: জন্মের চেয়ে মৃত্যু বেশি",
+  "summary_en": "The world is on the cusp of a demographic crisis as deaths start to outnumber births, posing significant social, economic, and political challenges",
+  "summary_bn": "বিশ্ব এক জনসংখ্যাগত সংকটের দিকে এগিয়ে যাচ্ছে যেখানে মৃত্যু জন্মের চেয়ে বেশি হয়ে যাচ্ছে, যা উল্লেখযোগ্য সামাজিক, অর্থনৈতিক এবং রাজনৈতিক চ্যালেঞ্জ তৈরি করছে",
+  "cover_image_en": "https://i.guim.co.uk/img/media/92b761fd145271400857a0d23cd57ed6f46f640c/461_0_3305_2643/master/3305.jpg?width=140&quality=85&auto=format&fit=max&s=7efb780c90bae2a6e17b9b81b969baab",
+  "cover_image_bn": "https://i.guim.co.uk/img/media/92b761fd145271400857a0d23cd57ed6f46f640c/461_0_3305_2643/master/3305.jpg?width=140&quality=85&auto=format&fit=max&s=7efb780c90bae2a6e17b9b81b969baab",
+  "author": "Ahnaf Hassan",
+  "source_url": "https://www.theguardian.com/world/ng-interactive/2026/may/02/what-happens-when-deaths-outnumber-births",
+  "score": 85,
+  "category": "POLITICS",
+  "published_at": "2026-05-02T06:27:08.393Z",
+  "pub_date": "2026-05-02T05:00:17.000Z",
+  "vanguard_analysis": {
+    "architecture": "Demographic modeling and simulation",
+    "algorithm_or_logic": "Statistical analysis and machine learning",
+    "governance": "International cooperation and policy development",
+    "delta_of_change": "Shift in global population dynamics and demographics",
+    "impact_horizon": "Long-term"
+  },
+  "image_prompt_en": "Aging population graph with a red arrow pointing downwards",
+  "image_prompt_bn": "বয়স্ক জনসংখ্যার গ্রাফ একটি লাল তীর নিচের দিকে নির্দেশ করছে"
+}
