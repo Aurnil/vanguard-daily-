@@ -1,9 +1,26 @@
 {
-  "generated_at": "2026-05-02T01:27:21.632Z",
+  "generated_at": "2026-05-02T02:27:19.065Z",
   "engine": "Vanguard Intelligence Engine v4.0",
   "author": "Ahnaf Hassan",
-  "total_articles": 20,
+  "total_articles": 21,
   "articles": [
+    {
+      "filename": "article-1777688828597-australias-threatened-species-under-fire-governmen.json",
+      "file_url": "https://github.com/Aurnil/vanguard-daily-/blob/main/news/article-1777688828597-australias-threatened-species-under-fire-governmen.json",
+      "download_url": "https://raw.githubusercontent.com/Aurnil/vanguard-daily-/main/news/article-1777688828597-australias-threatened-species-under-fire-governmen.json",
+      "title_en": "Australia's Threatened Species Under Fire: Government Accused of Weakening Protection Proposal",
+      "title_bn": "অস্ট্রেলিয়ার বিপন্ন প্রজাতির উপর হামলা: সরকারকে অভিযুক্ত করা হচ্ছে সুরক্ষা প্রস্তাব দুর্বল করার",
+      "summary_en": "The Australian government is under fire for allegedly watering down a proposal to protect the country's threatened species and ecosystems, sparking widespread criticism from environmental groups",
+      "summary_bn": "অস্ট্রেলিয়ান সরকার দেশের বিপন্ন প্রজাতি ও বাস্তুতন্ত্র রক্ষার প্রস্তাব দুর্বল করার অভিযোগে সমালোচিত হচ্ছে, পরিবেশগত গোষ্ঠীগুলির মধ্যে ব্যাপক সমালোচনা সৃষ্টি করছে",
+      "cover_image_en": "https://i.guim.co.uk/img/media/21a8051d436b804806e1165ab555e55aea1f2f15/363_83_815_652/master/815.jpg?width=140&quality=85&auto=format&fit=max&s=9be46632dfbc1076dc1ed64caa229445",
+      "cover_image_bn": "https://i.guim.co.uk/img/media/21a8051d436b804806e1165ab555e55aea1f2f15/363_83_815_652/master/815.jpg?width=140&quality=85&auto=format&fit=max&s=9be46632dfbc1076dc1ed64caa229445",
+      "author": "Ahnaf Hassan",
+      "source_url": "https://www.theguardian.com/australia-news/2026/may/02/federal-government-accused-of-watering-down-proposal-to-protect-australias-threatened-species-and-ecosystems",
+      "score": 80,
+      "category": "POLITICS",
+      "published_at": "2026-05-02T02:27:08.596Z",
+      "pub_date": "2026-05-02T00:00:10.000Z"
+    },
     {
       "filename": "article-1777685228486-iranian-nobel-laureate-narges-mohammadi-hospitaliz.json",
       "file_url": "https://github.com/Aurnil/vanguard-daily-/blob/main/news/article-1777685228486-iranian-nobel-laureate-narges-mohammadi-hospitaliz.json",
