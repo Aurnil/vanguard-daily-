@@ -1,9 +1,26 @@
 {
-  "generated_at": "2026-05-02T05:26:32.055Z",
+  "generated_at": "2026-05-02T06:27:18.916Z",
   "engine": "Vanguard Intelligence Engine v4.0",
   "author": "Ahnaf Hassan",
-  "total_articles": 23,
+  "total_articles": 24,
   "articles": [
+    {
+      "filename": "article-1777703228397-global-population-at-crossroads-deaths-surpass-bir.json",
+      "file_url": "https://github.com/Aurnil/vanguard-daily-/blob/main/news/article-1777703228397-global-population-at-crossroads-deaths-surpass-bir.json",
+      "download_url": "https://raw.githubusercontent.com/Aurnil/vanguard-daily-/main/news/article-1777703228397-global-population-at-crossroads-deaths-surpass-bir.json",
+      "title_en": "Global Population at Crossroads: Deaths Surpass Births",
+      "title_bn": "বিশ্ব জনসংখ্যা এক যুগান্তকার মুখোমুখি: জন্মের চেয়ে মৃত্যু বেশি",
+      "summary_en": "The world is on the cusp of a demographic crisis as deaths start to outnumber births, posing significant social, economic, and political challenges",
+      "summary_bn": "বিশ্ব এক জনসংখ্যাগত সংকটের দিকে এগিয়ে যাচ্ছে যেখানে মৃত্যু জন্মের চেয়ে বেশি হয়ে যাচ্ছে, যা উল্লেখযোগ্য সামাজিক, অর্থনৈতিক এবং রাজনৈতিক চ্যালেঞ্জ তৈরি করছে",
+      "cover_image_en": "https://i.guim.co.uk/img/media/92b761fd145271400857a0d23cd57ed6f46f640c/461_0_3305_2643/master/3305.jpg?width=140&quality=85&auto=format&fit=max&s=7efb780c90bae2a6e17b9b81b969baab",
+      "cover_image_bn": "https://i.guim.co.uk/img/media/92b761fd145271400857a0d23cd57ed6f46f640c/461_0_3305_2643/master/3305.jpg?width=140&quality=85&auto=format&fit=max&s=7efb780c90bae2a6e17b9b81b969baab",
+      "author": "Ahnaf Hassan",
+      "source_url": "https://www.theguardian.com/world/ng-interactive/2026/may/02/what-happens-when-deaths-outnumber-births",
+      "score": 85,
+      "category": "POLITICS",
+      "published_at": "2026-05-02T06:27:08.393Z",
+      "pub_date": "2026-05-02T05:00:17.000Z"
+    },
     {
       "filename": "article-1777699582078-peru-investigates-human-trafficking-for-russian-wa.json",
       "file_url": "https://github.com/Aurnil/vanguard-daily-/blob/main/news/article-1777699582078-peru-investigates-human-trafficking-for-russian-wa.json",
