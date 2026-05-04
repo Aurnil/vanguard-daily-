@@ -4,9 +4,31 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Vanguard Daily</title>
+
+<!-- Dynamic OG meta tags (item 20) -->
+<meta id="og-title"       property="og:title"       content="Vanguard Daily" />
+<meta id="og-description" property="og:description" content="Rigorous, independent journalism." />
+<meta id="og-image"       property="og:image"        content="" />
+<meta id="og-url"         property="og:url"          content="" />
+<meta property="og:type"  content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&family=Hind+Siliguri:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<!-- Print stylesheet (item 19) -->
+<style media="print">
+  #lang-gate,#site-header,#breaking-sidebar,#modal-overlay,
+  #site-footer,.back-to-top,#refresh-banner,#breaking-banner,
+  .news-card { display: none !important; }
+  #print-article { display: block !important; }
+  body { color: #000; font-family: Georgia, serif; font-size: 12pt; }
+  #print-headline { font-size: 22pt; margin-bottom: 6pt; }
+  #print-byline   { font-size: 9pt; color: #555; margin-bottom: 14pt; border-bottom: 1pt solid #ccc; padding-bottom: 6pt; }
+  #print-body     { font-size: 11pt; line-height: 1.7; }
+  #print-body p   { margin-bottom: 10pt; }
+</style>
 
 <style>
 /* ============================================================
@@ -23,6 +45,7 @@
   --ink-mid:    #555555;
   --ink-light:  #888888;
   --red:        #C0392B;
+  --red-light:  #E74C3C;
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-body:  'Lora', Georgia, serif;
   --font-ui:    'Inter', sans-serif;
@@ -43,8 +66,62 @@ img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; }
 
+/* Print article container — hidden on screen */
+#print-article { display: none; }
+
 /* ============================================================
-   LANGUAGE GATEWAY — Full-screen, mandatory
+   BREAKING NEWS BANNER (item 12)
+   ============================================================ */
+#breaking-banner {
+  display: none;
+  background: var(--red);
+  color: #fff;
+  padding: 9px 5%;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 210;
+}
+#breaking-banner.visible { display: flex; }
+.bb-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: #fff;
+  flex-shrink: 0;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+.bb-label {
+  font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; margin-right: 4px;
+}
+#bb-headline { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
+#bb-headline:hover { text-decoration: underline; }
+
+/* ============================================================
+   REFRESH BANNER (item 10)
+   ============================================================ */
+#refresh-banner {
+  display: none;
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 9000;
+  background: var(--ink);
+  color: var(--bg);
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: opacity 0.3s;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+#refresh-banner.visible { display: flex; }
+#refresh-banner:hover { background: #222; }
+
+/* ============================================================
+   LANGUAGE GATEWAY
    ============================================================ */
 #lang-gate {
   position: fixed; inset: 0; z-index: 9999;
@@ -69,36 +146,31 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .gate-btn:hover { background: var(--ink); color: var(--bg); }
 
 /* ============================================================
-   HEADER — Sticky
+   HEADER
    ============================================================ */
 #site-header {
   position: sticky; top: 0; z-index: 200;
   background: var(--bg); border-bottom: 2.5px solid var(--ink);
 }
-
-/* ── MOBILE header row (<640px)
-   Layout: [Logo centered] [Hamburger right]
-   Search bar is permanently visible BELOW the logo row        */
 .header-row {
   display: flex; align-items: center;
   min-height: 60px; padding: 0 5%;
-  gap: var(--base-grid);
+  gap: 8px;
   position: relative;
 }
-
-/* Logo — mobile: center-aligned, 180px wide */
+/* Mobile: logo absolutely centered, toggle left, hamburger right */
 .site-logo {
   display: flex; flex-direction: column;
-  align-items: center;          /* center on mobile */
+  align-items: center;
   line-height: 1; flex-shrink: 0;
   border-bottom: 1.5px solid var(--ink); padding-bottom: 2px;
-  width: 180px;
-  margin: 0 auto;               /* push to center of row */
+  width: 160px;
+  position: absolute; left: 50%; transform: translateX(-50%);
+  pointer-events: auto;
 }
 .logo-l1 { font-family: var(--font-serif); font-weight: 900; font-size: 1.4rem; letter-spacing: 0.07em; text-transform: uppercase; }
 .logo-l2 { font-family: var(--font-serif); font-weight: 700; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; }
 
-/* Mobile search row — always visible below the logo/hamburger row */
 .mobile-search-bar {
   display: flex; align-items: center;
   border-top: 1px solid var(--border);
@@ -112,19 +184,16 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .mobile-search-bar input::placeholder { color: var(--ink-light); }
 
-/* Hamburger — mobile only, absolute right */
 #hamburger {
   display: flex; flex-direction: column; justify-content: center;
   gap: 5px; width: 28px; height: 28px; padding: 2px;
   flex-shrink: 0;
-  /* sits at far right, logo is centered with margin:auto */
 }
 #hamburger span { display: block; height: 2px; width: 100%; background: var(--ink); transition: transform var(--trans), opacity var(--trans); }
 #hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 #hamburger.open span:nth-child(2) { opacity: 0; }
 #hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Mobile drawer — category pills */
 #mobile-drawer { display: none; flex-direction: column; background: var(--bg); border-top: 1px solid var(--border); }
 #mobile-drawer.open { display: flex; }
 .mobile-cats { display: flex; overflow-x: auto; gap: 8px; padding: 10px 5%; scrollbar-width: none; }
@@ -133,34 +202,24 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   white-space: nowrap; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
   padding: 6px 14px; border: 1.5px solid var(--border2); border-radius: 2px; color: var(--ink-mid);
   transition: background var(--trans), color var(--trans), border-color var(--trans);
+  position: relative;
 }
 .mobile-cats button:hover, .mobile-cats button.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 
-/* Desktop nav elements — hidden on mobile */
 #desktop-nav { display: none; }
 .desktop-header-search { display: none; }
 
-/* ── TABLET header (640px – 1023px)
-   Layout: [Logo left 200px]  [Nav inline list right-aligned]
-   No search in header on tablet — it's in the layout already  */
 @media (min-width: 640px) {
   .mobile-search-bar { display: none; }
   #hamburger         { display: none; }
   #mobile-drawer     { display: none !important; }
-
-  .header-row {
-    max-width: 100%; padding: 0 5%;
-    min-height: 64px;
-  }
-
+  .header-row { max-width: 100%; padding: 0 5%; min-height: 64px; gap: var(--base-grid); }
   .site-logo {
-    align-items: flex-start;   /* left-align on tablet+ */
-    margin: 0;                 /* remove auto centering */
-    width: 200px;
+    position: static; transform: none;
+    align-items: flex-start;
+    width: 200px; margin: 0;
   }
   .logo-l1 { font-size: 1.5rem; }
-
-  /* Inline nav list, right-aligned */
   #desktop-nav {
     display: flex; align-items: center;
     gap: 4px; margin-left: auto; flex-shrink: 0;
@@ -169,19 +228,15 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
     padding: 5px 10px; border-radius: 2px; color: var(--ink-mid);
     transition: background var(--trans), color var(--trans);
+    position: relative;
   }
   #desktop-nav button:hover, #desktop-nav button.active { background: var(--ink); color: var(--bg); }
 }
 
-/* ── DESKTOP header (≥1024px)
-   Layout: [Logo left 250px]  [Nav]  [Search bar right]        */
 @media (min-width: 1024px) {
   .header-row { max-width: 1280px; margin: 0 auto; padding: 0 5%; min-height: 68px; }
-
   .site-logo { width: 250px; }
   .logo-l1   { font-size: 1.7rem; }
-
-  /* Search bar appears in header on desktop, right side after nav */
   .desktop-header-search {
     display: flex; align-items: center;
     border: 1.5px solid var(--border2); border-radius: var(--radius);
@@ -196,33 +251,62 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .desktop-header-search svg { color: var(--ink-light); flex-shrink: 0; }
 }
 
-/* Date bar */
+/* Date bar (item 16) */
 #date-bar {
   background: var(--ink); color: var(--bg);
-  font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
-  padding: 5px 5%; display: flex; gap: 14px; align-items: center; justify-content: space-between;
+  font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 5px 5%; display: flex; gap: 8px; align-items: center; justify-content: space-between;
+  flex-wrap: wrap;
 }
+@media (min-width: 640px) { #date-bar { font-size: 0.68rem; letter-spacing: 0.12em; gap: 14px; } }
 #date-bar .edition { opacity: 0.6; }
+#last-updated { opacity: 0.75; font-style: italic; letter-spacing: 0.04em; text-transform: none; font-size: 0.6rem; }
 
 /* ============================================================
-   APP SHELL — Responsive grid
-   MOBILE  (<640px):   single column; sidebar below feed
-   TABLET  (≥640px):   sidebar LEFT 25% | main feed RIGHT
-   DESKTOP (≥1024px):  sidebar LEFT 20% (max 260px) | main feed
+   CATEGORY COUNT BADGE (item 15)
+   ============================================================ */
+.cat-count-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.25);
+  color: inherit;
+  font-size: 0.58rem; font-weight: 700;
+  border-radius: 8px;
+  padding: 1px 5px;
+  margin-left: 3px;
+  vertical-align: middle;
+  line-height: 1.4;
+}
+button.active .cat-count-badge { background: rgba(255,255,255,0.3); }
+
+/* ============================================================
+   SCORE BADGE (item 11)
+   ============================================================ */
+.score-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: 50%;
+  font-size: 0.55rem; font-weight: 800;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.score-red    { background: #C0392B; color: #fff; }
+.score-orange { background: #E67E22; color: #fff; }
+.score-green  { background: #27AE60; color: #fff; }
+
+/* ============================================================
+   APP SHELL
    ============================================================ */
 #app-shell {
-  width: 90%; margin: 0 auto;
-  padding: var(--base-grid) 0;
+  width: 95%; margin: 0 auto;
+  padding: 12px 0;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-areas: "feed" "sidebar";
-  gap: var(--base-grid);
+  gap: 14px;
   align-items: start;
 }
-#main-feed      { grid-area: feed; }
+#main-feed        { grid-area: feed; }
 #breaking-sidebar { grid-area: sidebar; }
 
-/* Tablet: sidebar LEFT at 25% width */
 @media (min-width: 640px) {
   #app-shell {
     width: 80%;
@@ -232,8 +316,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     padding: var(--base-grid) 0 32px;
   }
 }
-
-/* Desktop: sidebar LEFT at 20% (capped 260px), 70% container */
 @media (min-width: 1024px) {
   #app-shell {
     width: 70%; max-width: 1200px;
@@ -245,11 +327,17 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 /* ============================================================
-   BREAKING SIDEBAR — vertical column, left side
+   BREAKING SIDEBAR
    ============================================================ */
 #breaking-sidebar {
   border: 1.5px solid var(--ink); background: var(--surface);
-  overflow: hidden; position: sticky; top: 80px;
+  overflow: hidden; position: sticky; top: 100px;
+}
+@media (min-width: 640px) {
+  #breaking-sidebar { top: 72px; }
+}
+@media (min-width: 1024px) {
+  #breaking-sidebar { top: 76px; }
 }
 .ticker-hdr {
   background: var(--ink); color: var(--bg); padding: 8px 12px;
@@ -262,36 +350,78 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .ticker-item { padding: 11px 12px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background var(--trans); }
 .ticker-item:last-child { border-bottom: none; }
 .ticker-item:hover { background: var(--surface2); }
-.t-cat  { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 3px; }
+.t-cat   { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 3px; }
 .t-title { font-family: var(--font-serif); font-size: 0.82rem; font-weight: 700; line-height: 1.3; }
 .t-source { font-size: 0.6rem; color: var(--ink-mid); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
 .t-source a { color: var(--red); text-decoration: underline; text-underline-offset: 2px; }
-.t-time { font-size: 0.62rem; color: var(--ink-light); margin-top: 3px; }
+.t-time  { font-size: 0.62rem; color: var(--ink-light); margin-top: 3px; }
 
 /* ============================================================
    NEWS GRID & CARDS
    ============================================================ */
-/* Mobile: single column */
-#news-grid { display: grid; gap: var(--base-grid); grid-template-columns: 1fr; }
+#news-grid { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { #news-grid { gap: var(--base-grid); } }
 
-/* Tablet: 2-column grid, ~48% each card */
 @media (min-width: 640px) {
   #news-grid { grid-template-columns: 1fr 1fr; }
   #news-grid .news-card:first-child { grid-column: 1 / -1; }
   #news-grid .news-card:first-child .card-headline { font-size: 1.25rem; }
-  #news-grid .news-card:first-child .card-summary { -webkit-line-clamp: 4; }
-  .card-headline { font-size: 1rem; }  /* tablet: 20px headline */
-  .card-summary  { font-size: 0.875rem; } /* tablet: 16px content */
+  #news-grid .news-card:first-child .card-summary  { -webkit-line-clamp: 4; }
+  .card-headline { font-size: 1rem; }
+  .card-summary  { font-size: 0.875rem; }
 }
-
-/* Desktop: 3-column grid, ~31% each card */
 @media (min-width: 1024px) {
   #news-grid { grid-template-columns: 1fr 1fr 1fr; }
   #news-grid .news-card:first-child { grid-column: 1 / 3; }
   #news-grid .news-card:first-child .card-headline { font-size: 1.5rem; }
-  .card-headline { font-size: 1.1rem; }   /* desktop: 24px headline */
-  .card-summary  { font-size: 1rem; }     /* desktop: 18px content */
+  .card-headline { font-size: 1.1rem; }
+  .card-summary  { font-size: 1rem; }
 }
+
+/* Daily Summary hero card (item 6) */
+.news-card.daily-summary {
+  grid-column: 1 / -1 !important;
+  border: 2.5px solid var(--ink);
+  background: #FFFDF7;
+  position: relative;
+}
+.daily-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--ink); color: var(--bg);
+  font-size: 0.6rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 4px 10px; margin-bottom: 8px;
+  border-radius: 2px;
+}
+
+/* Minimal card (item 5) */
+.news-card.minimal {
+  background: var(--surface2);
+  border: 1.5px dashed var(--border2);
+}
+.news-card.minimal:hover { border-color: var(--ink); }
+.minimal-badge {
+  display: inline-flex; align-items: center;
+  background: var(--border2); color: var(--ink-mid);
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 2px; margin-left: 6px;
+}
+
+/* Skeleton cards (item 3) */
+.skeleton-card {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+@keyframes skeleton-pulse {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
+.skeleton-img   { width: 100%; aspect-ratio: 16/9; background: var(--surface2); }
+.skeleton-body  { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.skeleton-line  { height: 10px; background: var(--border2); border-radius: 3px; }
+.skeleton-line.w80 { width: 80%; }
+.skeleton-line.w60 { width: 60%; }
+.skeleton-line.w40 { width: 40%; }
 
 .news-card {
   background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius);
@@ -300,37 +430,49 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .news-card:hover { border-color: var(--ink); box-shadow: 3px 3px 0 var(--ink); transform: translate(-2px,-2px); }
 
-/* Image: 100% width, fixed 16:9 aspect ratio */
+/* Card image — lazy-loaded (item 1) */
 .card-img { width: 100%; aspect-ratio: 16/9; overflow: hidden; background: var(--surface2); }
-.card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.38s ease; }
+.card-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.35s ease, transform 0.38s ease; }
+.card-img img.loaded { opacity: 1; }
 .news-card:hover .card-img img { transform: scale(1.04); }
 .card-img-blank { width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
 .card-img-blank svg { opacity: 0.2; }
 
-/* Card body */
-.card-body { padding: 14px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
-
-/* Category badge — top-left */
+.card-body { padding: 12px; flex: 1; display: flex; flex-direction: column; gap: 7px; }
+@media (min-width: 640px) { .card-body { padding: 14px; gap: 8px; } }
 .card-cat {
   font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
   width: fit-content; border-left: 3px solid; padding-left: 6px;
+  display: flex; align-items: center; gap: 6px;
 }
-
-/* Headline — below image, mobile: 18px, tablet: 20px, desktop: 24px */
 .card-headline { font-family: var(--font-serif); font-weight: 700; font-size: 1.1rem; line-height: 1.3; flex: 1; }
-@media (max-width: 639px) { .card-headline { font-size: 1rem; } } /* 18px mobile */
+@media (max-width: 639px) { .card-headline { font-size: 1rem; } }
 
 .card-summary { font-family: var(--font-body); font-size: 0.8rem; line-height: 1.55; color: var(--ink-mid); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-@media (max-width: 639px) { .card-summary { font-size: 0.8rem; } } /* 14px mobile content */
+@media (max-width: 639px) { .card-summary { font-size: 0.8rem; } }
 
-/* Timestamp / byline — below headline */
+/* Reading time (item 4) */
+.reading-time {
+  font-size: 0.6rem; color: var(--ink-light); display: flex; align-items: center; gap: 4px;
+}
+.reading-time svg { opacity: 0.5; }
+
 .card-meta { display: flex; align-items: center; gap: 7px; font-size: 0.63rem; color: var(--ink-light); border-top: 1px solid var(--border); padding-top: 8px; margin-top: auto; flex-wrap: wrap; }
 .card-byline { font-weight: 600; color: var(--ink-mid); }
 .card-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border2); flex-shrink: 0; }
-.card-publisher { margin-left: auto; font-size: 0.6rem; color: var(--ink-mid); display: flex; align-items: center; gap: 4px; }
-.card-publisher a { color: var(--red); text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
 
-/* Category colour coding */
+/* Publisher — more prominent (item 18) */
+.card-publisher {
+  margin-left: auto; font-size: 0.6rem; color: var(--ink-mid);
+  display: flex; align-items: center; gap: 4px;
+  border: 1px solid var(--border2); border-radius: 2px;
+  padding: 2px 6px;
+  max-width: 120px; overflow: hidden;
+}
+.card-publisher a { color: var(--red); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 3px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.card-publisher a:hover { text-decoration: underline; text-underline-offset: 2px; }
+.pub-icon { opacity: 0.5; flex-shrink: 0; }
+
 .cc-politics   { border-color: #1a1a2e; color: #1a1a2e; }
 .cc-economy    { border-color: #14532d; color: #14532d; }
 .cc-world      { border-color: #7c2d12; color: #7c2d12; }
@@ -338,14 +480,16 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .cc-sports     { border-color: #3b1a6e; color: #3b1a6e; }
 .cc-default    { border-color: #000;    color: #000; }
 
-/* ============================================================
-   LANGUAGE TOGGLE — permanent pill next to logo
-   ============================================================ */
+/* Lang toggle — mobile: left side. tablet+: after logo */
 #lang-toggle {
   display: flex; align-items: center;
   border: 1.5px solid var(--border2); border-radius: 20px;
   overflow: hidden; flex-shrink: 0; height: 30px;
   font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+}
+@media (min-width: 640px) {
+  /* On tablet+, lang-toggle margin-right:auto moves it left of the nav */
+  #lang-toggle { margin-right: 0; }
 }
 #lang-toggle button {
   padding: 0 10px; height: 100%; color: var(--ink-mid);
@@ -361,31 +505,147 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ============================================================
-   MODAL — Article Detail
+   MODAL
    ============================================================ */
-#modal-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.52); backdrop-filter: blur(2px); display: none; align-items: flex-start; justify-content: center; padding: 36px 16px; overflow-y: auto; }
+#modal-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.52); backdrop-filter: blur(2px);
+  display: none; align-items: flex-start; justify-content: center;
+  padding: 0; overflow-y: auto;
+}
 #modal-overlay.open { display: flex; }
-#modal-box { background: var(--bg); border: 2px solid var(--ink); width: 100%; max-width: 800px; position: relative; animation: rise 0.24s ease; }
+#modal-box {
+  background: var(--bg); border: 2px solid var(--ink);
+  width: 100%; max-width: 800px; position: relative;
+  animation: rise 0.24s ease;
+  margin: 0 auto;
+  /* On mobile full-screen, on larger screens float with gap */
+  min-height: 100svh;
+}
+@media (min-width: 640px) {
+  #modal-overlay { padding: 32px 16px; align-items: flex-start; }
+  #modal-box { min-height: auto; margin: 0 auto; }
+}
+
+/* Reading progress bar (item 7) — sits at very top of modal-box, not sticky */
+#modal-progress {
+  position: relative; top: 0; left: 0; right: 0;
+  height: 3px; background: var(--border2); z-index: 10;
+}
+#modal-progress-bar {
+  height: 100%; width: 0%; background: var(--red);
+  transition: width 0.1s linear;
+  border-radius: 0;
+}
+
 @keyframes rise { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-#modal-close { position: absolute; top: 12px; right: 12px; z-index: 2; width: 32px; height: 32px; border: 1.5px solid var(--border2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--ink-mid); transition: background var(--trans), color var(--trans); }
+
+/* Modal header actions bar — close button lives here as a flex sibling */
+#modal-actions {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  justify-content: flex-end;
+  position: relative;
+}
+#modal-close {
+  width: 30px; height: 30px; border: 1.5px solid var(--border2); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; color: var(--ink-mid); flex-shrink: 0;
+  transition: background var(--trans), color var(--trans);
+  margin-left: 4px;
+}
 #modal-close:hover { background: var(--ink); color: var(--bg); }
-#modal-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--surface2); }
+.modal-action-btn {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 5px 10px; border: 1.5px solid var(--border2); border-radius: 2px; color: var(--ink-mid);
+  transition: border-color var(--trans), color var(--trans), background var(--trans);
+}
+.modal-action-btn:hover { border-color: var(--ink); color: var(--ink); }
+
+#modal-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--surface2); display: block; }
 #modal-img.hide { display: none; }
-#modal-content { padding: 26px 30px 36px; }
+#modal-content { padding: 20px 16px 32px; }
+@media (min-width: 480px) { #modal-content { padding: 24px 24px 36px; } }
+@media (min-width: 640px) { #modal-content { padding: 26px 30px 40px; } }
 #modal-cat { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); margin-bottom: 10px; }
-#modal-headline { font-family: var(--font-serif); font-size: clamp(1.4rem,4vw,2rem); font-weight: 900; line-height: 1.18; margin-bottom: 10px; }
-#modal-byline { font-size: 0.73rem; color: var(--ink-light); padding-bottom: 16px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+#modal-headline { font-family: var(--font-serif); font-size: clamp(1.2rem,5vw,2rem); font-weight: 900; line-height: 1.18; margin-bottom: 10px; word-break: break-word; }
+#modal-byline { font-size: 0.73rem; color: var(--ink-light); padding-bottom: 16px; border-bottom: 1px solid var(--border); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+#modal-reading-time { font-size: 0.68rem; color: var(--ink-light); display: flex; align-items: center; gap: 4px; }
+
 #modal-body { font-family: var(--font-body); font-size: 1rem; line-height: 1.78; color: var(--ink-mid); }
 #modal-body p { margin-bottom: 1.1em; }
+
+/* Loading state in modal */
+#modal-body .modal-loading {
+  display: flex; align-items: center; gap: 10px;
+  padding: 32px 0; color: var(--ink-light);
+  font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+}
+
 #modal-source { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 8px; font-size: 0.72rem; color: var(--ink-mid); }
 #modal-source strong { color: var(--ink); }
 #modal-source a { color: var(--red); text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
 
-/* Bangla font overrides */
+/* Vanguard Analysis panel (item 17) */
+#modal-vanguard {
+  margin-top: 24px; border: 1.5px solid var(--border2); border-radius: var(--radius);
+  overflow: hidden;
+}
+#modal-vanguard-toggle {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; background: var(--surface);
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  border-bottom: 1.5px solid transparent; color: var(--ink);
+  transition: background var(--trans);
+}
+#modal-vanguard-toggle:hover { background: var(--surface2); }
+#modal-vanguard-toggle .va-chevron { transition: transform var(--trans); }
+#modal-vanguard-toggle.open .va-chevron { transform: rotate(180deg); }
+#modal-vanguard-body { display: none; padding: 14px; background: var(--bg); }
+#modal-vanguard-body.open { display: block; }
+.va-field { margin-bottom: 12px; }
+.va-field:last-child { margin-bottom: 0; }
+.va-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mid); margin-bottom: 3px; }
+.va-value { font-size: 0.82rem; line-height: 1.5; color: var(--ink); }
+
+/* Related articles (item 8) */
+#modal-related { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--border); }
+.related-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mid); margin-bottom: 12px; }
+.related-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 640px) { .related-grid { grid-template-columns: 1fr 1fr; } }
+.related-card {
+  border: 1.5px solid var(--border2); border-radius: var(--radius);
+  padding: 11px 13px; cursor: pointer;
+  transition: border-color var(--trans), background var(--trans);
+}
+.related-card:hover { border-color: var(--ink); background: var(--surface); }
+.related-cat  { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); margin-bottom: 4px; }
+.related-title { font-family: var(--font-serif); font-size: 0.85rem; font-weight: 700; line-height: 1.3; }
+.related-time  { font-size: 0.58rem; color: var(--ink-light); margin-top: 4px; }
+
+/* Bangla overrides */
 .lang-bn #modal-body,
 .lang-bn .card-headline,
 .lang-bn .card-summary,
 .lang-bn .t-title { font-family: var(--font-bn); }
+
+/* ============================================================
+   BACK TO TOP (item 14)
+   ============================================================ */
+.back-to-top {
+  position: fixed; bottom: 24px; right: 24px; z-index: 300;
+  width: 42px; height: 42px; border: 2px solid var(--ink);
+  border-radius: 50%; background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink); cursor: pointer;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s, background var(--trans);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+.back-to-top.visible { opacity: 1; pointer-events: auto; }
+.back-to-top:hover { background: var(--ink); color: var(--bg); transform: translateY(-2px); }
 
 /* ============================================================
    FOOTER
@@ -415,9 +675,27 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 </head>
 <body>
 
-<!-- ============================================================
-     LANGUAGE GATEWAY — Mandatory full-screen choice
-     ============================================================ -->
+<!-- Print-only article container (item 19) -->
+<div id="print-article">
+  <div id="print-headline"></div>
+  <div id="print-byline"></div>
+  <div id="print-body"></div>
+</div>
+
+<!-- Refresh banner (item 10) -->
+<div id="refresh-banner" role="alert">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+  <span id="refresh-banner-text">New stories available — tap to refresh</span>
+</div>
+
+<!-- Breaking banner (item 12) -->
+<div id="breaking-banner" role="alert">
+  <div class="bb-dot"></div>
+  <span class="bb-label">Breaking</span>
+  <span id="bb-headline"></span>
+</div>
+
+<!-- Language gate -->
 <div id="lang-gate">
   <div class="gate-masthead">
     <div class="gate-line1">Vanguard</div>
@@ -430,28 +708,17 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   </div>
 </div>
 
-<!-- ============================================================
-     HEADER
-     Mobile:  [Logo center] [Hamburger right] + search bar below
-     Tablet:  [Logo left 200px] [Nav inline list right]
-     Desktop: [Logo left 250px] [Nav] [Search bar right]
-     ============================================================ -->
+<!-- Header -->
 <header id="site-header">
   <div class="header-row">
-
-    <!-- Logo — center on mobile, left on tablet+ -->
     <a href="#" class="site-logo" aria-label="Vanguard Daily">
       <span class="logo-l1">Vanguard</span>
       <span class="logo-l2">Daily</span>
     </a>
-
-    <!-- Permanent language toggle — always next to logo -->
-    <div id="lang-toggle" aria-label="Switch language">
+    <div id="lang-toggle" aria-label="Switch language" style="flex-shrink:0; margin-right:auto;">
       <button id="lt-en" onclick="setLang('en')" aria-label="English">EN</button>
       <button id="lt-bn" onclick="setLang('bn')" aria-label="বাংলা">বাং</button>
     </div>
-
-    <!-- Desktop/Tablet nav — inline list, right-aligned (hidden on mobile) -->
     <nav id="desktop-nav" aria-label="Category filter">
       <button data-cat="all" class="active" onclick="filterCat('all',this)">All</button>
       <button data-cat="politics" onclick="filterCat('politics',this)">Politics</button>
@@ -460,30 +727,22 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
       <button data-cat="technology" onclick="filterCat('technology',this)">Tech</button>
       <button data-cat="sports" onclick="filterCat('sports',this)">Sports</button>
     </nav>
-
-    <!-- Desktop search bar — right side, desktop only (≥1024px) -->
     <div class="desktop-header-search" role="search">
       <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2">
         <circle cx="8.5" cy="8.5" r="5.5"/><line x1="13" y1="13" x2="19" y2="19"/>
       </svg>
       <input type="text" id="desktop-search-input" placeholder="Search stories…" aria-label="Search" oninput="onSearch(this.value)" />
     </div>
-
-    <!-- Hamburger — mobile only -->
     <button id="hamburger" aria-label="Open menu" onclick="toggleDrawer()">
       <span></span><span></span><span></span>
     </button>
   </div>
-
-  <!-- Mobile search bar — permanently visible below logo row on mobile -->
   <div class="mobile-search-bar">
     <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2">
       <circle cx="8.5" cy="8.5" r="5.5"/><line x1="13" y1="13" x2="19" y2="19"/>
     </svg>
     <input type="text" id="mobile-search-input" placeholder="Search stories…" aria-label="Search" oninput="onSearch(this.value)" />
   </div>
-
-  <!-- Mobile drawer — category pills, toggled by hamburger -->
   <div id="mobile-drawer">
     <div class="mobile-cats">
       <button data-cat="all" class="active" onclick="filterCat('all',this)">All</button>
@@ -496,21 +755,15 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   </div>
 </header>
 
-<!-- DATE BAR -->
+<!-- Date bar (item 16) -->
 <div id="date-bar">
   <strong id="current-date"></strong>
+  <span id="last-updated"></span>
   <span class="edition" id="edition-label">Morning Edition</span>
 </div>
 
-<!-- ============================================================
-     APP SHELL
-     Mobile:  [feed] then [sidebar] stacked
-     Tablet+: [sidebar LEFT 25%] | [feed RIGHT]
-     Desktop: [sidebar LEFT 20%] | [feed RIGHT 3-col]
-     ============================================================ -->
+<!-- App shell -->
 <div id="app-shell">
-
-  <!-- Breaking sidebar — LEFT on tablet/desktop, below on mobile -->
   <aside id="breaking-sidebar">
     <div class="ticker-hdr">
       <div class="ticker-dot"></div>
@@ -518,76 +771,91 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     </div>
     <div class="ticker-list" id="ticker-list"></div>
   </aside>
-
   <section id="main-feed">
     <div id="news-grid">
-      <div class="spinner-wrap">
-        <div class="spinner"></div>
-        <span id="loading-text">Loading stories…</span>
-      </div>
+      <!-- Skeleton cards shown during load (item 3) -->
+      <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line w80"></div><div class="skeleton-line w60"></div><div class="skeleton-line w40"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line w80"></div><div class="skeleton-line w60"></div><div class="skeleton-line w40"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line w80"></div><div class="skeleton-line w60"></div><div class="skeleton-line w40"></div></div></div>
     </div>
   </section>
-
 </div>
 
-<!-- ============================================================
-     ARTICLE MODAL
-     ============================================================ -->
+<!-- Article modal -->
 <div id="modal-overlay" role="dialog" aria-modal="true" onclick="overlayClick(event)">
   <div id="modal-box">
-    <button id="modal-close" onclick="closeModal()" aria-label="Close">&#215;</button>
+    <!-- Reading progress bar (item 7) -->
+    <div id="modal-progress"><div id="modal-progress-bar"></div></div>
+    <!-- Modal action bar: share + print + close (items 9, 19) -->
+    <div id="modal-actions">
+      <button class="modal-action-btn" id="modal-share-btn" onclick="shareArticle()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        <span id="share-label">Share</span>
+      </button>
+      <button class="modal-action-btn" onclick="printArticle()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        <span>Print</span>
+      </button>
+      <button id="modal-close" onclick="closeModal()" aria-label="Close">&#215;</button>
+    </div>
     <img id="modal-img" src="" alt="" />
     <div id="modal-content">
       <div id="modal-cat"></div>
       <h2 id="modal-headline"></h2>
-      <div id="modal-byline"></div>
+      <div id="modal-byline">
+        <span id="modal-byline-text"></span>
+        <span id="modal-reading-time"></span>
+      </div>
       <div id="modal-body"></div>
+      <!-- Vanguard Analysis (item 17) -->
+      <div id="modal-vanguard" style="display:none">
+        <button id="modal-vanguard-toggle" onclick="toggleVanguardPanel()">
+          <span>Vanguard Intelligence Analysis</span>
+          <svg class="va-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="modal-vanguard-body"></div>
+      </div>
+      <!-- Related articles (item 8) -->
+      <div id="modal-related" style="display:none">
+        <div class="related-label">Related Stories</div>
+        <div class="related-grid" id="related-grid"></div>
+      </div>
       <div id="modal-source"></div>
     </div>
   </div>
 </div>
 
-<!-- ============================================================
-     FOOTER — Brand | Social (FB, IG, X only) | Nav | Copyright
-     ============================================================ -->
+<!-- Back to top (item 14) -->
+<button class="back-to-top" id="back-to-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<!-- Footer -->
 <footer id="site-footer">
   <div class="footer-inner">
-
     <div class="footer-top">
-      <!-- Brand blurb -->
       <div class="footer-brand">
         <span class="footer-brand-name">Vanguard Daily</span>
         <p class="footer-brand-desc" id="footer-desc">Rigorous, independent journalism. Trusted by readers across the world.</p>
       </div>
-
-      <!-- Social links — Facebook, Instagram, X (Twitter) only -->
       <div class="footer-socials">
         <span class="footer-socials-label" id="socials-label">Follow Us</span>
         <div class="social-links">
-
-          <!-- Facebook -->
           <a class="social-link" href="https://facebook.com/vanguarddaily" target="_blank" rel="noopener" aria-label="Facebook">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
             Facebook
           </a>
-
-          <!-- Instagram -->
           <a class="social-link" href="https://instagram.com/vanguarddaily" target="_blank" rel="noopener" aria-label="Instagram">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
             Instagram
           </a>
-
-          <!-- X / Twitter -->
           <a class="social-link" href="https://x.com/vanguarddaily" target="_blank" rel="noopener" aria-label="X (Twitter)">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
             X
           </a>
-
         </div>
       </div>
     </div>
-
-    <!-- Footer nav -->
     <nav class="footer-nav" aria-label="Footer navigation">
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
@@ -597,210 +865,248 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
       <a href="./news/manifest.json" target="_blank">RSS Feed</a>
       <a href="#">Archive</a>
     </nav>
-
-    <!-- Bottom bar -->
     <div class="footer-bottom">
       <span id="footer-copy">© 2025 Vanguard Daily. All rights reserved.</span>
       <span>Built for independent journalism.</span>
     </div>
-
   </div>
 </footer>
 
-<!-- ============================================================
-     JAVASCRIPT ENGINE
-     ============================================================ -->
 <script>
-/* ── DEMO content ─────────────────────────────────────────── */
+/* ============================================================
+   DEMO DATA
+   ============================================================ */
 const DEMO = [
   {
     id:"d1", isBreaking:false, category:"Economy", author:"Priya Mehta",
     publisher:"Financial Times", sourceUrl:"https://ft.com",
     timestamp:"2025-04-29T08:30:00Z",
+    vanguard_score: 82,
+    reading_time_en: 3, reading_time_bn: 4,
     image:"https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=900&q=80",
     title_en:"Global Markets Surge as Central Banks Signal Rate Pause",
     title_bn:"কেন্দ্রীয় ব্যাংকের সুদের হার বিরতির ইঙ্গিতে বৈশ্বিক বাজারে উল্লম্ফন",
     summary_en:"Stock indices across Asia, Europe, and North America recorded significant gains after major central banks hinted at pausing rate hikes, easing months of investor anxiety.",
-    summary_bn:"বিশ্বের প্রধান কেন্দ্রীয় ব্যাংকগুলোর ইঙ্গিতের পরে এশিয়া, ইউরোপ ও উত্তর আমেরিকার শেয়ারবাজারে উল্লেখযোগ্য উত্থান ঘটেছে, যা বিনিয়োগকারীদের মাসব্যাপী উদ্বেগ প্রশমিত করেছে।",
+    summary_bn:"বিশ্বের প্রধান কেন্দ্রীয় ব্যাংকগুলোর ইঙ্গিতের পরে এশিয়া, ইউরোপ ও উত্তর আমেরিকার শেয়ারবাজারে উল্লেখযোগ্য উত্থান ঘটেছে।",
     body_en:"Financial markets responded with broad optimism as the Federal Reserve, European Central Bank, and Bank of England issued coordinated statements suggesting they are comfortable holding rates steady. The S&P 500 climbed 1.8%, European equities posted their strongest session in three months, and emerging market currencies also rallied.\n\nAnalysts caution that the relief may be temporary — inflation data due next week could quickly reverse the mood. Bond yields fell sharply, with the 10-year US Treasury dipping below 4.2% for the first time since January.\n\nThe coordinated signalling marks a significant shift in tone from the aggressive hiking cycle that dominated 2023 and 2024. Markets are now pricing in at least two rate cuts before year-end.",
-    body_bn:"ফেডারেল রিজার্ভ, ইউরোপীয় কেন্দ্রীয় ব্যাংক এবং ব্যাংক অব ইংল্যান্ড একযোগে বিবৃতি দেওয়ার পর আর্থিক বাজার ব্যাপক আশাবাদে সাড়া দিয়েছে। এস অ্যান্ড পি ৫০০ সূচক ১.৮% বৃদ্ধি পেয়েছে এবং উদীয়মান বাজারের মুদ্রাগুলোও শক্তিশালী হয়েছে।\n\nবিশ্লেষকরা সতর্ক করছেন যে এই স্বস্তি সাময়িক হতে পারে — আগামী সপ্তাহে প্রকাশিতব্য মূল্যস্ফীতির তথ্য পরিস্থিতি দ্রুত পাল্টে দিতে পারে।\n\nএই সমন্বিত সংকেত ২০২৩-২০২৪ সালের আক্রমণাত্মক সুদ বৃদ্ধি চক্র থেকে একটি উল্লেখযোগ্য পরিবর্তন চিহ্নিত করে।"
+    body_bn:"ফেডারেল রিজার্ভ, ইউরোপীয় কেন্দ্রীয় ব্যাংক এবং ব্যাংক অব ইংল্যান্ড একযোগে বিবৃতি দেওয়ার পর আর্থিক বাজার ব্যাপক আশাবাদে সাড়া দিয়েছে। এস অ্যান্ড পি ৫০০ সূচক ১.৮% বৃদ্ধি পেয়েছে এবং উদীয়মান বাজারের মুদ্রাগুলোও শক্তিশালী হয়েছে।\n\nবিশ্লেষকরা সতর্ক করছেন যে এই স্বস্তি সাময়িক হতে পারে — আগামী সপ্তাহে প্রকাশিতব্য মূল্যস্ফীতির তথ্য পরিস্থিতি দ্রুত পাল্টে দিতে পারে।\n\nএই সমন্বিত সংকেত ২০২৩-২০২৪ সালের আক্রমণাত্মক সুদ বৃদ্ধি চক্র থেকে একটি উল্লেখযোগ্য পরিবর্তন চিহ্নিত করে।",
+    vanguard_analysis: {
+      architecture: "Central bank policy coordination across the Fed, ECB, and BoE signals a new phase of synchronised monetary easing.",
+      governance: "Regulatory clarity on rate trajectory reduces systemic uncertainty for financial institutions.",
+      delta_of_change: "Shift from 18-month hawkish cycle to neutral stance represents a pivot of historic magnitude.",
+      impact_horizon: "Medium-term (6–18 months): equity re-rating and EM debt relief. Long-term contingent on inflation."
+    }
   },
   {
     id:"d2", isBreaking:true, category:"World", author:"James Okafor",
     publisher:"BBC News", sourceUrl:"https://bbc.com",
     timestamp:"2025-04-29T06:15:00Z",
+    vanguard_score: 91,
+    reading_time_en: 2, reading_time_bn: 3,
     image:"https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=900&q=80",
     title_en:"Summit Diplomacy: Leaders Convene to Address Pacific Tensions",
     title_bn:"শীর্ষ সম্মেলন কূটনীতি: প্রশান্ত মহাসাগরীয় উত্তেজনা নিরসনে নেতারা একত্রিত",
     summary_en:"A rare trilateral summit opened in Singapore, bringing heads of state together to de-escalate the most serious maritime dispute the region has seen in a decade.",
-    summary_bn:"সিঙ্গাপুরে একটি বিরল ত্রিপক্ষীয় শীর্ষ সম্মেলন শুরু হয়েছে, যেখানে রাষ্ট্রপ্রধানরা এক দশকের মধ্যে সবচেয়ে গুরুতর সামুদ্রিক বিরোধ নিরসনে একত্রিত হয়েছেন।",
+    summary_bn:"সিঙ্গাপুরে একটি বিরল ত্রিপক্ষীয় শীর্ষ সম্মেলন শুরু হয়েছে।",
     body_en:"Delegations from three Pacific nations gathered in Singapore for 'frank and necessary' talks. The ASEAN-brokered summit runs two days with bilateral side sessions.\n\nSecurity analysts note that informal confidence-building measures may prove more durable than any formal communiqué. The dispute centres on overlapping territorial claims in a strategically vital shipping corridor.\n\nA joint statement is expected by Friday, though observers warn that implementation will be the true test of diplomatic progress.",
-    body_bn:"তিনটি প্রশান্ত মহাসাগরীয় দেশের প্রতিনিধিদল সিঙ্গাপুরে 'আন্তরিক ও প্রয়োজনীয়' আলোচনার জন্য একত্রিত হয়েছে। আসিয়ান-মধ্যস্থতায় এই সম্মেলন দুই দিন ধরে চলবে।\n\nনিরাপত্তা বিশ্লেষকরা মনে করেন যে অনানুষ্ঠানিক আস্থা-নির্মাণমূলক পদক্ষেপগুলো যেকোনো আনুষ্ঠানিক ইশতেহারের চেয়ে বেশি স্থায়ী হতে পারে।\n\nশুক্রবারের মধ্যে একটি যৌথ বিবৃতি প্রত্যাশিত, তবে পর্যবেক্ষকরা সতর্ক করেছেন যে বাস্তবায়নই কূটনৈতিক অগ্রগতির প্রকৃত পরীক্ষা হবে।"
+    body_bn:"তিনটি প্রশান্ত মহাসাগরীয় দেশের প্রতিনিধিদল সিঙ্গাপুরে 'আন্তরিক ও প্রয়োজনীয়' আলোচনার জন্য একত্রিত হয়েছে। আসিয়ান-মধ্যস্থতায় এই সম্মেলন দুই দিন ধরে চলবে।\n\nনিরাপত্তা বিশ্লেষকরা মনে করেন যে অনানুষ্ঠানিক আস্থা-নির্মাণমূলক পদক্ষেপগুলো যেকোনো আনুষ্ঠানিক ইশতেহারের চেয়ে বেশি স্থায়ী হতে পারে।\n\nশুক্রবারের মধ্যে একটি যৌথ বিবৃতি প্রত্যাশিত।"
   },
   {
     id:"d3", isBreaking:false, category:"Technology", author:"Sara Lindqvist",
     publisher:"The Verge", sourceUrl:"https://theverge.com",
     timestamp:"2025-04-28T22:00:00Z",
+    vanguard_score: 78,
+    reading_time_en: 3, reading_time_bn: 4,
     image:"https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=900&q=80",
     title_en:"AI Regulation Bill Passes Committee in Historic Vote",
     title_bn:"ঐতিহাসিক ভোটে কৃত্রিম বুদ্ধিমত্তা নিয়ন্ত্রণ বিল কমিটিতে পাস",
     summary_en:"Lawmakers approved a sweeping framework requiring transparency disclosures for high-risk AI systems and mandatory independent audits before deployment in critical infrastructure.",
-    summary_bn:"আইনপ্রণেতারা উচ্চ-ঝুঁকির কৃত্রিম বুদ্ধিমত্তা সিস্টেমের জন্য স্বচ্ছতা প্রকাশ এবং গুরুত্বপূর্ণ অবকাঠামোয় স্থাপনার আগে বাধ্যতামূলক স্বাধীন নিরীক্ষা প্রয়োজনীয় একটি ব্যাপক কাঠামো অনুমোদন করেছেন।",
+    summary_bn:"আইনপ্রণেতারা উচ্চ-ঝুঁকির কৃত্রিম বুদ্ধিমত্তা সিস্টেমের জন্য একটি ব্যাপক কাঠামো অনুমোদন করেছেন।",
     body_en:"The Senate Commerce Committee voted 14-9 to advance the Algorithmic Accountability and Safety Act. The bill now heads to the full Senate floor where passage is uncertain.\n\nTechnology companies have expressed mixed reactions — larger firms say they welcome clear rules, while smaller firms warn compliance costs could stifle innovation. The bill requires any AI system used in hiring, lending, healthcare, or law enforcement to undergo third-party auditing annually.\n\nCivil liberties groups largely praised the bill, though some argued the audit requirements do not go far enough to address algorithmic bias.",
-    body_bn:"সিনেট বাণিজ্য কমিটি ১৪-৯ ভোটে অ্যালগরিদমিক জবাবদিহিতা ও নিরাপত্তা আইন অগ্রগামী করেছে। বিলটি এখন পূর্ণ সিনেট ফ্লোরে যাবে যেখানে পাস হওয়া অনিশ্চিত।\n\nপ্রযুক্তি কোম্পানিগুলো মিশ্র প্রতিক্রিয়া জানিয়েছে — বড় প্রতিষ্ঠানগুলো স্পষ্ট নিয়ম স্বাগত জানালেও ছোট প্রতিষ্ঠানগুলো সতর্ক করছে যে সম্মতির খরচ উদ্ভাবনকে বাধাগ্রস্ত করতে পারে।\n\nনাগরিক স্বাধীনতা গোষ্ঠীগুলো বিলটির প্রশংসা করেছে, তবে কেউ কেউ যুক্তি দিয়েছেন যে নিরীক্ষার প্রয়োজনীয়তা অ্যালগরিদমিক পক্ষপাত মোকাবেলায় যথেষ্ট নয়।"
+    body_bn:"সিনেট বাণিজ্য কমিটি ১৪-৯ ভোটে অ্যালগরিদমিক জবাবদিহিতা ও নিরাপত্তা আইন অগ্রগামী করেছে। বিলটি এখন পূর্ণ সিনেট ফ্লোরে যাবে যেখানে পাস হওয়া অনিশ্চিত।\n\nপ্রযুক্তি কোম্পানিগুলো মিশ্র প্রতিক্রিয়া জানিয়েছে — বড় প্রতিষ্ঠানগুলো স্পষ্ট নিয়ম স্বাগত জানালেও ছোট প্রতিষ্ঠানগুলো সতর্ক করছে।\n\nনাগরিক স্বাধীনতা গোষ্ঠীগুলো বিলটির প্রশংসা করেছে।",
+    vanguard_analysis: {
+      architecture: "Audit-based compliance framework mirrors EU AI Act's risk-tiered approach, signalling transatlantic regulatory convergence.",
+      governance: "Mandatory third-party audits create accountability infrastructure independent of self-reporting by developers.",
+      delta_of_change: "First binding AI legislation in the US to reach committee stage — a structural milestone regardless of final outcome.",
+      impact_horizon: "Short-term: compliance cost uncertainty. Medium-term: market consolidation favouring larger, resource-rich firms."
+    }
   },
   {
     id:"d4", isBreaking:true, category:"Politics", author:"David Krane",
     publisher:"Reuters", sourceUrl:"https://reuters.com",
     timestamp:"2025-04-28T16:45:00Z",
+    vanguard_score: 95,
+    reading_time_en: 2, reading_time_bn: 3,
     image:"https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=900&q=80",
     title_en:"Election Watch: Early Polls Show Tightening Race",
     title_bn:"নির্বাচন পর্যবেক্ষণ: প্রাথমিক জরিপে প্রতিযোগিতা আরও তীব্র",
     summary_en:"New data shows the incumbent's lead has narrowed significantly in key constituencies, with undecided voters holding unusual sway just six weeks before the national vote.",
     summary_bn:"নতুন তথ্য দেখাচ্ছে যে জাতীয় ভোটের মাত্র ছয় সপ্তাহ আগে মূল নির্বাচনী এলাকাগুলোতে ক্ষমতাসীনের ব্যবধান উল্লেখযোগ্যভাবে সংকুচিত হয়েছে।",
     body_en:"Four independent polling firms show the incumbent party's advantage has shrunk from 8 points to 3 in battleground regions. The shift has been most pronounced among voters aged 25–44.\n\nThe opposition has redoubled canvassing in suburban districts and launched a new digital campaign targeting undecided voters. Internal party polling reportedly shows even tighter numbers.\n\nElection analysts caution that six weeks is ample time for momentum to shift again, particularly given two scheduled national debates still to come.",
-    body_bn:"চারটি স্বাধীন জরিপ সংস্থার তথ্য অনুযায়ী, প্রতিদ্বন্দ্বিতাপূর্ণ অঞ্চলগুলোতে ক্ষমতাসীন দলের সুবিধা ৮ পয়েন্ট থেকে ৩-এ নেমে এসেছে। ২৫-৪৪ বছর বয়সী ভোটারদের মধ্যে এই পরিবর্তন সবচেয়ে স্পষ্ট।\n\nবিরোধী দল শহরতলির এলাকায় প্রচারণা দ্বিগুণ করেছে এবং অনিশ্চিত ভোটারদের লক্ষ্য করে একটি নতুন ডিজিটাল প্রচারণা চালু করেছে।\n\nনির্বাচন বিশ্লেষকরা সতর্ক করেছেন যে ছয় সপ্তাহ গতিধারা আবার পরিবর্তনের জন্য যথেষ্ট সময়, বিশেষত দুটি জাতীয় বিতর্ক এখনও বাকি।"
+    body_bn:"চারটি স্বাধীন জরিপ সংস্থার তথ্য অনুযায়ী, প্রতিদ্বন্দ্বিতাপূর্ণ অঞ্চলগুলোতে ক্ষমতাসীন দলের সুবিধা ৮ পয়েন্ট থেকে ৩-এ নেমে এসেছে।\n\nবিরোধী দল শহরতলির এলাকায় প্রচারণা দ্বিগুণ করেছে এবং অনিশ্চিত ভোটারদের লক্ষ্য করে একটি নতুন ডিজিটাল প্রচারণা চালু করেছে।\n\nনির্বাচন বিশ্লেষকরা সতর্ক করেছেন যে ছয় সপ্তাহ গতিধারা আবার পরিবর্তনের জন্য যথেষ্ট সময়।"
   },
   {
     id:"d5", isBreaking:false, category:"Sports", author:"Tomás Rivera",
     publisher:"ESPN", sourceUrl:"https://espn.com",
     timestamp:"2025-04-28T10:00:00Z",
+    vanguard_score: 65,
+    reading_time_en: 3, reading_time_bn: 4,
+    isDailySummary: false,
     image:"https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=900&q=80",
     title_en:"Champions League Semi-Finals: Dramatic Night Across Europe",
     title_bn:"চ্যাম্পিয়ন্স লিগ সেমি-ফাইনাল: ইউরোপজুড়ে রোমাঞ্চকর রাত",
     summary_en:"Two closely contested matches produced late drama, with both decided in stoppage time, setting up an enthralling final pairing for next month.",
-    summary_bn:"দুটি হাড্ডাহাড্ডি ম্যাচে যোগ করা সময়ে নাটকীয় পরিণতি হয়েছে, যা আগামী মাসের ফাইনালে অসাধারণ একটি জুটি নিশ্চিত করেছে।",
+    summary_bn:"দুটি হাড্ডাহাড্ডি ম্যাচে যোগ করা সময়ে নাটকীয় পরিণতি হয়েছে।",
     body_en:"Tuesday's Champions League semi-finals delivered everything neutral fans could hope for. Both matches were decided in injury time, with a combined four goals scored in the final ten minutes across the two ties.\n\nThe final next month has already broken pre-sale ticketing records, with demand outstripping supply by a ratio of 12 to 1. UEFA confirmed the venue will host a record broadcast audience.\n\nBoth winning managers praised the resilience of their squads, while noting the physical toll of a congested fixture schedule heading into the final weeks of domestic leagues.",
-    body_bn:"মঙ্গলবারের চ্যাম্পিয়ন্স লিগ সেমি-ফাইনাল নিরপেক্ষ সমর্থকদের সকল প্রত্যাশা পূরণ করেছে। দুটি ম্যাচই ইনজুরি সময়ে নির্ধারিত হয়েছে, যেখানে শেষ দশ মিনিটে মোট চারটি গোল হয়েছে।\n\nআগামী মাসের ফাইনাল ইতোমধ্যে প্রি-সেল টিকেট বিক্রির রেকর্ড ভেঙেছে, চাহিদা সরবরাহের চেয়ে ১২ গুণ বেশি। উয়েফা নিশ্চিত করেছে যে ভেন্যুতে রেকর্ড সম্প্রচার দর্শক থাকবে।\n\nউভয় বিজয়ী কোচ তাদের দলের মানসিক দৃঢ়তার প্রশংসা করেছেন।"
+    body_bn:"মঙ্গলবারের চ্যাম্পিয়ন্স লিগ সেমি-ফাইনাল নিরপেক্ষ সমর্থকদের সকল প্রত্যাশা পূরণ করেছে। দুটি ম্যাচই ইনজুরি সময়ে নির্ধারিত হয়েছে, যেখানে শেষ দশ মিনিটে মোট চারটি গোল হয়েছে।\n\nআগামী মাসের ফাইনাল ইতোমধ্যে প্রি-সেল টিকেট বিক্রির রেকর্ড ভেঙেছে। উভয় বিজয়ী কোচ তাদের দলের মানসিক দৃঢ়তার প্রশংসা করেছেন।"
   },
   {
     id:"d6", isBreaking:false, category:"World", author:"Nadia Petrov",
     publisher:"The Guardian", sourceUrl:"https://theguardian.com",
     timestamp:"2025-04-27T14:20:00Z",
+    vanguard_score: 88,
+    reading_time_en: 3, reading_time_bn: 4,
+    isDailySummary: true,
     image:"https://images.unsplash.com/photo-1517525822370-e65d1b32f5a9?w=900&q=80",
     title_en:"Climate Report: Arctic Ice Reaches Record Low for April",
     title_bn:"জলবায়ু প্রতিবেদন: এপ্রিলে আর্কটিক বরফ রেকর্ড সর্বনিম্নে",
     summary_en:"Scientists confirmed this week that Arctic sea ice extent hit its lowest April measurement on record, raising renewed alarm about accelerating polar melt.",
-    summary_bn:"বিজ্ঞানীরা এই সপ্তাহে নিশ্চিত করেছেন যে আর্কটিক সমুদ্রের বরফ এপ্রিলে রেকর্ড সর্বনিম্নে পৌঁছেছে, যা ত্বরান্বিত মেরু গলনের বিষয়ে নতুন উদ্বেগ জাগিয়েছে।",
+    summary_bn:"বিজ্ঞানীরা এই সপ্তাহে নিশ্চিত করেছেন যে আর্কটিক সমুদ্রের বরফ এপ্রিলে রেকর্ড সর্বনিম্নে পৌঁছেছে।",
     body_en:"Arctic sea ice measured 13.1 million square kilometers this April — the lowest in the 46-year satellite record, beating the previous low set in 2017 by a margin scientists described as 'alarming'.\n\nReduced ice coverage lowers albedo and further warms surrounding waters, creating a feedback loop that accelerates melting beyond linear projections. The phenomenon is being closely monitored by climate scientists in Bangladesh, where sea-level rise poses an existential threat to coastal communities.\n\nThe UN's latest assessment projects that without significant emissions reductions, the Arctic could see its first ice-free summer before 2035 — a threshold previously not expected until mid-century.",
-    body_bn:"এই এপ্রিলে আর্কটিক সমুদ্রের বরফ ছিল ১৩.১ মিলিয়ন বর্গকিলোমিটার — ৪৬ বছরের স্যাটেলাইট রেকর্ডে সর্বনিম্ন, ২০১৭ সালের আগের নিম্নমান ছাড়িয়ে গেছে।\n\nবরফের আচ্ছাদন কমে যাওয়া তাপমাত্রা শোষণ ক্ষমতা হ্রাস করে এবং আশেপাশের জলকে আরও উষ্ণ করে, একটি প্রতিক্রিয়া চক্র তৈরি করে। এই ঘটনাটি বাংলাদেশের জলবায়ু বিজ্ঞানীরা ঘনিষ্ঠভাবে পর্যবেক্ষণ করছেন, যেখানে সমুদ্রপৃষ্ঠের উচ্চতা বৃদ্ধি উপকূলীয় সম্প্রদায়ের জন্য অস্তিত্বগত হুমকি।\n\nজাতিসংঘের সর্বশেষ মূল্যায়ন অনুমান করেছে যে উল্লেখযোগ্য নির্গমন হ্রাস ছাড়া, আর্কটিক ২০৩৫ সালের আগে তার প্রথম বরফমুক্ত গ্রীষ্মকাল দেখতে পারে।"
+    body_bn:"এই এপ্রিলে আর্কটিক সমুদ্রের বরফ ছিল ১৩.১ মিলিয়ন বর্গকিলোমিটার — ৪৬ বছরের স্যাটেলাইট রেকর্ডে সর্বনিম্ন।\n\nবরফের আচ্ছাদন কমে যাওয়া তাপমাত্রা শোষণ ক্ষমতা হ্রাস করে এবং আশেপাশের জলকে আরও উষ্ণ করে।\n\nজাতিসংঘের সর্বশেষ মূল্যায়ন অনুমান করেছে যে উল্লেখযোগ্য নির্গমন হ্রাস ছাড়া, আর্কটিক ২০৩৫ সালের আগে তার প্রথম বরফমুক্ত গ্রীষ্মকাল দেখতে পারে।",
+    vanguard_analysis: {
+      architecture: "Accelerating feedback loops in polar systems represent a non-linear threat multiplier beyond IPCC baseline projections.",
+      governance: "Bangladesh's coastal vulnerability positions the country at the intersection of climate science and geopolitical risk.",
+      delta_of_change: "April 2025 ice extent breaks prior record by statistically significant margin — not gradual drift but structural rupture.",
+      impact_horizon: "Near-term: shipping route disruption. Long-term: existential risk for low-lying nations without immediate mitigation."
+    }
+  },
+  {
+    id:"d7", isBreaking:false, isMinimal:true, category:"Technology", author:"Ahnaf Hassan",
+    publisher:"TechCrunch", sourceUrl:"https://techcrunch.com",
+    timestamp:"2025-04-27T09:00:00Z",
+    vanguard_score: 60,
+    reading_time_en: 1,
+    title_en:"OpenAI Announces New Enterprise Tier",
+    title_bn:"ওপেনএআই নতুন এন্টারপ্রাইজ স্তর ঘোষণা করেছে",
+    summary_en:"OpenAI has quietly launched a new enterprise pricing tier targeting Fortune 500 companies.",
+    summary_bn:"ওপেনএআই ফরচুন ৫০০ কোম্পানিগুলোকে লক্ষ্য করে একটি নতুন এন্টারপ্রাইজ মূল্য নির্ধারণ স্তর চালু করেছে।"
   }
 ];
 
-/* ── Global state ──────────────────────────────────────────── */
-let currentLang    = 'en';
-let allArticles    = [];
-let breakingItems  = [];
-let activeCategory = 'all';
-let searchQuery    = '';
+/* ============================================================
+   GLOBAL STATE
+   ============================================================ */
+let currentLang      = 'en';
+let allArticles      = [];
+let breakingItems    = [];
+let activeCategory   = 'all';
+let searchQuery      = '';
+let currentModalId   = null;
+let manifestGeneratedAt = null;
+let autoRefreshTimer = null;
+const articleBodyCache = new Map(); // lazy-fetch cache (core fix)
 
-/* ── Category normalisation map ───────────────────────────────
-   Maps ANY Gemini output → one of the 5 website categories.
-   Comparison is always done in lowercase so case never matters. */
+/* ============================================================
+   CATEGORY NORMALISATION
+   ============================================================ */
 const CAT_NORM = {
-  /* TECH group */
-  'tech':        'technology',
-  'technology':  'technology',
-  'ai/ml':       'technology',
-  'ai':          'technology',
-  'ml':          'technology',
-  'systems':     'technology',
-  'security':    'technology',
-  'hardware':    'technology',
-  'web3':        'technology',
-  'software':    'technology',
-  /* WORLD group */
-  'world':       'world',
-  'biotech':     'world',
-  'other':       'world',
-  'environment': 'world',
-  'science':     'world',
-  'health':      'world',
-  'international':'world',
-  /* POLITICS group */
-  'politics':    'politics',
-  'policy':      'politics',
-  'government':  'politics',
-  /* ECONOMY group */
-  'economy':     'economy',
-  'economics':   'economy',
-  'finance':     'economy',
-  'business':    'economy',
-  /* SPORTS group */
-  'sports':      'sports',
-  'sport':       'sports',
+  'tech':'technology','technology':'technology','ai/ml':'technology','ai':'technology',
+  'ml':'technology','systems':'technology','security':'technology','hardware':'technology',
+  'web3':'technology','software':'technology',
+  'world':'world','biotech':'world','other':'world','environment':'world',
+  'science':'world','health':'world','international':'world',
+  'politics':'politics','policy':'politics','government':'politics',
+  'economy':'economy','economics':'economy','finance':'economy','business':'economy',
+  'sports':'sports','sport':'sports',
 };
-
-/* Normalise any category string to one of the 5 known values */
 function normaliseCategory(raw) {
   if (!raw) return 'world';
   return CAT_NORM[(raw).toLowerCase().trim()] || 'world';
 }
 
-/* ── i18n strings ─────────────────────────────────────────── */
+/* ============================================================
+   i18n
+   ============================================================ */
 const L = {
   en: {
-    loading:       'Loading stories…',
-    breaking:      'Breaking',
-    edition:       'Morning Edition',
-    noArticles:    'No stories found in this category.',
-    noSearch:      'No stories match your search.',
-    footerDesc:    'Rigorous, independent journalism. Trusted by readers across Bangladesh and the world.',
-    footerCopy:    '© 2025 Vanguard Daily. All rights reserved.',
-    socialsLabel:  'Follow Us',
-    source:        'Source:',
-    publisher:     'Published by',
-    readMore:      'Read full story ↗',
-    searchPh:      'Search stories…',
-    all:           'All',
-    politics:      'Politics',
-    economy:       'Economy',
-    world:         'World',
-    technology:    'Tech',
-    sports:        'Sports',
+    loading:'Loading stories…', breaking:'Breaking', edition:'Morning Edition',
+    noArticles:'No stories found in this category.', noSearch:'No stories match your search.',
+    footerDesc:'Rigorous, independent journalism. Trusted by readers across Bangladesh and the world.',
+    footerCopy:'© 2025 Vanguard Daily. All rights reserved.',
+    socialsLabel:'Follow Us', source:'Source:', publisher:'Published by',
+    readMore:'Read full story ↗', searchPh:'Search stories…',
+    all:'All', politics:'Politics', economy:'Economy', world:'World',
+    technology:'Tech', sports:'Sports',
+    updatedAgo:'Updated', justNow:'just now', minAgo:'min ago',
+    readingTime:'min read', share:'Share', print:'Print',
+    relatedLabel:'Related Stories',
+    newStories:'New stories available — tap to refresh',
+    loadingBody:'Loading article…',
+    dailyBriefing:'Daily Briefing', sourceOnly:'Source only',
   },
   bn: {
-    loading:       'সংবাদ লোড হচ্ছে…',
-    breaking:      'ব্রেকিং',
-    edition:       'সকালের সংস্করণ',
-    noArticles:    'এই বিভাগে কোনো সংবাদ পাওয়া যায়নি।',
-    noSearch:      'আপনার অনুসন্ধানের সাথে কোনো সংবাদ মেলেনি।',
-    footerDesc:    'কঠোর, স্বাধীন সাংবাদিকতা। বাংলাদেশ ও বিশ্বজুড়ে পাঠকদের বিশ্বাসযোগ্য।',
-    footerCopy:    '© ২০২৫ ভ্যানগার্ড ডেইলি। সর্বস্বত্ব সংরক্ষিত।',
-    socialsLabel:  'আমাদের অনুসরণ করুন',
-    source:        'সূত্র:',
-    publisher:     'প্রকাশক',
-    readMore:      'সম্পূর্ণ সংবাদ পড়ুন ↗',
-    searchPh:      'সংবাদ খুঁজুন…',
-    all:           'সব',
-    politics:      'রাজনীতি',
-    economy:       'অর্থনীতি',
-    world:         'বিশ্ব',
-    technology:    'প্রযুক্তি',
-    sports:        'খেলাধুলা',
+    loading:'সংবাদ লোড হচ্ছে…', breaking:'ব্রেকিং', edition:'সকালের সংস্করণ',
+    noArticles:'এই বিভাগে কোনো সংবাদ পাওয়া যায়নি।', noSearch:'আপনার অনুসন্ধানের সাথে কোনো সংবাদ মেলেনি।',
+    footerDesc:'কঠোর, স্বাধীন সাংবাদিকতা। বাংলাদেশ ও বিশ্বজুড়ে পাঠকদের বিশ্বাসযোগ্য।',
+    footerCopy:'© ২০২৫ ভ্যানগার্ড ডেইলি। সর্বস্বত্ব সংরক্ষিত।',
+    socialsLabel:'আমাদের অনুসরণ করুন', source:'সূত্র:', publisher:'প্রকাশক',
+    readMore:'সম্পূর্ণ সংবাদ পড়ুন ↗', searchPh:'সংবাদ খুঁজুন…',
+    all:'সব', politics:'রাজনীতি', economy:'অর্থনীতি', world:'বিশ্ব',
+    technology:'প্রযুক্তি', sports:'খেলাধুলা',
+    updatedAgo:'আপডেট', justNow:'এইমাত্র', minAgo:'মিনিট আগে',
+    readingTime:'মিনিট পড়া', share:'শেয়ার', print:'প্রিন্ট',
+    relatedLabel:'সম্পর্কিত সংবাদ',
+    newStories:'নতুন সংবাদ উপলব্ধ — রিফ্রেশ করতে ট্যাপ করুন',
+    loadingBody:'নিবন্ধ লোড হচ্ছে…',
+    dailyBriefing:'দৈনিক ব্রিফিং', sourceOnly:'শুধু উৎস',
   }
 };
 const t = k => (L[currentLang][k] || L.en[k] || k);
 
-/* ── Language gate & toggle ───────────────────────────────── */
+/* ============================================================
+   READING TIME HELPER (item 4)
+   ============================================================ */
+function calcReadingTime(text) {
+  if (!text) return 1;
+  return Math.max(1, Math.round(text.trim().split(/\s+/).length / 200));
+}
+function getReadingTime(a) {
+  if (currentLang === 'bn' && a.reading_time_bn) return a.reading_time_bn;
+  if (a.reading_time_en) return a.reading_time_en;
+  const body = currentLang === 'bn' ? (a.body_bn || a.body_en || '') : (a.body_en || a.body || '');
+  return calcReadingTime(body);
+}
+
+/* ============================================================
+   LAST UPDATED (item 16)
+   ============================================================ */
+function updateLastUpdatedDisplay() {
+  const el = document.getElementById('last-updated');
+  if (!el || !manifestGeneratedAt) return;
+  const diff = Math.floor((Date.now() - new Date(manifestGeneratedAt)) / 60000);
+  let label;
+  if (diff < 1) label = t('justNow');
+  else label = diff + ' ' + t('minAgo');
+  el.textContent = t('updatedAgo') + ' ' + label;
+}
+
+/* ============================================================
+   LANGUAGE
+   ============================================================ */
 function setLang(lang) {
   currentLang = lang;
   localStorage.setItem('vd_lang', lang);
-  document.body.className        = 'lang-' + lang;
-  document.documentElement.lang  = lang === 'bn' ? 'bn' : 'en';
+  document.body.className       = 'lang-' + lang;
+  document.documentElement.lang = lang === 'bn' ? 'bn' : 'en';
   document.getElementById('lang-gate').classList.add('hidden');
-
-  /* Update toggle button active state */
   const ltEn = document.getElementById('lt-en');
   const ltBn = document.getElementById('lt-bn');
   if (ltEn) ltEn.classList.toggle('active', lang === 'en');
   if (ltBn) ltBn.classList.toggle('active', lang === 'bn');
-
   applyI18n();
-
   if (allArticles.length || breakingItems.length) {
-    renderGrid();
-    renderTicker();
+    renderGrid(); renderTicker();
   } else {
     loadNews();
   }
@@ -809,30 +1115,31 @@ function setLang(lang) {
 function applyI18n() {
   const safe = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
   const safeAttr = (id, attr, val) => { const el = document.getElementById(id); if (el) el.setAttribute(attr, val); };
-
-  safe('loading-text',   t('loading'));
   safe('breaking-label', t('breaking'));
   safe('edition-label',  t('edition'));
   safe('footer-copy',    t('footerCopy'));
   safe('footer-desc',    t('footerDesc'));
   safe('socials-label',  t('socialsLabel'));
-
-  /* Update search placeholders */
   safeAttr('desktop-search-input', 'placeholder', t('searchPh'));
   safeAttr('mobile-search-input',  'placeholder', t('searchPh'));
-
-  /* Update category nav buttons */
   const catMap = {
-    'all': t('all'), 'politics': t('politics'), 'economy': t('economy'),
-    'world': t('world'), 'technology': t('technology'), 'sports': t('sports')
+    'all':t('all'),'politics':t('politics'),'economy':t('economy'),
+    'world':t('world'),'technology':t('technology'),'sports':t('sports')
   };
   document.querySelectorAll('#desktop-nav button[data-cat], .mobile-cats button[data-cat]').forEach(btn => {
     const cat = btn.dataset.cat;
-    if (catMap[cat]) btn.textContent = catMap[cat];
+    if (catMap[cat]) {
+      // Preserve count badge
+      const badge = btn.querySelector('.cat-count-badge');
+      btn.textContent = catMap[cat];
+      if (badge) btn.appendChild(badge);
+    }
   });
 }
 
-/* ── Text & media helpers ──────────────────────────────────── */
+/* ============================================================
+   TEXT HELPERS
+   ============================================================ */
 const getTitle   = a => (currentLang==='bn' && a.title_bn)   ? a.title_bn   : (a.title_en   || a.title   || '');
 const getSummary = a => (currentLang==='bn' && a.summary_bn) ? a.summary_bn : (a.summary_en || a.summary || '');
 const getBody    = a => (currentLang==='bn' && a.body_bn)    ? a.body_bn    : (a.body_en    || a.body    || '');
@@ -840,56 +1147,82 @@ const getImage   = a => (currentLang==='bn' && a.image_bn)   ? a.image_bn   : (a
 
 function fmtDate(iso) {
   try {
-    return new Date(iso).toLocaleString(currentLang==='bn' ? 'bn-BD' : 'en-GB', {
-      day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'
+    return new Date(iso).toLocaleString(currentLang==='bn'?'bn-BD':'en-GB',{
+      day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'
     });
   } catch(_) { return iso || ''; }
 }
 
 function catClass(raw) {
-  const norm = normaliseCategory(raw);
-  const m = { politics:'cc-politics', economy:'cc-economy', world:'cc-world', technology:'cc-technology', sports:'cc-sports' };
-  return m[norm] || 'cc-default';
+  const n = normaliseCategory(raw);
+  return {politics:'cc-politics',economy:'cc-economy',world:'cc-world',
+          technology:'cc-technology',sports:'cc-sports'}[n] || 'cc-default';
 }
-
-/* Display label for a category (translated) */
 function catLabel(raw) {
-  const norm = normaliseCategory(raw);
-  const labels = {
-    politics:'politics', economy:'economy', world:'world',
-    technology:'technology', sports:'sports'
-  };
-  return t(labels[norm] || 'world');
+  const n = normaliseCategory(raw);
+  return t({politics:'politics',economy:'economy',world:'world',
+             technology:'technology',sports:'sports'}[n] || 'world');
 }
 
-function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
 
-/* ── Category + search filter ─────────────────────────────── */
+/* ============================================================
+   SCORE BADGE (item 11)
+   ============================================================ */
+function scoreBadgeHtml(a) {
+  const score = a.vanguard_score;
+  if (!score) return '';
+  const cls = score >= 90 ? 'score-red' : score >= 75 ? 'score-orange' : 'score-green';
+  return `<span class="score-badge ${cls}" title="Vanguard Score: ${score}">${score}</span>`;
+}
+
+/* ============================================================
+   PUBLISHER HTML (item 18 — more prominent)
+   ============================================================ */
+function publisherHtml(a, compact) {
+  if (!a.publisher && !a.sourceUrl) return '';
+  const name = esc(a.publisher || 'Source');
+  const extIcon = `<svg class="pub-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+  const link = a.sourceUrl
+    ? `<a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${name}${extIcon}</a>`
+    : name;
+  if (compact) return `<span class="card-publisher">${link}</span>`;
+  const readMore = a.sourceUrl
+    ? `<a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener">${t('readMore')}</a>`
+    : '';
+  return `<div id="modal-source"><strong>${t('publisher')}:</strong>&nbsp;${link}${readMore?'&nbsp;·&nbsp;'+readMore:''}</div>`;
+}
+
+/* ============================================================
+   FILTER & SEARCH
+   ============================================================ */
 function filteredArticles() {
   return allArticles.filter(a => {
-    /* Normalise article category for comparison */
-    const normCat = normaliseCategory(a.category);
-    const catOk   = activeCategory === 'all' || normCat === activeCategory;
-    const q       = searchQuery.trim().toLowerCase();
+    const catOk = activeCategory === 'all' || normaliseCategory(a.category) === activeCategory;
+    const q = searchQuery.trim().toLowerCase();
     if (!q) return catOk;
     const textOk =
-      getTitle(a).toLowerCase().includes(q)   ||
+      getTitle(a).toLowerCase().includes(q) ||
       getSummary(a).toLowerCase().includes(q) ||
-      (a.author||'').toLowerCase().includes(q)    ||
+      (a.author||'').toLowerCase().includes(q) ||
       (a.publisher||'').toLowerCase().includes(q) ||
       (a.category||'').toLowerCase().includes(q);
     return catOk && textOk;
   });
 }
 
-function filterCat(cat, _btn) {
+function filterCat(cat) {
   activeCategory = cat;
   document.querySelectorAll('#desktop-nav button, .mobile-cats button').forEach(b => {
-    b.classList.toggle('active', (b.dataset.cat || b.textContent.trim().toLowerCase()) === cat
-      || (cat === 'all' && (b.dataset.cat === 'all' || b.textContent.trim().toLowerCase() === t('all').toLowerCase()))
+    b.classList.toggle('active',
+      (b.dataset.cat === cat) ||
+      (cat === 'all' && b.dataset.cat === 'all')
     );
   });
   renderGrid();
+  updateCatCounts(); // item 15
 }
 
 function onSearch(val) {
@@ -901,48 +1234,104 @@ function onSearch(val) {
   renderGrid();
 }
 
-/* ── Render publisher/source line ─────────────────────────── */
-function publisherHtml(a, compact) {
-  if (!a.publisher && !a.sourceUrl) return '';
-  const name = esc(a.publisher || 'Source');
-  const link = a.sourceUrl
-    ? `<a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${name}</a>`
-    : name;
-  if (compact) return `<span class="card-publisher">${link}</span>`;
-  const readMore = a.sourceUrl
-    ? `<a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener">${t('readMore')}</a>`
-    : '';
-  return `<div id="modal-source"><strong>${t('publisher')}:</strong>&nbsp;${link}${readMore ? '&nbsp;·&nbsp;' + readMore : ''}</div>`;
+/* ============================================================
+   CATEGORY COUNT BADGES (item 15)
+   ============================================================ */
+function updateCatCounts() {
+  const pool = allArticles;
+  const counts = { all: pool.length };
+  pool.forEach(a => {
+    const c = normaliseCategory(a.category);
+    counts[c] = (counts[c] || 0) + 1;
+  });
+  document.querySelectorAll('#desktop-nav button[data-cat], .mobile-cats button[data-cat]').forEach(btn => {
+    const cat = btn.dataset.cat;
+    const n = counts[cat] || 0;
+    let badge = btn.querySelector('.cat-count-badge');
+    if (n > 0) {
+      if (!badge) { badge = document.createElement('span'); badge.className = 'cat-count-badge'; btn.appendChild(badge); }
+      badge.textContent = n;
+    } else if (badge) badge.remove();
+  });
 }
 
-/* ── Render main grid ─────────────────────────────────────── */
+/* ============================================================
+   RENDER GRID (item 6 — daily summary, item 5 — minimal)
+   ============================================================ */
 function renderGrid() {
   const grid  = document.getElementById('news-grid');
   const items = filteredArticles();
-
   if (!items.length) {
     const allPooled = [...allArticles, ...breakingItems];
     if (allPooled.length === 0) {
       grid.innerHTML = `<div class="no-results">${t('noArticles')}</div>`;
     } else if (allArticles.length === 0 && breakingItems.length > 0) {
-      grid.innerHTML = breakingItems.map((a,i) => renderCard(a,i)).join('');
+      grid.innerHTML = breakingItems.map((a,i)=>renderCard(a,i)).join('');
     } else {
-      grid.innerHTML = `<div class="no-results">${searchQuery ? t('noSearch') : t('noArticles')}</div>`;
+      grid.innerHTML = `<div class="no-results">${searchQuery?t('noSearch'):t('noArticles')}</div>`;
     }
+    setupLazyImages();
     return;
   }
-  grid.innerHTML = items.map((a,i) => renderCard(a,i)).join('');
+  grid.innerHTML = items.map((a,i)=>renderCard(a,i)).join('');
+  setupLazyImages(); // item 1
 }
 
 function renderCard(a, i) {
-  /* Skip cards with no title — prevents blank hero cards */
   const title = getTitle(a);
   if (!title) return '';
 
+  /* Daily Summary hero card (item 6) */
+  if (a.isDailySummary) {
+    const coverImg = getImage(a);
+    const imgBlock = coverImg
+      ? `<div class="card-img"><img data-src="${esc(coverImg)}" alt="${esc(title)}" /></div>`
+      : '';
+    const rt = getReadingTime(a);
+    return `<article class="news-card daily-summary" onclick="openModal('${esc(a.id)}')" tabindex="0" role="button" aria-label="${esc(title)}">
+      ${imgBlock}
+      <div class="card-body">
+        <span class="daily-badge">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          ${t('dailyBriefing')}
+        </span>
+        <span class="card-cat ${catClass(a.category)}">${catLabel(a.category)}</span>
+        <h2 class="card-headline">${title}</h2>
+        <p class="card-summary">${getSummary(a)}</p>
+        <div class="card-meta">
+          <span class="card-byline">${esc(a.author||'')}</span>
+          <span class="card-dot"></span>
+          <time datetime="${esc(a.timestamp||'')}">${fmtDate(a.timestamp)}</time>
+          <span class="reading-time"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${rt} ${t('readingTime')}</span>
+          ${scoreBadgeHtml(a)}
+          ${publisherHtml(a, true)}
+        </div>
+      </div>
+    </article>`;
+  }
+
+  /* Minimal card (item 5) */
+  if (a.isMinimal) {
+    return `<article class="news-card minimal" onclick="openModal('${esc(a.id)}')" tabindex="0" role="button" aria-label="${esc(title)}">
+      <div class="card-body">
+        <span class="card-cat ${catClass(a.category)}">${catLabel(a.category)}<span class="minimal-badge">${t('sourceOnly')}</span></span>
+        <h2 class="card-headline">${title}</h2>
+        <p class="card-summary">${getSummary(a)}</p>
+        <div class="card-meta">
+          <time datetime="${esc(a.timestamp||'')}">${fmtDate(a.timestamp)}</time>
+          ${scoreBadgeHtml(a)}
+          ${publisherHtml(a, true)}
+        </div>
+      </div>
+    </article>`;
+  }
+
+  /* Standard card */
   const coverImg = getImage(a);
   const imgBlock = coverImg
-    ? `<div class="card-img"><img src="${esc(coverImg)}" alt="${esc(title)}" loading="${i<2?'eager':'lazy'}" /></div>`
+    ? `<div class="card-img"><img data-src="${esc(coverImg)}" alt="${esc(title)}" /></div>`
     : `<div class="card-img card-img-blank"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>`;
+  const rt = getReadingTime(a);
 
   return `<article class="news-card" onclick="openModal('${esc(a.id)}')" tabindex="0" role="button" aria-label="${esc(title)}">
     ${imgBlock}
@@ -954,20 +1343,52 @@ function renderCard(a, i) {
         <span class="card-byline">${esc(a.author||'')}</span>
         <span class="card-dot"></span>
         <time datetime="${esc(a.timestamp||'')}">${fmtDate(a.timestamp)}</time>
+        <span class="reading-time"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${rt} ${t('readingTime')}</span>
+        ${scoreBadgeHtml(a)}
         ${publisherHtml(a, true)}
       </div>
     </div>
   </article>`;
 }
 
-/* ── Render breaking sidebar ──────────────────────────────── */
+/* ============================================================
+   LAZY IMAGE LOADING (item 1)
+   ============================================================ */
+function setupLazyImages() {
+  const imgs = document.querySelectorAll('#news-grid img[data-src]');
+  if (!imgs.length) return;
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+        img.addEventListener('load', () => img.classList.add('loaded'), { once: true });
+        img.addEventListener('error', () => img.classList.add('loaded'), { once: true });
+        obs.unobserve(img);
+      });
+    }, { rootMargin: '200px' });
+    imgs.forEach(img => io.observe(img));
+  } else {
+    imgs.forEach(img => {
+      img.src = img.dataset.src;
+      img.removeAttribute('data-src');
+      img.classList.add('loaded');
+    });
+  }
+}
+
+/* ============================================================
+   BREAKING TICKER RENDER
+   ============================================================ */
 function renderTicker() {
   const items = breakingItems.length ? breakingItems : allArticles.slice(0,8);
   document.getElementById('ticker-list').innerHTML = items.map(a => {
     const title = getTitle(a);
     if (!title) return '';
     const srcHtml = a.publisher
-      ? `<div class="t-source">${t('publisher')}: ${a.sourceUrl ? `<a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${esc(a.publisher)}</a>` : esc(a.publisher)}</div>`
+      ? `<div class="t-source">${t('publisher')}: ${a.sourceUrl?`<a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${esc(a.publisher)}</a>`:esc(a.publisher)}</div>`
       : '';
     return `<div class="ticker-item" onclick="openModal('${esc(a.id)}')">
       <div class="t-cat">${catLabel(a.category)}</div>
@@ -976,54 +1397,107 @@ function renderTicker() {
       <div class="t-time">${fmtDate(a.timestamp)}</div>
     </div>`;
   }).join('');
+
+  /* Breaking banner (item 12) */
+  const banner = document.getElementById('breaking-banner');
+  const latestBreaking = breakingItems[0];
+  if (latestBreaking) {
+    const bbTitle = getTitle(latestBreaking);
+    document.getElementById('bb-headline').textContent = bbTitle;
+    document.getElementById('bb-headline').onclick = () => openModal(latestBreaking.id);
+    banner.classList.add('visible');
+  } else {
+    banner.classList.remove('visible');
+  }
 }
 
-/* ── DATA ENGINE ──────────────────────────────────────────── */
-async function loadNews() {
+/* ============================================================
+   MANIFEST LOAD + SESSION CACHE (item 2)
+   ============================================================ */
+const MANIFEST_CACHE_KEY = 'vd_manifest_cache';
+const MANIFEST_CACHE_TS  = 'vd_manifest_ts';
+const CACHE_TTL          = 5 * 60 * 1000; // 5 minutes for live, session is fallback
+
+async function loadNews(forceRefresh = false) {
   let fetched   = [];
   let usingDemo = false;
+  let manifestRaw = null;
 
-  try {
-    const mRes = await fetch('./manifest.json', { cache: 'no-store' });
-    if (!mRes.ok) {
-      const mRes2 = await fetch('./news/manifest.json', { cache: 'no-store' });
-      if (!mRes2.ok) { usingDemo = true; }
-      else { const raw2 = await mRes2.json(); fetched = normaliseManifest(raw2); if (!fetched.length) usingDemo = true; }
-    } else {
-      const raw = await mRes.json();
-      fetched = normaliseManifest(raw);
-      if (!fetched.length) usingDemo = true;
+  // Try sessionStorage cache first (item 2)
+  if (!forceRefresh) {
+    try {
+      const cachedTs  = sessionStorage.getItem(MANIFEST_CACHE_TS);
+      const cachedRaw = sessionStorage.getItem(MANIFEST_CACHE_KEY);
+      if (cachedTs && cachedRaw && (Date.now() - parseInt(cachedTs)) < CACHE_TTL) {
+        manifestRaw = JSON.parse(cachedRaw);
+        console.log('[VD] Serving manifest from sessionStorage cache.');
+      }
+    } catch(_) {}
+  }
+
+  if (!manifestRaw) {
+    try {
+      const mRes = await fetch('./manifest.json', { cache: 'no-store' });
+      if (!mRes.ok) {
+        const mRes2 = await fetch('./news/manifest.json', { cache: 'no-store' });
+        if (!mRes2.ok) { usingDemo = true; }
+        else { manifestRaw = await mRes2.json(); }
+      } else {
+        manifestRaw = await mRes.json();
+      }
+      if (manifestRaw) {
+        try {
+          sessionStorage.setItem(MANIFEST_CACHE_KEY, JSON.stringify(manifestRaw));
+          sessionStorage.setItem(MANIFEST_CACHE_TS, String(Date.now()));
+        } catch(_) {}
+      }
+    } catch (err) {
+      console.error('[VD] manifest error:', err);
+      usingDemo = true;
     }
-  } catch (err) {
-    console.error('[VD] manifest error:', err);
-    usingDemo = true;
+  }
+
+  if (!usingDemo && manifestRaw) {
+    fetched = normaliseManifest(manifestRaw);
+    if (!fetched.length) usingDemo = true;
   }
 
   if (usingDemo) { fetched = DEMO; console.log('[VD] Using demo data.'); }
 
-  /* Deduplicate */
+  // Store manifest metadata for last-updated (item 16)
+  if (manifestRaw && manifestRaw.generated_at) {
+    manifestGeneratedAt = manifestRaw.generated_at;
+  } else {
+    manifestGeneratedAt = new Date().toISOString();
+  }
+  updateLastUpdatedDisplay();
+
   const seen = new Set();
   fetched = fetched.filter(a => {
     if (!a || !a.id) return false;
     if (seen.has(a.id)) return false;
     seen.add(a.id); return true;
   });
-
-  /* Sort newest first */
   fetched.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
-
-  /* Normalise categories BEFORE routing */
   fetched.forEach(a => { a.category = normaliseCategory(a.category); });
 
   breakingItems = fetched.filter(a => a.isBreaking === true);
   allArticles   = fetched.filter(a => a.isBreaking !== true);
 
   console.log(`[VD] Breaking: ${breakingItems.length} | Feed: ${allArticles.length}`);
+
   renderGrid();
   renderTicker();
+  updateCatCounts(); // item 15
+  startAutoRefresh();  // item 10
 }
 
-/* ── Normalise manifest format ────────────────────────────── */
+/* ============================================================
+   NORMALISE MANIFEST (body_en/bn stripped — lazy fetched)
+   Core fix: remove body reconstruction fallback from manifest.
+   body_en/bn stay on the object only if they exist in manifest
+   (transitional support). vanguard_analysis kept for panel (item 17).
+   ============================================================ */
 function normaliseManifest(raw) {
   let items = [];
   if (raw && !Array.isArray(raw) && Array.isArray(raw.articles)) items = raw.articles;
@@ -1040,56 +1514,320 @@ function normaliseManifest(raw) {
     if (!a.timestamp) a.timestamp = a.published_at || a.pub_date || a.pubDate || a.date || new Date().toISOString();
     if (!a.sourceUrl) a.sourceUrl = a.source_url || a.url || a.link || '';
     if (!a.publisher && a.sourceUrl) { try { a.publisher = new URL(a.sourceUrl).hostname.replace('www.',''); } catch(_){} }
-    if (!a.body_en && !a.body) {
-      const va = a.vanguard_analysis;
-      if (va) {
-        a.body_en = [
-          va.architecture       ? 'Architecture: '     + va.architecture       : '',
-          va.algorithm_or_logic ? 'Analysis: '         + va.algorithm_or_logic : '',
-          va.governance         ? 'Governance: '       + va.governance         : '',
-          va.delta_of_change    ? 'Delta of Change: '  + va.delta_of_change    : '',
-          va.impact_horizon     ? 'Impact Horizon: '   + va.impact_horizon     : '',
-        ].filter(Boolean).join('\n\n');
-        a.body_bn = a.summary_bn || a.body_en;
-      } else {
-        a.body_en = a.summary_en || '';
-        a.body_bn = a.summary_bn || '';
-      }
-    }
+    // NOTE: body_en/body_bn intentionally NOT reconstructed from vanguard_analysis here.
+    // If they exist in the manifest already (legacy), keep them. If not, openModal lazy-fetches.
     if (!a.isBreaking) a.isBreaking = false;
     if (!a.author) a.author = 'Ahnaf Hassan';
     return a;
   }).filter(Boolean);
 }
 
-/* ── Modal ────────────────────────────────────────────────── */
-function openModal(id) {
+/* ============================================================
+   MODAL — LAZY FETCH (core fix)
+   ============================================================ */
+async function openModal(id) {
   const a = [...allArticles, ...breakingItems].find(x => x.id === id);
   if (!a) return;
+  currentModalId = id;
+
+  /* Populate immediately from manifest fields */
   const img = document.getElementById('modal-img');
   const coverSrc = getImage(a);
   if (coverSrc) { img.src = coverSrc; img.alt = getTitle(a); img.classList.remove('hide'); }
   else img.classList.add('hide');
-  document.getElementById('modal-cat').textContent      = catLabel(a.category);
-  document.getElementById('modal-headline').textContent = getTitle(a);
-  document.getElementById('modal-byline').textContent   = `${a.author||''}  ·  ${fmtDate(a.timestamp)}`;
-  document.getElementById('modal-body').innerHTML       =
-    getBody(a).split('\n').filter(p=>p.trim()).map(p=>`<p>${p}</p>`).join('');
-  document.getElementById('modal-source').innerHTML     = publisherHtml(a, false);
-  document.getElementById('modal-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); document.body.style.overflow = ''; }
-function overlayClick(e) { if (e.target===document.getElementById('modal-overlay')) closeModal(); }
-document.addEventListener('keydown', e => { if (e.key==='Escape') closeModal(); });
 
-/* ── Mobile drawer ────────────────────────────────────────── */
+  document.getElementById('modal-cat').textContent         = catLabel(a.category);
+  document.getElementById('modal-headline').textContent    = getTitle(a);
+  const rt = getReadingTime(a);
+  document.getElementById('modal-byline-text').textContent = `${a.author||''}  ·  ${fmtDate(a.timestamp)}`;
+  document.getElementById('modal-reading-time').innerHTML  =
+    `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${rt} ${t('readingTime')}`;
+  document.getElementById('modal-source').innerHTML        = publisherHtml(a, false);
+
+  /* Vanguard panel (item 17) */
+  renderVanguardPanel(a);
+
+  /* Related articles (item 8) */
+  renderRelatedArticles(a);
+
+  /* OG meta update (item 20) */
+  updateOGMeta(a);
+
+  /* Open overlay */
+  const overlay = document.getElementById('modal-overlay');
+  overlay.classList.add('open');
+  overlay.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+
+  /* Reset progress bar */
+  document.getElementById('modal-progress-bar').style.width = '0%';
+
+  /* Check in-memory body first (already loaded or from demo data) */
+  const cachedBody = articleBodyCache.get(id);
+  if (cachedBody) {
+    renderModalBody(cachedBody);
+    return;
+  }
+
+  const existingBody = getBody(a);
+  if (existingBody && existingBody.trim().length > 0) {
+    /* Body lives in manifest already (demo / legacy) — use it and cache */
+    articleBodyCache.set(id, { body_en: a.body_en || a.body || '', body_bn: a.body_bn || '' });
+    renderModalBody({ body_en: a.body_en || a.body || '', body_bn: a.body_bn || '' });
+    return;
+  }
+
+  /* Lazy fetch from individual article JSON using download_url */
+  document.getElementById('modal-body').innerHTML =
+    `<div class="modal-loading"><div class="spinner"></div><span>${t('loadingBody')}</span></div>`;
+
+  const url = a.download_url || (a.filename ? `./news/${a.filename}` : null);
+  if (!url) {
+    document.getElementById('modal-body').innerHTML =
+      `<p style="color:var(--ink-light);font-size:.85rem">Full article content not available.</p>`;
+    return;
+  }
+
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('fetch failed');
+    const articleData = await res.json();
+    const bodyData = {
+      body_en: articleData.body_en || articleData.body || '',
+      body_bn: articleData.body_bn || articleData.body_en || ''
+    };
+    /* Patch body onto in-memory object + cache so re-open is instant */
+    a.body_en = bodyData.body_en;
+    a.body_bn = bodyData.body_bn;
+    articleBodyCache.set(id, bodyData);
+    /* Update reading time from actual body */
+    renderModalBody(bodyData);
+  } catch (err) {
+    console.error('[VD] lazy fetch error:', err);
+    document.getElementById('modal-body').innerHTML =
+      `<p style="color:var(--ink-light);font-size:.85rem">Could not load article. <a href="${esc(a.sourceUrl||'#')}" target="_blank" rel="noopener" style="color:var(--red)">Read at source ↗</a></p>`;
+  }
+}
+
+function renderModalBody(bodyData) {
+  const body = currentLang === 'bn'
+    ? (bodyData.body_bn || bodyData.body_en || '')
+    : (bodyData.body_en || '');
+  document.getElementById('modal-body').innerHTML =
+    body.split('\n').filter(p => p.trim()).map(p => `<p>${p}</p>`).join('');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  currentModalId = null;
+  /* Restore OG meta */
+  document.getElementById('og-title').setAttribute('content', 'Vanguard Daily');
+  document.getElementById('og-description').setAttribute('content', 'Rigorous, independent journalism.');
+  document.getElementById('og-image').setAttribute('content', '');
+}
+
+function overlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+/* ============================================================
+   VANGUARD ANALYSIS PANEL (item 17)
+   ============================================================ */
+function renderVanguardPanel(a) {
+  const va = a.vanguard_analysis;
+  const panel = document.getElementById('modal-vanguard');
+  const body  = document.getElementById('modal-vanguard-body');
+  if (!va || !Object.values(va).some(v => v)) {
+    panel.style.display = 'none';
+    return;
+  }
+  panel.style.display = '';
+  const fields = [
+    { key: 'architecture',       label: 'Architecture' },
+    { key: 'algorithm_or_logic', label: 'Algorithm / Logic' },
+    { key: 'governance',         label: 'Governance' },
+    { key: 'delta_of_change',    label: 'Delta of Change' },
+    { key: 'impact_horizon',     label: 'Impact Horizon' },
+  ];
+  body.innerHTML = fields.filter(f => va[f.key]).map(f =>
+    `<div class="va-field"><div class="va-label">${f.label}</div><div class="va-value">${esc(va[f.key])}</div></div>`
+  ).join('');
+  // Reset collapse state
+  document.getElementById('modal-vanguard-toggle').classList.remove('open');
+  body.classList.remove('open');
+}
+
+function toggleVanguardPanel() {
+  const toggle = document.getElementById('modal-vanguard-toggle');
+  const body   = document.getElementById('modal-vanguard-body');
+  toggle.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+/* ============================================================
+   RELATED ARTICLES (item 8)
+   ============================================================ */
+function renderRelatedArticles(a) {
+  const relPanel = document.getElementById('modal-related');
+  const relGrid  = document.getElementById('related-grid');
+  const pool = [...allArticles, ...breakingItems].filter(x =>
+    x.id !== a.id && normaliseCategory(x.category) === normaliseCategory(a.category)
+  ).slice(0, 3);
+
+  if (!pool.length) { relPanel.style.display = 'none'; return; }
+  relPanel.style.display = '';
+  relGrid.innerHTML = pool.map(x => {
+    const title = getTitle(x);
+    return `<div class="related-card" onclick="openModal('${esc(x.id)}')">
+      <div class="related-cat">${catLabel(x.category)}</div>
+      <div class="related-title">${title}</div>
+      <div class="related-time">${fmtDate(x.timestamp)}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ============================================================
+   OG META UPDATE (item 20)
+   ============================================================ */
+function updateOGMeta(a) {
+  const title = getTitle(a);
+  const desc  = getSummary(a);
+  const img   = getImage(a) || '';
+  document.getElementById('og-title').setAttribute('content', title + ' — Vanguard Daily');
+  document.getElementById('og-description').setAttribute('content', desc);
+  document.getElementById('og-image').setAttribute('content', img);
+  document.getElementById('og-url').setAttribute('content', window.location.href);
+  document.title = title + ' — Vanguard Daily';
+}
+
+/* ============================================================
+   SHARE BUTTON (item 9)
+   ============================================================ */
+async function shareArticle() {
+  const a = currentModalId ? [...allArticles,...breakingItems].find(x=>x.id===currentModalId) : null;
+  if (!a) return;
+  const url   = a.sourceUrl || window.location.href;
+  const title = getTitle(a);
+  if (navigator.share) {
+    try { await navigator.share({ title, url }); } catch(_) {}
+  } else {
+    try {
+      await navigator.clipboard.writeText(url);
+      const btn = document.getElementById('modal-share-btn');
+      const orig = btn.querySelector('span').textContent;
+      btn.querySelector('span').textContent = 'Copied!';
+      setTimeout(() => btn.querySelector('span').textContent = orig, 1800);
+    } catch(_) {}
+  }
+}
+
+/* ============================================================
+   PRINT (item 19)
+   ============================================================ */
+function printArticle() {
+  const a = currentModalId ? [...allArticles,...breakingItems].find(x=>x.id===currentModalId) : null;
+  if (!a) return;
+  document.getElementById('print-headline').textContent = getTitle(a);
+  document.getElementById('print-byline').textContent   = `${a.author||''}  ·  ${fmtDate(a.timestamp)}  ·  ${a.publisher||''}`;
+  const body = currentLang==='bn' ? (a.body_bn||a.body_en||'') : (a.body_en||a.body||'');
+  document.getElementById('print-body').innerHTML =
+    body.split('\n').filter(p=>p.trim()).map(p=>`<p>${p}</p>`).join('');
+  window.print();
+}
+
+/* ============================================================
+   MODAL READING PROGRESS BAR (item 7)
+   ============================================================ */
+document.getElementById('modal-overlay').addEventListener('scroll', function() {
+  const overlay    = this;
+  const box        = document.getElementById('modal-box');
+  const scrollable = overlay.scrollHeight - overlay.clientHeight;
+  const pct = scrollable > 0 ? Math.min(100, (overlay.scrollTop / scrollable) * 100) : 0;
+  document.getElementById('modal-progress-bar').style.width = pct + '%';
+}, { passive: true });
+
+/* ============================================================
+   AUTO REFRESH (item 10)
+   ============================================================ */
+function startAutoRefresh() {
+  if (autoRefreshTimer) clearInterval(autoRefreshTimer);
+  autoRefreshTimer = setInterval(async () => {
+    try {
+      const res = await fetch('./manifest.json', { cache: 'no-store' });
+      if (!res.ok) return;
+      const raw = await res.json();
+      const freshItems = normaliseManifest(raw);
+      if (!freshItems.length) return;
+      const seen = new Set([...allArticles, ...breakingItems].map(x => x.id));
+      const hasNew = freshItems.some(x => x.id && !seen.has(x.id));
+      if (hasNew) {
+        const banner = document.getElementById('refresh-banner');
+        document.getElementById('refresh-banner-text').textContent = t('newStories');
+        banner.classList.add('visible');
+        banner.onclick = () => {
+          banner.classList.remove('visible');
+          sessionStorage.removeItem(MANIFEST_CACHE_KEY);
+          loadNews(true);
+        };
+      }
+    } catch(_) {}
+  }, 10 * 60 * 1000); // 10 minutes
+}
+
+/* ============================================================
+   KEYBOARD NAVIGATION (item 13)
+   ============================================================ */
+document.addEventListener('keydown', e => {
+  const overlayOpen = document.getElementById('modal-overlay').classList.contains('open');
+
+  if (e.key === 'Escape') {
+    if (overlayOpen) closeModal();
+    return;
+  }
+  if (overlayOpen) {
+    if (e.key === 'Enter' || e.key === ' ') return;
+    return;
+  }
+
+  const items = filteredArticles();
+  if (!items.length) return;
+
+  // J = next, K = prev, Enter = open focused
+  if (e.key === 'j' || e.key === 'J' || e.key === 'k' || e.key === 'K') {
+    e.preventDefault();
+    const cards = [...document.querySelectorAll('#news-grid .news-card')];
+    const focused = document.activeElement;
+    let idx = cards.indexOf(focused);
+    if (e.key === 'j' || e.key === 'J') idx = Math.min(idx + 1, cards.length - 1);
+    else idx = Math.max(idx - 1, 0);
+    if (idx >= 0 && cards[idx]) {
+      cards[idx].focus();
+      cards[idx].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+  }
+});
+
+/* ============================================================
+   BACK TO TOP (item 14)
+   ============================================================ */
+window.addEventListener('scroll', () => {
+  const btt = document.getElementById('back-to-top');
+  btt.classList.toggle('visible', window.scrollY > 400);
+  updateLastUpdatedDisplay(); // refresh relative time on scroll
+}, { passive: true });
+
+/* ============================================================
+   MOBILE DRAWER
+   ============================================================ */
 function toggleDrawer() {
   document.getElementById('mobile-drawer').classList.toggle('open');
   document.getElementById('hamburger').classList.toggle('open');
 }
 
-/* ── Init ─────────────────────────────────────────────────── */
+/* ============================================================
+   INIT
+   ============================================================ */
 (function init() {
   document.getElementById('current-date').textContent =
     new Date().toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
@@ -1099,7 +1837,10 @@ function toggleDrawer() {
     setLang(stored);
     loadNews();
   }
-  /* No stored preference — gate stays visible. setLang() called by gate buttons which then calls loadNews(). */
+  /* Otherwise gate stays visible; setLang() calls loadNews() */
+
+  /* Periodic last-updated refresh */
+  setInterval(updateLastUpdatedDisplay, 60000);
 })();
 </script>
 </body>
