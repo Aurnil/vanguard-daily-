@@ -1456,9 +1456,9 @@ async function loadNews(forceRefresh = false) {
 
   if (!manifestRaw) {
     try {
-      const mRes = await fetch('./manifest.json', { cache: 'no-store' });
+      const mRes = await fetch('./news/manifest.json', { cache: 'no-store' });
       if (!mRes.ok) {
-        const mRes2 = await fetch('./news/manifest.json', { cache: 'no-store' });
+        const mRes2 = await fetch('./manifest.json', { cache: 'no-store' });
         if (!mRes2.ok) { usingDemo = true; }
         else { manifestRaw = await mRes2.json(); }
       } else {
@@ -1566,7 +1566,7 @@ async function openModal(id) {
   /* Read Full Story CTA → article page */
   const rfLink = document.getElementById('modal-read-full-link');
   const rfLabel = document.getElementById('modal-read-full-label');
-  rfLink.href = `article.html?id=${esc(a.id)}`;
+  rfLink.href = `news/${a.filename || (a.id + '.html')}`;
   rfLabel.textContent = currentLang === 'bn' ? 'সম্পূর্ণ সংবাদ পড়ুন' : 'Read Full Story';
 
   /* Vanguard panel (item 17) */
@@ -1779,7 +1779,7 @@ function startAutoRefresh() {
   if (autoRefreshTimer) clearInterval(autoRefreshTimer);
   autoRefreshTimer = setInterval(async () => {
     try {
-      const res = await fetch('./manifest.json', { cache: 'no-store' });
+      const res = await fetch('./news/manifest.json', { cache: 'no-store' });
       if (!res.ok) return;
       const raw = await res.json();
       const freshItems = normaliseManifest(raw);
